@@ -3,6 +3,7 @@ import { useLocation } from "react-router";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 import { IoIosArrowDown,IoIosArrowUp } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 export default function Header(){
     const local = useLocation().pathname;
@@ -26,9 +27,9 @@ export default function Header(){
                     openMenu 
                     && 
                     <Links>
-                        <span>My posts</span>
-                        <span>My likes</span>
-                        <span>logout</span>
+                        <Link to="/my-posts">My posts</Link>
+                        <Link to="/my-like">My likes</Link>
+                        <Link to="/">logout</Link>
                     </Links>
                 }
 
@@ -78,7 +79,10 @@ const Links = styled.div`
     background-color: #171717;
     border-radius: 0 0 0 20px;
     padding: 0px 30px 17px 30px;
-    span{
+    a{
         margin-top: 10px;
+    }
+    @media(max-width:600px){
+        font-size: 15px;
     }
 `
