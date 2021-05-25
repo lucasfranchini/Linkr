@@ -22,7 +22,16 @@ export default function Header(){
             <Menu>
                 {openMenu ? <IoIosArrowUp/>:<IoIosArrowDown/>}
                 <img src={user.user.avatar} alt="user"/>
-                
+                {
+                    openMenu 
+                    && 
+                    <Links>
+                        <span>My posts</span>
+                        <span>My likes</span>
+                        <span>logout</span>
+                    </Links>
+                }
+
             </Menu>
         </Body>
     );
@@ -40,10 +49,10 @@ const Body = styled.div`
     justify-content: space-between;
     align-items: center;
     color: white;
+    font-weight: 700;
 `
 const Title = styled.div`
     font-family: 'Passion One', cursive;
-    font-weight: 700;
     font-size: 49px;
     line-height: 54px;
 `
@@ -57,4 +66,19 @@ const Menu=styled.div`
             border-radius: 50%;
             margin-left: 15px;
         }
+`
+const Links = styled.div`
+    position: fixed;
+    right: 0;
+    top: 72px;
+    display: flex;
+    flex-direction: column;
+    font-size: 17px;
+    font-family: 'Lato', sans-serif;
+    background-color: #171717;
+    border-radius: 0 0 0 20px;
+    padding: 0px 30px 17px 30px;
+    span{
+        margin-top: 10px;
+    }
 `
