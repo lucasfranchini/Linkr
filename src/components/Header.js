@@ -18,25 +18,35 @@ export default function Header(){
 
     if(local==="/"|| local==="/signup") return null;
     return (
-        <Body onClick={toggleMenu}>
-            <Title>Linkr</Title>
-            <Menu>
-                {openMenu ? <IoIosArrowUp/>:<IoIosArrowDown/>}
-                <img src={user.user.avatar} alt="user"/>
-                {
-                    openMenu 
-                    && 
-                    <Links>
-                        <Link to="/my-posts">My posts</Link>
-                        <Link to="/my-like">My likes</Link>
-                        <Link to="/">logout</Link>
-                    </Links>
-                }
-
-            </Menu>
-        </Body>
+        <>
+            <ClickCapture onClick={()=>setOpenMenu(false)}/>
+            <Body onClick={e=>console.log(e)}>
+                <Title>Linkr</Title>
+                <Menu onClick={toggleMenu}>
+                    {openMenu ? <IoIosArrowUp/>:<IoIosArrowDown/>}
+                    <img src={user.user.avatar} alt="user"/>
+                    {
+                        openMenu 
+                        && 
+                        <Links>
+                            <Link to="/my-posts" onClick={toggleMenu}>My posts</Link>
+                            <Link to="/my-like" onClick={toggleMenu}>My likes</Link>
+                            <Link to="/" onClick={()=>window.localStorage.clear()}>logout</Link>
+                        </Links>
+                    }
+                </Menu>
+            </Body>
+        </>
     );
 }
+
+const ClickCapture=styled.div`
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+`
 
 const Body = styled.div`
     width: 100%;
