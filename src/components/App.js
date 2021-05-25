@@ -1,7 +1,6 @@
 import GlobalStyle from '../styles/globalStyles';
 import LogInPage from "./sign/LogInPage"
 import SignUpPage from "./sign/SignUpPage"
-import TimeLinePage from "./timeLine/TimeLinePage"
 
 import {BrowserRouter, Switch, Route } from 'react-router-dom'
 import { useState } from "react";
@@ -24,9 +23,6 @@ export default function App() {
 				</Route>
 				<Route path="/signup" exact>
 					<SignUpPage />
-				</Route>
-				<Route path="/timeline" exact>
-					<TimeLinePage />
 				</Route>
 			</Switch>
 		</BrowserRouter>

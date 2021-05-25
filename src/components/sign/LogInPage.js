@@ -17,16 +17,16 @@ export default function LogInPage() {
     function login(e) {
         e.preventDefault();
         if (ValidateEmail(email) && password){
-            setIsLoading('true');
+            setIsLoading(true);
             const body = {email, password};
-            const request = axios.post('', body);
+            const request = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-in', body);
             request.then((response)=> {
-                setIsLoading('false');
+                setIsLoading(false);
                 setUser({...response.data});
                 history.push('/timeline');
             })
             request.catch((error)=> {
-                setIsLoading('false');
+                setIsLoading(false);
                 console.log(error);
                 alert('Wrong e-mail or password, please try again');
             })
@@ -70,8 +70,8 @@ const Button = styled.button`
     letter-spacing: inherit;
     color: #FFF;
     border: none;
-    cursor: ${props=> props.isloading === "true" ? "not-allowed" : "pointer"};
-    opacity: ${props=> props.isloading === "true" ? 0.7 : 1};
+    cursor: ${props=> props.isloading ? "not-allowed" : "pointer"};
+    opacity: ${props=> props.isloading ? 0.7 : 1};
     :hover{
         background-color:#18a9f2;
     }

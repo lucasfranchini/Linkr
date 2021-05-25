@@ -12,24 +12,24 @@ import styled from "styled-components";
 export default function SignUpPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
-    const [image, setImage] = useState('');
+    const [username, setUserName] = useState('');
+    const [pictureUrl, setPictureUrl] = useState('');
     const history = useHistory();
     const { setIsLoading, isLoading } = useContext(UserContext);
-
+    
     function signUp(e) {
         e.preventDefault();
-        if (name && password && ValidateEmail(email) && ValidateURL(image)){
+        if (username && password && ValidateEmail(email) && ValidateURL(pictureUrl)){
             setIsLoading(true);
             const body = {
                 email,
-                name,
-                image,
-                password
+                password,
+                username,
+                pictureUrl
             };
-            const request = axios.post('', body);
+            const request = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-up', body);
             request.then((response)=> {
-                if (response.status === '201'){
+                if (response.status === 200){
                     history.push("/");
                 } else {
                     console.log(response);
@@ -37,8 +37,8 @@ export default function SignUpPage() {
                 setIsLoading(false);
             });
             request.catch((error)=> {
-                if(error.response.status === '400') {
-                    alert('This e-mail is already in use, please proceed to log in page or use a different e-mail');
+                if(error.response.status === 403) {
+                    alert('This e-mail is already in use, please proceed to log in page or use a different e-mail address');
                 } else {
                     console.log(error.response);
                 }
@@ -53,11 +53,11 @@ export default function SignUpPage() {
             alert("Please, enter a password");
             return;
         }
-        if (!name){
+        if (!username){
             alert("Please, tell us your username");
             return;
         }
-        if (!ValidateURL(image)){
+        if (!ValidateURL(pictureUrl)){
             alert("Please, provide a valid picture URL");
             return;
         }
@@ -68,8 +68,8 @@ export default function SignUpPage() {
             <Form onSubmit={signUp}>
                 <input onChange={(e)=>setEmail(e.target.value)} value={email} type="text" placeholder="e-mail" ></input>
                 <input onChange={(e)=>setPassword(e.target.value)} value={password} type="password" placeholder="password"></input>
-                <input onChange={(e)=>setName(e.target.value)} value={name} type="text" placeholder="username"></input>
-                <input onChange={(e)=>setImage(e.target.value)} value={image} type="text" placeholder="picture url"></input>
+                <input onChange={(e)=>setUserName(e.target.value)} value={username} type="text" placeholder="username"></input>
+                <input onChange={(e)=>setPictureUrl(e.target.value)} value={pictureUrl} type="text" placeholder="picture url"></input>
                 <Button isloading={isLoading} type="submit">Sign Up</Button>
                 <Link to='/'><p>Switch back to log in</p></Link>
             </Form>
@@ -102,8 +102,8 @@ const Button = styled.button`
     letter-spacing: inherit;
     color: #FFF;
     border: none;
-    cursor: ${props=> props.isloading === "true" ? "not-allowed" : "pointer"};
-    opacity: ${props=> props.isloading === "true" ? 0.7 : 1};
+    cursor: ${props=> props.isloading ? "not-allowed" : "pointer"};
+    opacity: ${props=> props.isloading ? 0.7 : 1};
     :hover{
         background-color:#18a9f2;
     }
