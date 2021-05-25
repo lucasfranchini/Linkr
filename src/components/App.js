@@ -27,6 +27,15 @@ export default function App() {
 				<Route path="/my-posts" exact>
 					<FilteredPosts/>
 				</Route>
+				<Route path="/my-likes" exact>
+					<FilteredPosts/>
+				</Route>
+				<Route path="/user/:id" exact>
+					<FilteredPosts/>
+				</Route>
+				<Route path="/hashtag/:hashtag" exact>
+					<FilteredPosts/>
+				</Route>
 			</Switch>
 		</BrowserRouter>
 	</UserContext.Provider>

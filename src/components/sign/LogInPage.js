@@ -23,7 +23,7 @@ export default function LogInPage() {
             request.then((response)=> {
                 setIsLoading(false);
                 setUser({...response.data});
-                history.push('/timeline');
+                history.push('/my-posts');
             })
             request.catch((error)=> {
                 setIsLoading(false);
