@@ -1,11 +1,10 @@
 import axios from "axios";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import {Link, useHistory} from 'react-router-dom';
 
 import Cover from './Cover';
-import UserContext from '../../contexts/UserContext';
-import ValidateEmail from '../../components/validate/ValidateEmail';
-import ValidateURL from '../../components/validate/ValidateURL';
+import validateEmail from '../validate/validateEmail';
+import validateURL from '../validate/validateURL';
 
 import styled from "styled-components";
 
@@ -14,12 +13,12 @@ export default function SignUpPage() {
     const [password, setPassword] = useState('');
     const [username, setUserName] = useState('');
     const [pictureUrl, setPictureUrl] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
-    const { setIsLoading, isLoading } = useContext(UserContext);
-    
+
     function signUp(e) {
         e.preventDefault();
-        if (username && password && ValidateEmail(email) && ValidateURL(pictureUrl)){
+        if (username && password && validateEmail(email) && validateURL(pictureUrl)){
             setIsLoading(true);
             const body = {
                 email,
@@ -45,7 +44,7 @@ export default function SignUpPage() {
                 setIsLoading(false);
             })
         }
-        if (!ValidateEmail(email)){
+        if (!validateEmail(email)){
             alert("Please, provide your e-mail");
             return;
         }
@@ -57,7 +56,7 @@ export default function SignUpPage() {
             alert("Please, tell us your username");
             return;
         }
-        if (!ValidateURL(pictureUrl)){
+        if (!validateURL(pictureUrl)){
             alert("Please, provide a valid picture URL");
             return;
         }

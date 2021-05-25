@@ -10,11 +10,9 @@ import UserContext from '../contexts/UserContext'
 
 export default function App() {
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-	console.log(user)
+  
   return (
-	  
-	<UserContext.Provider value={{user, setUser, isLoading, setIsLoading}}>
+	<UserContext.Provider value={{user, setUser}}>
 		<BrowserRouter>
 			<GlobalStyle />
 			<Switch>
