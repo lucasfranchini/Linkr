@@ -36,4 +36,21 @@ const Container = styled.div`
         line-height: 64px;
         letter-spacing: 0em;
     }
+    @media(max-width: 600px) {
+        flex-direction:column;
+        align-items:center;
+        padding:20px 0 30px 0;
+        background: #151515;
+        box-shadow: 0px 4px 4px 0px #00000040;
+        margin-bottom:40px;
+
+        h1{
+            font-size: 76px;
+            line-height: 84px;
+        }
+        h2 {
+            font-size: 23px;
+            line-height: 34px;
+        }
+    }
 `
