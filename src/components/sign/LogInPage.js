@@ -28,7 +28,11 @@ export default function LogInPage() {
             })
             request.catch((error)=> {
                 setIsLoading(false);
-                alert('Wrong e-mail or password, please try again');
+                if(error.response.status === 504){
+                    alert('We will be up and running once our friends fix theirs Infinite Loops. It might take a while!')
+                }else if(error.response.status === 403){
+                    alert('Wrong e-mail or password, please try again');
+                }
             })
         } else {
             alert('Please enter your e-mail and password');

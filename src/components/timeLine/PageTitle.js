@@ -22,4 +22,8 @@ const Container = styled.div`
         letter-spacing: 0em;
         color:#FFF;
     }
+    @media(max-width: 940px) {
+        height: 86px;
+        padding-left: 18px;
+    }
 `

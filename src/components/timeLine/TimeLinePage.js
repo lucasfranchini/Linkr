@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useContext, useEffect } from "react";
 import UserContext from '../../contexts/UserContext';
-import PostContext from '../../contexts/UserContext';
+import PostContext from '../../contexts/PostContext';
 
 import Post from "./Post";
 import PageTitle from "./PageTitle";
@@ -63,8 +63,11 @@ const Container = styled.div`
     display:flex;
     flex-direction:column;
     justify-content:center;
-    margin:0 auto;
+    margin:0px auto;
     width: 614px;
+    @media(max-width: 940px) {
+        width:100%;
+    }
 `
 const PostsContainer = styled.div`
     display:flex;
