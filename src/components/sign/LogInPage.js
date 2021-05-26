@@ -28,8 +28,11 @@ export default function LogInPage() {
             })
             request.catch((error)=> {
                 setIsLoading(false);
-                console.log(error);
-                alert('Wrong e-mail or password, please try again');
+                if(error.response.status === 504){
+                    alert('We will be up and running once our friends fix theirs Infinite Loops. It might take a while!')
+                }else if(error.response.status === 403){
+                    alert('Wrong e-mail or password, please try again');
+                }
             })
         } else {
             alert('Please enter your e-mail and password');
@@ -62,6 +65,7 @@ const Container = styled.div`
 const Button = styled.button`
     width: 100%;
     height: 65px;
+    margin-bottom:25px;
     background: #1877F2;
     border-radius: 6px;
     font-family: inherit;
@@ -126,7 +130,6 @@ const Form = styled.form`
         letter-spacing: 0em;
         text-decoration: underline;
         text-underline-offset: 0.1em;
-        margin-top:25px;
         color: #FFFFFF;
     }
     @media(max-width: 600px) {
