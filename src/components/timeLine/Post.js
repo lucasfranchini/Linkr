@@ -1,100 +1,44 @@
 import { useState, useContext, useEffect } from "react";
-import PostContext from '../../contexts/UserContext';
+import PostContext from '../../contexts/PostContext';
 
 import {FaRegHeart} from 'react-icons/fa'
 import styled from "styled-components";
 import ReactHashtag from 'react-hashtag';
 
-const userObj =
-{
-    "token": "token-gerado",
-    "user": {
-        "id": 1,
-        "email": "teste@teste.com",
-        "username": "teste",
-        "avatar": "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/1/avatar"
-    }
-};
-const postObj = {
-    posts: [
-        {
-        id: 2,
-        text: "Never Gonna Give You Up #rickroll",
-        link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        linkTitle: "Rick Astley - Never Gonna Give You Up (Video)",
-        linkDescription: "Rick Astley's official music video for “Never Gonna Give You Up” Listen to Rick Astley: https://RickAstley.lnk.to/_listenYDSubscribe to the official Rick Ast...",
-        linkImage: "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
-        user: {
-            id: 1,
-            username: "teste",
-            avatar: "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/1/avatar"
-            },
-        likes: [
-                {
-                id: 1,
-                userId: 1,
-                postId: 2,
-                createdAt: "2021-05-24T18:55:37.544Z",
-                updatedAt: "2021-05-24T18:55:37.544Z",
-                "user.id": 1,
-                "user.username": "teste"
-                }
-            ]
-        }
-    ]
-};
-
 export default function Post(props) {
-    
-    const { postsData, setPostsData } = useContext(PostContext);
+    const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.props;
 
-
-    return (
-        <>
-            {postObj.posts.map(({id,
-            text, 
-            link, 
-            linkTitle, 
-            linkDescription, 
-            linkImage, 
-            user,
-            likes 
-            }) => {
-                return (
-                    <Container key={id.toString()}>
-                        <PostCreator key={user.id.toString()}>
-                            <img src={user.avatar}></img>
-                            <FaRegHeart/>
-                            <p>{14} Likes</p>
-                        </PostCreator>
-                        <PostContent>
-                            <h3>{user.username}</h3>
+        return (
+            <Container key={id.toString()}>
+                <PostCreator key={user.id.toString()}>
+                    <img src={user.avatar}></img>
+                    <FaRegHeart/>
+                    <p>{likes ? likes.length : 0} Likes</p>
+                </PostCreator>
+                <PostContent>
+                    <h3>{user.username}</h3>
+                    <p>
+                        <ReactHashtag onHashtagClick={val => alert(val)}>
+                            {text}
+                        </ReactHashtag>
+                    </p>
+                    <PostSnippet>
+                        <SpinnetContent>
+                            <span>
+                                {linkTitle}
+                            </span>
                             <p>
-                                <ReactHashtag onHashtagClick={val => alert(val)}>
-                                    {text}
-                                </ReactHashtag>
+                                {linkDescription}
                             </p>
-                            <PostSnippet>
-                                <SpinnetContent>
-                                    <span>
-                                        {linkTitle}
-                                    </span>
-                                    <p>
-                                        {linkDescription}
-                                    </p>
-                                    <a href={link}>
-                                        {link}   
-                                    </a>
-                                </SpinnetContent>
-                            <SnippetImg src={linkImage}></SnippetImg>
-                            </PostSnippet>
-                        </PostContent>
-                    </Container>
-                )
-            })}
-        </>
-       
-    );
+                            <a href={link}>
+                                {link}   
+                            </a>
+                        </SpinnetContent>
+                        <SnippetImg src={linkImage}></SnippetImg>
+                    </PostSnippet>
+                </PostContent>
+            </Container>
+        );
 };
 const Container = styled.div`
     font-family: Lato;

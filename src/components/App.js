@@ -8,12 +8,10 @@ import { useState } from "react";
 import UserContext from '../contexts/UserContext'
 import PostContext from '../contexts/UserContext'
 
-
-
-
 export default function App() {
   const [user, setUser] = useState(null);
   const [postsData, setPostsData] = useState(null);
+
   return (
 	<UserContext.Provider value={{user, setUser}}>
 		<BrowserRouter>
@@ -25,7 +23,7 @@ export default function App() {
 				<Route path="/signup" exact>
 					<SignUpPage />
 				</Route>
-				<PostContext.Provider value={{postsData, setPostsData}}>
+				<PostContext.Provider value={{user, postsData, setPostsData}}>
 					<Route path="/timeline" exact>
 						<TimeLinePage />
 					</Route>
