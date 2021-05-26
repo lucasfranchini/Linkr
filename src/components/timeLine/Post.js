@@ -106,6 +106,7 @@ const PostContent = styled.div`
 `
 const PostSnippet = styled.div`
     position: relative;
+    z-index:2;
     padding-left: 20px;
     width: 502px;
     height: 154px;

@@ -28,7 +28,6 @@ export default function LogInPage() {
             })
             request.catch((error)=> {
                 setIsLoading(false);
-                console.log(error);
                 alert('Wrong e-mail or password, please try again');
             })
         } else {
