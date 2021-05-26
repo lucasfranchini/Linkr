@@ -74,10 +74,9 @@ const Menu=styled.button`
         }
 `
 const Links = styled.div`
-    position: absolute;
-    width: calc(100% + 17px);
-    right: -17px;
+    position: fixed;
     top: 72px;
+    right: 0;
     display: flex;
     flex-direction: column;
     font-size: 17px;
