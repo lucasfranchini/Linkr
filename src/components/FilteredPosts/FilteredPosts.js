@@ -66,6 +66,9 @@ const Body =  styled.div`
     margin: 125px auto;
     @media(max-width:940px){
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
 `
@@ -76,11 +79,18 @@ const Title = styled.h1`
     font-weight: 700;
     line-height: 64px;
     margin-bottom: 43px;
+    @media(max-width:940px){
+        width: 612px;
+    }
+    @media(max-width:612px){
+        width: 100%;
+        padding-left: 15px;
+    }
 `
 const Posts =  styled.div`
     display:flex;
     flex-direction:column;
     align-items:flex-start;
     justify-content:center;
-    width: 100%;
+    
 `
