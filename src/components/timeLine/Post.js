@@ -6,8 +6,8 @@ import {FaRegHeart} from 'react-icons/fa'
 import styled from "styled-components";
 import ReactHashtag from 'react-hashtag';
 
-export default function Post(props) {
-    const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.props;
+export default function Post({post}) {
+    const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = post;
     const history = useHistory();
     function goToUrl(tag) {
         const hashtag = tag.replace('#','')

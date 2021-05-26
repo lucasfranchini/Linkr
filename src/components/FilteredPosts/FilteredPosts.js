@@ -3,19 +3,21 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import styled from "styled-components";
 import UserContext from "../../contexts/UserContext";
+import Post from "../timeLine/Post";
 
 export default function FilteredPosts(){
     let local = useLocation().pathname;
     const {user} = useContext(UserContext);
     const {id,hashtag} = useParams();
     const [title,setTitle]=useState("");
-    console.log(user.user.id)
+    const [posts,setPosts]=useState([]);
     useEffect(()=>{
         if(local==="/my-posts"){
             setTitle("My Posts");
             const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${user.user.id}/posts`,{headers:{Authorization: `Bearer ${user.token}`}});
             promise.then(answer=>{
                 console.log(answer)
+                setPosts(answer.data.posts)
             })
         }
         else if(local===`/user/${id}`){
@@ -25,6 +27,7 @@ export default function FilteredPosts(){
                 setTitle(`${answer.data.user.username}'s posts`)
                 const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}/posts`,{headers:{Authorization: `Bearer ${user.token}`}});
                 promise.then(answer=>{
+                    setPosts(answer.data.posts)
                     console.log(answer)
                 })
             });
@@ -34,6 +37,7 @@ export default function FilteredPosts(){
             const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts`,{headers:{Authorization: `Bearer ${user.token}`}});
             promise.then(answer=>{
                 console.log(answer)
+                setPosts(answer.data.posts)
             })
         }
         else if(local==="/my-likes"){
@@ -41,6 +45,7 @@ export default function FilteredPosts(){
             const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked`,{headers:{Authorization: `Bearer ${user.token}`}});
             promise.then(answer=>{
                 console.log(answer)
+                setPosts(answer.data.posts)
             })
         }
     },[local,id,hashtag,user.token,user.user.id]);
@@ -50,6 +55,9 @@ export default function FilteredPosts(){
             <Title>
                 {title}
             </Title>
+            <Posts>
+                {posts.map(p=><Post key={p.id} post={p}/>)}
+            </Posts>
         </Body>
     );
 }
@@ -68,4 +76,11 @@ const Title = styled.h1`
     font-weight: 700;
     line-height: 64px;
     margin-bottom: 43px;
+`
+const Posts =  styled.div`
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    width: 100%;
 `
