@@ -1,16 +1,15 @@
 import axios from "axios";
 import styled from 'styled-components';
 import { useState, useContext } from "react";
-import { useHistory } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
-import PostContext from '../../contexts/UserContext';
+import PostContext from '../../contexts/PostContext';
 
 export default function CreatePost() {
     const { user } = useContext(UserContext);
     const { postsData, setPostsData } = useContext(PostContext);
+    
     const [isLoading, setIsLoading] = useState(false);
-    const history = useHistory();
     const [text, setText] = useState("");
     const [link, setLink] = useState("");
 
@@ -18,19 +17,18 @@ export default function CreatePost() {
         e.preventDefault();
         setIsLoading(true);
         const body = {text, link};
-        const headers = { headers: { Authorization: `Bearer ${user.token}` } };
+        const config = { headers: { Authorization: `Bearer ${user.token}` } };
 
-        const request = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts', body, headers);
+        const request = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts', body, config);
 
         request.then((response)=> {
             setIsLoading(false);
             setText("");
             setLink("");
-            history.push('/timeline');
+            setPostsData([...postsData, response.data]);
         })
         request.catch((error)=> {
             setIsLoading(false);
-            console.log(error);
             alert('Houve um erro ao publicar seu link');
         })
     }
@@ -71,6 +69,7 @@ const Conteiner = styled.div`
     background: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 16px;
+    margin-bottom: 29px;
     padding-top: 21px;
     padding-bottom: 16px;
     padding-left: 86px;
