@@ -10,16 +10,18 @@ export default function Header(){
     const {user} = useContext(UserContext);
     const [openMenu,setOpenMenu] = useState(false);
 
-    function toggleMenu(){
+    function toggleMenu(e){
+        let verification =true;
+        if(e.relatedTarget!==null)verification=!(e.relatedTarget.innerHTML==='My posts'||e.relatedTarget.innerHTML==='My likes'||e.relatedTarget.innerHTML==='logout');
         if(openMenu===false)setOpenMenu(true);
-        else if(openMenu===true)setOpenMenu(false);
+        else if(openMenu===true && verification)setOpenMenu(false);
     }
 
     if(local==="/"|| local==="/signup") return null;
     return (
         <Body >
             <Title>Linkr</Title>
-            <Menu onClick={toggleMenu} onBlur={()=>setOpenMenu(false)}>
+            <Menu onClick={toggleMenu} onBlur={toggleMenu}>
                 {openMenu ? <IoIosArrowUp/>:<IoIosArrowDown/>}
                 <img src={user.user.avatar} alt="user"/>
                 {
@@ -56,13 +58,14 @@ const Title = styled.div`
     line-height: 54px;
 `
 const Menu=styled.button`
+    height: 100%;
     display: flex;
     align-items: center;
     font-size: 30px;
-    z-index: 2;
     background-color: inherit;
     color:inherit;
     border: none;
+    position: relative;
     img{
             width: 53px;
             height: 53px;
@@ -71,8 +74,9 @@ const Menu=styled.button`
         }
 `
 const Links = styled.div`
-    position: fixed;
-    right: 0;
+    position: absolute;
+    width: calc(100% + 17px);
+    right: -17px;
     top: 72px;
     display: flex;
     flex-direction: column;
@@ -81,7 +85,6 @@ const Links = styled.div`
     background-color: #171717;
     border-radius: 0 0 0 20px;
     padding: 0px 30px 17px 30px;
-    z-index: 2;
     a{
         margin-top: 10px;
     }
