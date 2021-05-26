@@ -6,17 +6,18 @@ import FilteredPosts from "./FilteredPosts/FilteredPosts";
 import {BrowserRouter, Switch, Route } from 'react-router-dom'
 import { useState } from "react";
 import UserContext from '../contexts/UserContext'
+import Header from './Header';
 
 
 
 export default function App() {
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  
   return (
-	  
-	<UserContext.Provider value={{user, setUser, isLoading, setIsLoading}}>
+	<UserContext.Provider value={{user, setUser}}>
 		<BrowserRouter>
 			<GlobalStyle />
+			<Header/>
 			<Switch>
 				<Route path="/" exact>
 					<LogInPage />

@@ -4,19 +4,20 @@ import {Link, useHistory} from 'react-router-dom';
 
 import Cover from './Cover';
 import UserContext from '../../contexts/UserContext';
-import ValidateEmail from '../../components/validate/ValidateEmail';
+import validateEmail from '../validate/validateEmail';
 
 import styled from "styled-components";
 
 export default function LogInPage() {
-    const { setUser, setIsLoading, isLoading } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
+    const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     function login(e) {
         e.preventDefault();
-        if (ValidateEmail(email) && password){
+        if (validateEmail(email) && password){
             setIsLoading(true);
             const body = {email, password};
             const request = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-in', body);
