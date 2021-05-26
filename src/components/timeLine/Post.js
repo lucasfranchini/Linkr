@@ -86,12 +86,15 @@ const PostContent = styled.div`
     flex-direction:column;
     align-items: flex-start;
     justify-content:space-between;
+    word-break:break-all;
     h3 {
         font-size: 19px;
         line-height: 23px;
         color: #FFFFFF;
+        margin-left:0px;
     }
     p{
+        margin-left:0px;
         font-size: 17px;
         line-height: 20px;
         color: #B7B7B7;
@@ -102,6 +105,7 @@ const PostContent = styled.div`
     }
 `
 const PostSnippet = styled.div`
+    position: relative;
     padding-left: 20px;
     width: 502px;
     height: 154px;
@@ -113,11 +117,14 @@ const PostSnippet = styled.div`
 `
 const SpinnetContent = styled.article`
     margin:24px 28px 23px 0;
+    width: 304px;
     display:flex;
     flex-direction:column;
     align-items:flex-start;
     justify-content:space-between;
     span{
+        text-align: left;
+        margin-left:0;
         font-size: 16px;
         line-height: 19px;
         color: #CECECE;
@@ -136,6 +143,9 @@ const SpinnetContent = styled.article`
     }
 `
 const SnippetImg = styled.img`
+    position:absolute;
+    right:0px;
+    top:0px;
     height:154px;
     width: 154px;
     border-radius: 0px 12px 13px 0px;
