@@ -1,4 +1,4 @@
-import GlobalStyle from '../styles/globalStyles';
+import GlobalStyle from '../styles/globalStyles'
 import LogInPage from "./sign/LogInPage"
 import SignUpPage from "./sign/SignUpPage"
 import TimeLinePage from "./timeLine/TimeLinePage"
@@ -7,6 +7,7 @@ import {BrowserRouter, Switch, Route } from 'react-router-dom'
 import { useState } from "react";
 import UserContext from '../contexts/UserContext'
 import PostContext from '../contexts/UserContext'
+import Header from './Header'
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -16,6 +17,7 @@ export default function App() {
 	<UserContext.Provider value={{user, setUser}}>
 		<BrowserRouter>
 			<GlobalStyle />
+			<Header/>
 			<Switch>
 				<Route path="/" exact>
 					<LogInPage />

@@ -3,8 +3,8 @@ import { useState, useContext, useEffect } from "react";
 import UserContext from '../../contexts/UserContext';
 import PostContext from '../../contexts/UserContext';
 
-import Post from "./Post"
-import PageTitle from "./PageTitle"
+import Post from "./Post";
+import PageTitle from "./PageTitle";
 
 import styled from "styled-components";
 
