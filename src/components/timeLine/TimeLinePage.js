@@ -5,6 +5,7 @@ import PostContext from '../../contexts/PostContext';
 
 import Post from "./Post";
 import PageTitle from "./PageTitle";
+import CreatePost from "../post/CreatePost";
 
 import styled from "styled-components";
 
@@ -40,7 +41,7 @@ export default function TimeLinePage() {
         return (
             <Container>    
                 <PageTitle title="timeline"/>
-                {/* Inserir componente para criar novos posts Aqui */}
+                <CreatePost/>
                 <PostsContainer>
                     {isLoaded === 1 ? 
                         postsData.map((p) => {
