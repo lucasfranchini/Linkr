@@ -9,7 +9,6 @@ export default function Header(){
     const local = useLocation().pathname;
     const {user} = useContext(UserContext);
     const [openMenu,setOpenMenu] = useState(false);
-    console.log(user)
 
     function toggleMenu(){
         if(openMenu===false)setOpenMenu(true);
@@ -18,35 +17,24 @@ export default function Header(){
 
     if(local==="/"|| local==="/signup") return null;
     return (
-        <>
-            <ClickCapture onClick={()=>setOpenMenu(false)}/>
-            <Body onClick={e=>console.log(e)}>
-                <Title>Linkr</Title>
-                <Menu onClick={toggleMenu}>
-                    {openMenu ? <IoIosArrowUp/>:<IoIosArrowDown/>}
-                    <img src={user.user.avatar} alt="user"/>
-                    {
-                        openMenu 
-                        && 
-                        <Links>
-                            <Link to="/my-posts" onClick={toggleMenu}>My posts</Link>
-                            <Link to="/my-like" onClick={toggleMenu}>My likes</Link>
-                            <Link to="/" onClick={()=>window.localStorage.clear()}>logout</Link>
-                        </Links>
-                    }
-                </Menu>
-            </Body>
-        </>
+        <Body >
+            <Title>Linkr</Title>
+            <Menu onClick={toggleMenu} onBlur={()=>setOpenMenu(false)}>
+                {openMenu ? <IoIosArrowUp/>:<IoIosArrowDown/>}
+                <img src={user.user.avatar} alt="user"/>
+                {
+                    openMenu 
+                    && 
+                    <Links>
+                        <Link to="/my-posts" onClick={toggleMenu}>My posts</Link>
+                        <Link to="/my-like" onClick={toggleMenu}>My likes</Link>
+                        <Link to="/" onClick={()=>window.localStorage.clear()}>logout</Link>
+                    </Links>
+                }
+            </Menu>
+        </Body>
     );
 }
-
-const ClickCapture=styled.div`
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-`
 
 const Body = styled.div`
     width: 100%;
@@ -67,10 +55,14 @@ const Title = styled.div`
     font-size: 49px;
     line-height: 54px;
 `
-const Menu=styled.div`
+const Menu=styled.button`
     display: flex;
     align-items: center;
     font-size: 30px;
+    z-index: 2;
+    background-color: inherit;
+    color:inherit;
+    border: none;
     img{
             width: 53px;
             height: 53px;
@@ -89,6 +81,7 @@ const Links = styled.div`
     background-color: #171717;
     border-radius: 0 0 0 20px;
     padding: 0px 30px 17px 30px;
+    z-index: 2;
     a{
         margin-top: 10px;
     }
