@@ -4,9 +4,11 @@ import { useState, useContext } from "react";
 import { useHistory } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
+import PostContext from '../../contexts/UserContext';
 
 export default function CreatePost() {
     const { user } = useContext(UserContext);
+    const { postsData, setPostsData } = useContext(PostContext);
     const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
     const [text, setText] = useState("");
