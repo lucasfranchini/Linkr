@@ -9,26 +9,41 @@ export default function FilteredPosts(){
     const {user} = useContext(UserContext);
     const {id,hashtag} = useParams();
     const [title,setTitle]=useState("");
-    console.log(local)
-    console.log(user)
+    console.log(user.user.id)
     useEffect(()=>{
         if(local==="/my-posts"){
             setTitle("My Posts");
+            const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${user.user.id}/posts`,{headers:{Authorization: `Bearer ${user.token}`}});
+            promise.then(answer=>{
+                console.log(answer)
+            })
         }
         else if(local===`/user/${id}`){
             const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}`,{headers:{Authorization: `Bearer ${user.token}`}});
             promise.then(answer=>{
                 console.log(answer)
                 setTitle(`${answer.data.user.username}'s posts`)
-            })
+                const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}/posts`,{headers:{Authorization: `Bearer ${user.token}`}});
+                promise.then(answer=>{
+                    console.log(answer)
+                })
+            });
         }
         else if(local===`/hashtag/${hashtag}`){
             setTitle(`# ${hashtag}`)
+            const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts`,{headers:{Authorization: `Bearer ${user.token}`}});
+            promise.then(answer=>{
+                console.log(answer)
+            })
         }
         else if(local==="/my-likes"){
             setTitle("My Likes");
+            const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked`,{headers:{Authorization: `Bearer ${user.token}`}});
+            promise.then(answer=>{
+                console.log(answer)
+            })
         }
-    },[local,id,hashtag,user.token]);
+    },[local,id,hashtag,user.token,user.user.id]);
     
     return (
         <Body>
