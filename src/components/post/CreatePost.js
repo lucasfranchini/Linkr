@@ -6,12 +6,11 @@ import { useHistory } from 'react-router-dom';
 import UserContext from '../../contexts/UserContext';
 
 export default function CreatePost() {
-    const { user, setIsLoading, isLoading } = useContext(UserContext);
+    const { user } = useContext(UserContext);
+    const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
     const [text, setText] = useState("");
     const [link, setLink] = useState("");
-
-    console.log(user);
 
     function postIt(e) {
         e.preventDefault();
@@ -31,26 +30,34 @@ export default function CreatePost() {
         request.catch((error)=> {
             setIsLoading(false);
             console.log(error);
-            alert('Algo deu errado! Tente novamente.');
+            alert('Houve um erro ao publciar seu link');
         })
     }
     return(
         <Conteiner>
-            <img src={user.avatar} alt=""></img>
+            <img src={user.user.avatar} alt=""></img>
             <Title>O que você tem para favoritar hoje?</Title>
             <Form onSubmit={postIt}>
                 <input
                     onChange={(e)=>setLink(e.target.value)}
                     value={link}
-                    type="text"
+                    type="url"
+                    pattern="https://.*"
+                    required
                     placeholder="https://..."
+                    disabled={isLoading ? (true) : (false)}
                 ></input>
                 <textarea
                     onChange={(e)=>setText(e.target.value)}
                     value={text}
                     placeholder="Muito irado esse link falando de #javascript"
+                    disabled={isLoading ? (true) : (false)}
                 ></textarea>
-                <Button isloading={isLoading} type="submit">Publicar</Button>
+                <Button
+                    isloading={isLoading}
+                    type="submit"
+                    disabled={isLoading ? (true) : (false)}
+                >{isLoading ? "Publishing" : "Publicar"}</Button>
             </Form>
         </Conteiner>
     );
@@ -116,7 +123,7 @@ const Button = styled.button`
     width: 112px;
     height: 31px;
     margin-top: 5px;
-    background: #1877F2;
+    background: ${props=> props.isloading ? "#18A9F2" : "#1877F2"};
     border: none;
     border-radius: 5px;
     text-align: center;
@@ -124,7 +131,8 @@ const Button = styled.button`
     font-family: Lato;
     font-size: 14px;
     line-height: 17px;
-    cursor: pointer;
+    cursor: ${props=> props.isloading ? "not-allowed" : "pointer"};
+    opacity: ${props=> props.isloading ? 0.7 : 1};
     :hover{
         background-color:#18a9f2;
     }
