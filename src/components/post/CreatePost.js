@@ -8,7 +8,7 @@ import PostContext from '../../contexts/PostContext';
 export default function CreatePost() {
     const { user } = useContext(UserContext);
     const { postsData, setPostsData } = useContext(PostContext);
-    
+
     const [isLoading, setIsLoading] = useState(false);
     const [text, setText] = useState("");
     const [link, setLink] = useState("");
@@ -82,6 +82,18 @@ const Conteiner = styled.div`
         height: 50px;
         border-radius: 25px;
     }
+    @media(max-width: 611px) {
+        width: 100vw;
+        border-radius: 0px;
+        padding-left: 15px;
+        padding-right: 16px;
+        img {
+            display: none;
+        }
+    }
+    @media(max-width: 331px) {
+        height: 233px;
+    }
 `;
 
 const Title = styled.div`
@@ -90,6 +102,9 @@ const Title = styled.div`
     font-size: 20px;
     line-height: 24px;
     color: #707070;
+    @media(max-width: 611px) {
+        text-align: center;
+    }
 `;
 
 const Form = styled.form`
@@ -116,6 +131,9 @@ const Form = styled.form`
     textarea {
         height: 66px;
         resize: none;
+    }
+    @media(max-width: 611px) {
+        width: calc(100vw - 37px);
     }
 `;
 
