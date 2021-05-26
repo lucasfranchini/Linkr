@@ -16,6 +16,7 @@ export default function Post(props) {
                     <p>{likes ? likes.length : 0} Likes</p>
                 </PostCreator>
                 <PostContent>
+                    {/* inserir Botoes editar/deletar Aqui */}
                     <h3>{user.username}</h3>
                     <p>
                         <ReactHashtag onHashtagClick={val => alert(val)}>
@@ -79,6 +80,8 @@ const PostCreator = styled.div`
     }
 `
 const PostContent = styled.div`
+    position: relative;
+    z-index: 2;
     width: 504px;
     height: 236px;
     margin-left:20px;
