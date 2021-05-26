@@ -25,12 +25,11 @@ export default function CreatePost() {
             setText("");
             setLink("");
             history.push('/timeline');
-            console.log(response.data);
         })
         request.catch((error)=> {
             setIsLoading(false);
             console.log(error);
-            alert('Houve um erro ao publciar seu link');
+            alert('Houve um erro ao publicar seu link');
         })
     }
     return(
