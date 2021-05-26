@@ -2,51 +2,56 @@ import { useState, useContext} from "react";
 import { useHistory, Link } from "react-router-dom";
 import PostContext from '../../contexts/PostContext';
 
+import DeletePost from "../post/DeletePost";
+
 import {FaRegHeart} from 'react-icons/fa'
 import styled from "styled-components";
 import ReactHashtag from 'react-hashtag';
 
 export default function Post(props) {
     const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.props;
+    const userInfo = props.userInfo;
+    console.log(userInfo);
+    const [isOpen, setIsOpen] = useState(false);
     const history = useHistory();
     function goToUrl(tag) {
         const hashtag = tag.replace('#','')
         history.push(`/${hashtag}`)
     }
-        return (
-            <Container key={id.toString()}>
-                <div>
-                    <PostCreator key={user.id.toString()}>
-                        <Link to={`/user/${user.id}`}><img src={user.avatar}></img></Link>
-                        <FaRegHeart/>
-                        <p>{likes ? likes.length : 0} Likes</p>
-                    </PostCreator>
-                    <PostContent>
-                        {/* inserir Botoes editar/deletar Aqui */}
-                        <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
-                        <p>
-                            <ReactHashtag onHashtagClick={(val) => goToUrl(val)}>
-                                {text}
-                            </ReactHashtag>
-                        </p>
-                        <PostSnippet>
-                            <SpinnetContent>
-                                <span>
-                                    {linkTitle}
-                                </span>
-                                <p>
-                                    {linkDescription}
-                                </p>
-                                <a href={link} target="_blank" rel="noopener noreferrer">
-                                    {link}   
-                                </a>
-                            </SpinnetContent>
-                            <SnippetImg src={linkImage}></SnippetImg>
-                        </PostSnippet>
-                    </PostContent>
-                </div>
-            </Container>
-        );
+    return (
+        <Container key={id.toString()}>
+            <div>
+                <PostCreator key={user.id.toString()}>
+                    <Link to={`/user/${user.id}`}><img src={user.avatar}></img></Link>
+                    <FaRegHeart/>
+                    <p>{likes ? likes.length : 0} Likes</p>
+                </PostCreator>
+                <PostContent>
+                    {user.id === userInfo.user.id ? <DeletePost postId={id} userToken={userInfo.token} isOpen={isOpen} setIsOpen={setIsOpen} /> : () => {return(<></>)}}
+                    <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
+                    <p>
+                        <ReactHashtag onHashtagClick={(val) => goToUrl(val)}>
+                            {text}
+                        </ReactHashtag>
+                    </p>
+                    <PostSnippet>
+                        <SpinnetContent>
+                            <span>
+                                {linkTitle}
+                            </span>
+                            <p>
+                                {linkDescription}
+                            </p>
+                            <a href={link} target="_blank" rel="noopener noreferrer">
+                                {link}   
+                            </a>
+                        </SpinnetContent>
+                        <SnippetImg src={linkImage}></SnippetImg>
+                    </PostSnippet>
+                </PostContent>
+            </div>
+        </Container>
+    );
 };
 const Container = styled.div`
     font-family: Lato;
@@ -63,6 +68,7 @@ const Container = styled.div`
         display:flex;
         align-items: flex-start;
         justify-content:center;
+        width: inherit;
     }
     @media(max-width: 940px) {
         padding: 15px 18px 8px 15px;
@@ -232,3 +238,9 @@ const SnippetImg = styled.img`
         width:115px;
     }
 `
+const ReactModalContainer = styled.div`
+    padding-top: 100px;
+    height: 100vh;
+    width: 100vw;
+    z-index: 100;
+`;

@@ -13,6 +13,7 @@
     "react-hashtag": "^2.1.2",
     "react-icons": "^4.2.0",
     "react-loaders": "^3.0.1",
+    "react-modal": "^3.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-tooltip": "^4.2.19",

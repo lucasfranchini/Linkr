@@ -46,7 +46,7 @@ export default function TimeLinePage() {
                     {isLoaded === 1 ? 
                         postsData.map((p) => {
                             return (
-                                <Post key={p.id.toString()} props={p} />
+                                <Post key={p.id.toString()} props={p} userInfo={user} />
                             )
                         }) : 
                         (isLoaded === 2) ?
