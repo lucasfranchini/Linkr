@@ -1,6 +1,6 @@
-import { useState, useContext} from "react";
+//import { useState, useContext} from "react";
+//import PostContext from '../../contexts/PostContext';
 import { useHistory, Link } from "react-router-dom";
-import PostContext from '../../contexts/PostContext';
 
 import {FaRegHeart} from 'react-icons/fa'
 import styled from "styled-components";
@@ -16,8 +16,8 @@ export default function Post(props) {
         return (
             <Container key={id.toString()}>
                 <div>
-                    <PostCreator key={user.id.toString()}>
-                        <Link to={`/user/${user.id}`}><img src={user.avatar}></img></Link>
+                    <PostCreator >
+                        <Link to={`/user/${user.id}`}><img src={user.avatar} alt={user.username}/></Link>
                         <FaRegHeart/>
                         <p>{likes ? likes.length : 0} Likes</p>
                     </PostCreator>
@@ -41,13 +41,14 @@ export default function Post(props) {
                                     {link}   
                                 </a>
                             </SpinnetContent>
-                            <SnippetImg src={linkImage}></SnippetImg>
+                            <SnippetImg src={linkImage} alt={linkTitle}></SnippetImg>
                         </PostSnippet>
                     </PostContent>
                 </div>
             </Container>
         );
 };
+
 const Container = styled.div`
     font-family: Lato;
     font-weight: 400;
@@ -132,6 +133,9 @@ const PostContent = styled.div`
         font-size: 17px;
         line-height: 20px;
         color: #B7B7B7;
+        >span{
+            cursor: pointer;
+        }
     }
     span { //hashtag Style
         color:#FFF;

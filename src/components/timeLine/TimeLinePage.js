@@ -35,7 +35,7 @@ export default function TimeLinePage() {
                 setIsLoaded(3)
             }
         })
-    },[user.token])
+    },[user.token, setPostsData])
 
     if(user){
         return (
