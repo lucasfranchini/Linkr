@@ -33,7 +33,7 @@ export default function App() {
 					<Route path="/user/:id" exact>
 						{/*componente-ProfilePage*/}
 					</Route>
-					<Route path="/:hashtag" exact>
+					<Route path="/hashtag/:hashtag" exact>
 						{/*componente-HashtagPage*/}
 					</Route>
 				</PostContext.Provider>

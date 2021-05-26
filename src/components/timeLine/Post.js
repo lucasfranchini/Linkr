@@ -11,7 +11,7 @@ export default function Post(props) {
     const history = useHistory();
     function goToUrl(tag) {
         const hashtag = tag.replace('#','')
-        history.push(`/${hashtag}`)
+        history.push(`/hashtag/${hashtag}`)
     }
         return (
             <Container key={id.toString()}>
