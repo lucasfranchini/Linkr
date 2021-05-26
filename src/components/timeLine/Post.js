@@ -1,6 +1,6 @@
-import { useState, useContext} from "react";
+//import { useState, useContext} from "react";
+//import PostContext from '../../contexts/PostContext';
 import { useHistory, Link } from "react-router-dom";
-import PostContext from '../../contexts/PostContext';
 
 import DeletePost from "../post/DeletePost";
 
@@ -16,7 +16,7 @@ export default function Post(props) {
     const history = useHistory();
     function goToUrl(tag) {
         const hashtag = tag.replace('#','')
-        history.push(`/${hashtag}`)
+        history.push(`/hashtag/${hashtag}`)
     }
     return (
         <Container key={id.toString()}>
@@ -53,6 +53,7 @@ export default function Post(props) {
         </Container>
     );
 };
+
 const Container = styled.div`
     font-family: Lato;
     font-weight: 400;
@@ -70,7 +71,7 @@ const Container = styled.div`
         justify-content:center;
         width: inherit;
     }
-    @media(max-width: 940px) {
+    @media(max-width: 611px) {
         padding: 15px 18px 8px 15px;
         width:100%;
         border-radius:0px;
@@ -98,7 +99,7 @@ const PostCreator = styled.div`
         font-size: 11px;
         line-height: 13px;
     }
-    @media(max-width: 940px) {
+    @media(max-width: 611px) {
         img {
         width: 40px;
         height: 40px;
@@ -138,12 +139,15 @@ const PostContent = styled.div`
         font-size: 17px;
         line-height: 20px;
         color: #B7B7B7;
+        >span{
+            cursor: pointer;
+        }
     }
     span { //hashtag Style
         color:#FFF;
         font-weight: 700;
     }
-    @media(max-width: 940px) {
+    @media(max-width: 611px) {
         height:auto;
         width: 100%;
         h3 {
@@ -171,7 +175,7 @@ const PostSnippet = styled.div`
     display:flex;
     align-items: center;
     justify-content:space-between;
-    @media(max-width: 940px) {
+    @media(max-width: 611px) {
         width: 100%;
         padding:0;
         min-height: 115px;
@@ -206,7 +210,7 @@ const SpinnetContent = styled.article`
         margin:0;
         color: #CECECE;
     }
-    @media(max-width: 940px) {
+    @media(max-width: 611px) {
         margin:0;
         padding:7px 11px 8px 12px;
         width: calc(100% - 115px);
@@ -233,7 +237,7 @@ const SnippetImg = styled.img`
     height:154px;
     width: 154px;
     border-radius: 0px 12px 13px 0px;
-    @media(max-width: 940px) {
+    @media(max-width: 611px) {
         height: 100%;
         width:115px;
     }

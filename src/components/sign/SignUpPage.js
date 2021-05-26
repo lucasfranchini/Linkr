@@ -92,6 +92,7 @@ const Container = styled.div`
 const Button = styled.button`
     width: 100%;
     height: 65px;
+    margin-bottom:25px;
     background: #1877F2;
     border-radius: 6px;
     font-family: inherit;
@@ -156,7 +157,6 @@ const Form = styled.form`
         letter-spacing: 0em;
         text-decoration: underline;
         text-underline-offset: 0.1em;
-        margin-top:25px;
         color: #FFFFFF;
     }
     @media(max-width: 600px) {

@@ -35,7 +35,7 @@ export default function TimeLinePage() {
                 setIsLoaded(3)
             }
         })
-    },[user.token])
+    },[user.token, setPostsData])
 
     if(user){
         return (
@@ -66,7 +66,7 @@ const Container = styled.div`
     justify-content:center;
     margin:0px auto;
     width: 614px;
-    @media(max-width: 940px) {
+    @media(max-width: 611px) {
         width:100%;
     }
 `
