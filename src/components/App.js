@@ -5,6 +5,7 @@ import SignUpPage from "./sign/SignUpPage"
 import {BrowserRouter, Switch, Route } from 'react-router-dom'
 import { useState } from "react";
 import UserContext from '../contexts/UserContext'
+import Header from './Header';
 
 
 
@@ -15,6 +16,7 @@ export default function App() {
 	<UserContext.Provider value={{user, setUser}}>
 		<BrowserRouter>
 			<GlobalStyle />
+			<Header/>
 			<Switch>
 				<Route path="/" exact>
 					<LogInPage />
