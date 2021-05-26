@@ -12,7 +12,7 @@ export default function Header(){
 
     function toggleMenu(e){
         let verification =true;
-        if(e.relatedTarget!==null)verification=!(e.relatedTarget.innerHTML==='My posts'||e.relatedTarget.innerHTML==='My likes'||e.relatedTarget.innerHTML==='logout');
+        if(e.relatedTarget!==null)verification=!(e.relatedTarget.innerHTML==='My posts'||e.relatedTarget.innerHTML==='My likes'||e.relatedTarget.innerHTML==='logout'||e.relatedTarget.innerHTML==='My teste');
         if(openMenu===false)setOpenMenu(true);
         else if(openMenu===true && verification)setOpenMenu(false);
     }
@@ -29,7 +29,8 @@ export default function Header(){
                     && 
                     <Links>
                         <Link to="/my-posts" onClick={toggleMenu}>My posts</Link>
-                        <Link to="/my-like" onClick={toggleMenu}>My likes</Link>
+                        <Link to="/my-likes" onClick={toggleMenu}>My likes</Link>
+                        <Link to="/user/3" onClick={toggleMenu}>My teste</Link>
                         <Link to="/" onClick={()=>window.localStorage.clear()}>logout</Link>
                     </Links>
                 }

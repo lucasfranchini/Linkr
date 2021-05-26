@@ -24,7 +24,7 @@ export default function LogInPage() {
             request.then((response)=> {
                 setIsLoading(false);
                 setUser({...response.data});
-                history.push('/my-posts');
+                history.push('/timeline');
             })
             request.catch((error)=> {
                 setIsLoading(false);
