@@ -6,6 +6,7 @@ import PostContext from '../../contexts/PostContext';
 import Post from "./Post";
 import PageTitle from "./PageTitle";
 import CreatePost from "../post/CreatePost";
+import TrendingTopics from "./TrendingTopics";
 
 import styled from "styled-components";
 
@@ -47,7 +48,7 @@ export default function TimeLinePage() {
                         {isLoaded === 1 ? 
                             postsData.map((p) => {
                                 return (
-                                    <Post key={p.id.toString()} props={p} userInfo={user} />
+                                    <Post key={p.id.toString()} props={p} />
                                 )
                             }) : 
                             (isLoaded === 2) ?
@@ -58,23 +59,7 @@ export default function TimeLinePage() {
                         }
                     </PostsContainer>
                 </Container>
-                <TrendingTopics>
-                    <TrendingTitle>
-                        <h1>trending</h1>
-                    </TrendingTitle>
-                    <TrendingList>
-                        <h1># javascript</h1>
-                        <h1># react</h1>
-                        <h1># react-native</h1>
-                        <h1># material</h1>
-                        <h1># web-dev</h1>
-                        <h1># mobile</h1>
-                        <h1># css</h1>
-                        <h1># html</h1>
-                        <h1># node</h1>
-                        <h1># sql</h1>
-                    </TrendingList>
-                </TrendingTopics>
+                <TrendingTopics user={user} />
             </Page>
         );
     }
@@ -82,6 +67,7 @@ export default function TimeLinePage() {
 
 const Page = styled.div`
     display: flex;
+    justify-content: center;
     max-width: 940px;
     margin: 0px auto;
 `;
@@ -103,48 +89,3 @@ const PostsContainer = styled.div`
     justify-content:center;
     width: 100%;
 `
-const TrendingTopics = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 301px;
-    height: 406px;
-    margin-top: 232px;
-    margin-left: 25px;
-    background: #484848;
-    border-radius: 16px;
-`;
-
-const TrendingTitle = styled.div`
-    height: 61px;
-    background: #171717;
-    border-radius: 16px 16px 0px 0px;
-    h1 {
-        margin-top: 9px;
-        margin-left: 16px;
-        color: #FFFFFF;
-        font-family: Oswald;
-        font-weight: bold;
-        font-size: 27px;
-        line-height: 40px;
-    }
-`;
-
-const TrendingList = styled.div`
-    height: 344px;
-    background: #171717;
-    border-radius: 0px 0px 16px 16px;
-    padding-top: 22px;
-    padding-left: 16px;
-    padding-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    h1 {
-        color: #FFFFFF;
-        font-family: Lato;
-        font-weight: bold;
-        font-size: 19px;
-        line-height: 23px;        
-    }
-`;
