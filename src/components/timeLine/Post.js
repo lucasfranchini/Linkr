@@ -13,38 +13,36 @@ export default function Post({post}) {
         const hashtag = tag.replace('#','')
         history.push(`/hashtag/${hashtag}`)
     }
-        return (
-            <Container key={id.toString()}>
-                <div>
-                    <PostCreator >
-                        <Link to={`/user/${user.id}`}><img src={user.avatar} alt={user.username}/></Link>
-                        <FaRegHeart/>
-                        <p>{likes ? likes.length : 0} Likes</p>
-                    </PostCreator>
-                    <PostContent>
-                        {/* inserir Botoes editar/deletar Aqui */}
-                        <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
-                        <p>
-                            <ReactHashtag onHashtagClick={(val) => goToUrl(val)}>
-                                {text}
-                            </ReactHashtag>
-                        </p>
-                        <PostSnippet>
-                            <SpinnetContent>
-                                <span>
-                                    {linkTitle}
-                                </span>
-                                <p>
-                                    {linkDescription}
-                                </p>
-                                <a href={link} target="_blank" rel="noopener noreferrer">
-                                    {link}   
-                                </a>
-                            </SpinnetContent>
-                            <SnippetImg src={linkImage} alt={linkTitle}></SnippetImg>
-                        </PostSnippet>
-                    </PostContent>
-                </div>
-            </Container>
-        );
+    return (
+        <Container key={id.toString()}>
+            <div>
+                <PostCreator key={user.id.toString()}>
+                    <Link to={`/user/${user.id}`}><img src={user.avatar}></img></Link>
+                    <FaRegHeart/>
+                    <p>{likes ? likes.length : 0} Likes</p>
+                </PostCreator>
+                <PostContent>
+                    <p>
+                        <ReactHashtag onHashtagClick={(val) => goToUrl(val)}>
+                            {text}
+                        </ReactHashtag>
+                    </p>
+                    <PostSnippet>
+                        <SpinnetContent>
+                            <span>
+                                {linkTitle}
+                            </span>
+                            <p>
+                                {linkDescription}
+                            </p>
+                            <a href={link} target="_blank" rel="noopener noreferrer">
+                                {link}   
+                            </a>
+                        </SpinnetContent>
+                        <SnippetImg src={linkImage}></SnippetImg>
+                    </PostSnippet>
+                </PostContent>
+            </div>
+        </Container>
+    );
 };
