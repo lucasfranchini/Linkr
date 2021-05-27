@@ -2,7 +2,6 @@ import styled from "styled-components";
 import ReactModal from 'react-modal';
 import axios from "axios";
 import { useState, useContext } from "react";
-import UserContext from '../../contexts/UserContext';
 import PostContext from '../../contexts/PostContext';
 import { IoMdTrash } from "react-icons/io";
 
@@ -22,7 +21,7 @@ export default function DeletePost({ postId, userToken }) {
         request.then((res) => {
             setIsLoading(true);
             let array = [...postsData];
-            let newPostsData = array.filter(e => e.id != postId);
+            let newPostsData = array.filter(e => e.id !== postId);
             setIsOpen(false);
             setPostsData(newPostsData);
             setIsLoading(false);
@@ -50,9 +49,7 @@ export default function DeletePost({ postId, userToken }) {
                 display: 'flex',
                 justifyContent: 'center',
                 margin: 'auto',
-                border: '1px solid #ccc',
                 background: '#333',
-                overflow: 'auto',
                 WebkitOverflowScrolling: 'touch',
                 borderRadius: '50px',
                 border: 'none',

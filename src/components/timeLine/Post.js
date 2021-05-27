@@ -1,5 +1,3 @@
-import { useState, useContext} from "react";
-import PostContext from '../../contexts/PostContext';
 import { useHistory, Link } from "react-router-dom";
 
 import DeletePost from "../post/DeletePost";
@@ -8,8 +6,9 @@ import {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Conta
 import {FaRegHeart} from 'react-icons/fa'
 import ReactHashtag from 'react-hashtag';
 
+
 export default function Post(props) {
-    const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.props;
+    const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.post;
     const userInfo = props.userInfo;
     const history = useHistory();
     function goToUrl(tag) {
@@ -20,7 +19,7 @@ export default function Post(props) {
         <Container key={id.toString()}>
             <div>
                 <PostCreator key={user.id.toString()}>
-                    <Link to={`/user/${user.id}`}><img src={user.avatar}></img></Link>
+                    <Link to={`/user/${user.id}`}><img src={user.avatar} alt={user.username}></img></Link>
                     <FaRegHeart/>
                     <p>{likes ? likes.length : 0} Likes</p>
                 </PostCreator>

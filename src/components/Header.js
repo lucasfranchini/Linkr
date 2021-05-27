@@ -29,7 +29,7 @@ export default function Header(){
                     && 
                     <Links>
                         <Link to="/my-posts" onClick={toggleMenu}>My posts</Link>
-                        <Link to="/my-like" onClick={toggleMenu}>My likes</Link>
+                        <Link to="/my-likes" onClick={toggleMenu}>My likes</Link>
                         <Link to="/" onClick={()=>window.localStorage.clear()}>logout</Link>
                     </Links>
                 }
