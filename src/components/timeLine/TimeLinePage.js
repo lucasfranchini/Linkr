@@ -6,6 +6,7 @@ import PostContext from '../../contexts/PostContext';
 import Post from "./Post";
 import PageTitle from "./PageTitle";
 import CreatePost from "../post/CreatePost";
+import TrendingTopics from "./TrendingTopics";
 
 import styled from "styled-components";
 
@@ -42,27 +43,37 @@ export default function TimeLinePage() {
     }
     if(user){
         return (
-            <Container>    
-                <PageTitle title="timeline"/>
-                <CreatePost reloadPosts={loadPosts}/>
-                <PostsContainer>
-                    {isLoaded === 1 ? 
-                        postsData.map((p) => {
-                            return (
-                                <Post key={p.id.toString()} props={p} userInfo={user} />
-                            )
-                        }) : 
-                        (isLoaded === 2) ?
-                        <PageTitle title="No post has been found yet! :("/> :
-                        (isLoaded ===3) ? 
-                        <PageTitle title="An unexpected error has occurred. Please, reload the page and try again!"/> :
-                        <PageTitle title="Loading..."/>
-                    }
-                </PostsContainer>
-            </Container>
+            <Page >
+                <Container>    
+                    <PageTitle title="timeline"/>
+                    <CreatePost/>
+                    <PostsContainer>
+                        {isLoaded === 1 ? 
+                            postsData.map((p) => {
+                                return (
+                                    <Post key={p.id} post={p} userInfo={user} />
+                                )
+                            }) : 
+                            (isLoaded === 2) ?
+                            <PageTitle title="No post has been found yet! :("/> :
+                            (isLoaded ===3) ? 
+                            <PageTitle title="An unexpected error has occurred. Please, reload the page and try again!"/> :
+                            <PageTitle title="Loading..."/>
+                        }
+                    </PostsContainer>
+                </Container>
+                <TrendingTopics user={user} />
+            </Page>
         );
     }
 };
+
+const Page = styled.div`
+    display: flex;
+    justify-content: center;
+    max-width: 940px;
+    margin: 0px auto;
+`;
 
 const Container = styled.div`
     display:flex;

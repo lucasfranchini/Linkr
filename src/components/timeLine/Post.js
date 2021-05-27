@@ -15,7 +15,7 @@ import { useEffect } from "react/cjs/react.development";
 import ReactTooltip from 'react-tooltip';
 
 export default function Post(props) {
-    const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.props;
+    const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.post;
     const userInfo = props.userInfo;
     const history = useHistory();
     const {user: myUser} = useContext(UserContext);
@@ -42,7 +42,7 @@ export default function Post(props) {
         } else if (userList.length === 2 && !userList.includes('You')){
             text = `${userList[0]} and ${userList[1]}`
         } else if (userList.length > 2 && !userList.includes('You')){
-            text = `${userList[0]} and ${userList[1]} other ${userList.length} people`
+            text = `${userList[0]} and ${userList[1]} other ${userList.length-2} people`
         } else if (userList.length === 1 && userList.includes('You')){
             text = `You`
         } else if (userList.length === 2 && userList.includes('You')){
