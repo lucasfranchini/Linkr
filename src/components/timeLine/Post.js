@@ -2,17 +2,12 @@ import { useState, useContext} from "react";
 import PostContext from '../../contexts/PostContext';
 import { useHistory, Link } from "react-router-dom";
 
-import DeletePost from "../post/DeletePost";
-
 import {FaRegHeart} from 'react-icons/fa'
 import styled from "styled-components";
 import ReactHashtag from 'react-hashtag';
 
 export default function Post(props) {
     const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.props;
-    const userInfo = props.userInfo;
-    console.log(userInfo);
-    const [isOpen, setIsOpen] = useState(false);
     const history = useHistory();
     function goToUrl(tag) {
         const hashtag = tag.replace('#','')
@@ -27,8 +22,6 @@ export default function Post(props) {
                     <p>{likes ? likes.length : 0} Likes</p>
                 </PostCreator>
                 <PostContent>
-                    {user.id === userInfo.user.id ? <DeletePost postId={id} userToken={userInfo.token} isOpen={isOpen} setIsOpen={setIsOpen} /> : () => {return(<></>)}}
-                    <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
                     <p>
                         <ReactHashtag onHashtagClick={(val) => goToUrl(val)}>
                             {text}
