@@ -22,6 +22,7 @@ export default function Post({post}) {
                     <p>{likes ? likes.length : 0} Likes</p>
                 </PostCreator>
                 <PostContent>
+                    <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
                     <p>
                         <ReactHashtag onHashtagClick={(val) => goToUrl(val)}>
                             {text}
