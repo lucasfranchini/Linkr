@@ -101,6 +101,7 @@ const Posts =  styled.div`
 const Content = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     >div{
         margin:0;    
     }
