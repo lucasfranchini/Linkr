@@ -100,9 +100,8 @@ const Posts =  styled.div`
 `
 const Content = styled.div`
     display: flex;
+    justify-content: space-between;
     >div{
-        margin:0;
-        margin-left: 25px;
+        margin:0;    
     }
-
 `
