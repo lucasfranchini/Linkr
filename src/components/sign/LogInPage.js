@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import {Link, useHistory} from 'react-router-dom';
 
 import Cover from './Cover';
@@ -9,11 +9,17 @@ import validateEmail from '../validate/validateEmail';
 import {Container, Form, Button} from './styles/LogInAndSignUpStyle';
 
 export default function LogInPage() {
-    const { setUser } = useContext(UserContext);
+    const { user,setUser } = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    useEffect(()=>{
+        if(user!==null){
+            history.push('/timeline');
+        }
+    },[user,history]);
 
     function login(e) {
         e.preventDefault();
@@ -24,6 +30,7 @@ export default function LogInPage() {
             request.then((response)=> {
                 setIsLoading(false);
                 setUser({...response.data});
+                localStorage.setItem('user',JSON.stringify(response.data));
                 history.push('/timeline');
             })
             request.catch((error)=> {
