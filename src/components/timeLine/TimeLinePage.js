@@ -15,6 +15,10 @@ export default function TimeLinePage() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(()=>{
+        loadPosts()
+    },[user.token, setPostsData])
+
+    function loadPosts() {
         const config = {
             headers: {
                 Authorization: `Bearer ${user.token}`
@@ -35,13 +39,12 @@ export default function TimeLinePage() {
                 setIsLoaded(3)
             }
         })
-    },[user.token, setPostsData])
-
+    }
     if(user){
         return (
             <Container>    
                 <PageTitle title="timeline"/>
-                <CreatePost/>
+                <CreatePost reloadPosts={loadPosts}/>
                 <PostsContainer>
                     {isLoaded === 1 ? 
                         postsData.map((p) => {

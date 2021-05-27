@@ -1,5 +1,5 @@
-//import { useState, useContext} from "react";
-//import PostContext from '../../contexts/PostContext';
+import { useState, useContext} from "react";
+import PostContext from '../../contexts/PostContext';
 import { useHistory, Link } from "react-router-dom";
 
 import {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container} from './styles/postStyle';
@@ -8,17 +8,21 @@ import ReactHashtag from 'react-hashtag';
 
 export default function Post(props) {
     const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.props;
+    console.log(props.props)
     const history = useHistory();
     function goToUrl(tag) {
         const hashtag = tag.replace('#','')
         history.push(`/hashtag/${hashtag}`)
+    }
+    function toggleLike(e,id) {
+        console.log(id)
     }
         return (
             <Container key={id.toString()}>
                 <div>
                     <PostCreator >
                         <Link to={`/user/${user.id}`}><img src={user.avatar} alt={user.username}/></Link>
-                        <FaRegHeart/>
+                        <FaRegHeart onClick={(e)=>toggleLike(e,id)}/>
                         <p>{likes ? likes.length : 0} Likes</p>
                     </PostCreator>
                     <PostContent>

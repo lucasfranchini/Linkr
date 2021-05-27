@@ -5,7 +5,7 @@ import { useState, useContext } from "react";
 import UserContext from '../../contexts/UserContext';
 import PostContext from '../../contexts/PostContext';
 
-export default function CreatePost() {
+export default function CreatePost({reloadPosts}) {
     const { user } = useContext(UserContext);
     const { postsData, setPostsData } = useContext(PostContext);
 
@@ -25,8 +25,10 @@ export default function CreatePost() {
             setIsLoading(false);
             setText("");
             setLink("");
-            setPostsData([...postsData, response.data]);
+            setPostsData([...postsData, response.data.post]);
+            reloadPosts();
         })
+        console.log(postsData);
         request.catch((error)=> {
             setIsLoading(false);
             alert('Houve um erro ao publicar seu link');
