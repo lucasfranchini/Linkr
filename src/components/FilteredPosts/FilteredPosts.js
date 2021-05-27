@@ -7,26 +7,28 @@ import UserContext from "../../contexts/UserContext";
 import Post from "../timeLine/Post";
 import TrendingTopics from "../timeLine/TrendingTopics";
 
-export default function FilteredPosts(){
+export default function FilteredPosts({url,newTitle}){
     let local = useLocation().pathname;
     const {user} = useContext(UserContext);
     const {id,hashtag} = useParams();
     const [title,setTitle]=useState("");
     const { postsData, setPostsData } = useContext(PostContext);
     
+    
     useEffect(()=>{
-        if(local==="/my-posts"){
-            setTitle("My Posts");
-            const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${user.user.id}/posts`,{headers:{Authorization: `Bearer ${user.token}`}});
+        const headers = {headers:{Authorization: `Bearer ${user.token}`}}
+        if(local==="/my-posts" || local==="/my-likes"){
+            setTitle(newTitle);
+            const promise = axios.get(url,headers);
             promise.then(answer=>{
                 setPostsData(answer.data.posts)
             })
         }
         else if(local===`/user/${id}`){
-            const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}`,{headers:{Authorization: `Bearer ${user.token}`}});
+            const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}`,headers);
             promise.then(answer=>{
                 setTitle(`${answer.data.user.username}'s posts`)
-                const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}/posts`,{headers:{Authorization: `Bearer ${user.token}`}});
+                const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}/posts`,headers);
                 promise.then(answer=>{
                     setPostsData(answer.data.posts)
                 })
@@ -34,19 +36,12 @@ export default function FilteredPosts(){
         }
         else if(local===`/hashtag/${hashtag}`){
             setTitle(`# ${hashtag}`)
-            const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts`,{headers:{Authorization: `Bearer ${user.token}`}});
+            const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts`,headers);
             promise.then(answer=>{
                 setPostsData(answer.data.posts)
             })
         }
-        else if(local==="/my-likes"){
-            setTitle("My Likes");
-            const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked`,{headers:{Authorization: `Bearer ${user.token}`}});
-            promise.then(answer=>{
-                setPostsData(answer.data.posts)
-            })
-        }
-    },[local,id,hashtag,user.token,user.user.id]);
+    },[local,id,hashtag,user.token,newTitle,setPostsData,url]);
     
     return (
         <Body>
