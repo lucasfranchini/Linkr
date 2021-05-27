@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import styled from "styled-components";
+import PostContext from "../../contexts/PostContext";
 import UserContext from "../../contexts/UserContext";
 import Post from "../timeLine/Post";
 import TrendingTopics from "../timeLine/TrendingTopics";
@@ -11,13 +12,14 @@ export default function FilteredPosts(){
     const {user} = useContext(UserContext);
     const {id,hashtag} = useParams();
     const [title,setTitle]=useState("");
-    const [posts,setPosts]=useState([]);
+    const { postsData, setPostsData } = useContext(PostContext);
+    
     useEffect(()=>{
         if(local==="/my-posts"){
             setTitle("My Posts");
             const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${user.user.id}/posts`,{headers:{Authorization: `Bearer ${user.token}`}});
             promise.then(answer=>{
-                setPosts(answer.data.posts)
+                setPostsData(answer.data.posts)
             })
         }
         else if(local===`/user/${id}`){
@@ -26,7 +28,7 @@ export default function FilteredPosts(){
                 setTitle(`${answer.data.user.username}'s posts`)
                 const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}/posts`,{headers:{Authorization: `Bearer ${user.token}`}});
                 promise.then(answer=>{
-                    setPosts(answer.data.posts)
+                    setPostsData(answer.data.posts)
                 })
             });
         }
@@ -34,14 +36,14 @@ export default function FilteredPosts(){
             setTitle(`# ${hashtag}`)
             const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts`,{headers:{Authorization: `Bearer ${user.token}`}});
             promise.then(answer=>{
-                setPosts(answer.data.posts)
+                setPostsData(answer.data.posts)
             })
         }
         else if(local==="/my-likes"){
             setTitle("My Likes");
             const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked`,{headers:{Authorization: `Bearer ${user.token}`}});
             promise.then(answer=>{
-                setPosts(answer.data.posts)
+                setPostsData(answer.data.posts)
             })
         }
     },[local,id,hashtag,user.token,user.user.id]);
@@ -53,7 +55,7 @@ export default function FilteredPosts(){
             </Title>
             <Content>
                 <Posts>
-                    {posts.map(p=><Post key={p.id} post={p} userInfo={user} />)}
+                    {postsData.map(p=><Post key={p.id} post={p} userInfo={user} />)}
                 </Posts>
                 <TrendingTopics user={user}/>
             </Content>
