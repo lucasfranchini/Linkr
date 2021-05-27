@@ -4,6 +4,7 @@ import { useLocation, useParams } from "react-router";
 import styled from "styled-components";
 import UserContext from "../../contexts/UserContext";
 import Post from "../timeLine/Post";
+import TrendingTopics from "../timeLine/TrendingTopics";
 
 export default function FilteredPosts(){
     let local = useLocation().pathname;
@@ -55,9 +56,12 @@ export default function FilteredPosts(){
             <Title>
                 {title}
             </Title>
-            <Posts>
-                {posts.map(p=><Post key={p.id} post={p}/>)}
-            </Posts>
+            <Content>
+                <Posts>
+                    {posts.map(p=><Post key={p.id} post={p}/>)}
+                </Posts>
+                <TrendingTopics user={user}/>
+            </Content>
         </Body>
     );
 }
@@ -93,4 +97,12 @@ const Posts =  styled.div`
     align-items:flex-start;
     justify-content:center;
     
+`
+const Content = styled.div`
+    display: flex;
+    >div{
+        margin:0;
+        margin-left: 25px;
+    }
+
 `
