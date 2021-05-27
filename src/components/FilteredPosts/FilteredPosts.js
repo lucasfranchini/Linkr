@@ -53,7 +53,7 @@ export default function FilteredPosts(){
             </Title>
             <Content>
                 <Posts>
-                    {posts.map(p=><Post key={p.id} post={p}/>)}
+                    {posts.map(p=><Post key={p.id} post={p} userInfo={user} />)}
                 </Posts>
                 <TrendingTopics user={user}/>
             </Content>
