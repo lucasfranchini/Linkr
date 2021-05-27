@@ -1,5 +1,5 @@
-//import { useState, useContext} from "react";
-//import PostContext from '../../contexts/PostContext';
+import { useState, useContext} from "react";
+import PostContext from '../../contexts/PostContext';
 import { useHistory, Link } from "react-router-dom";
 
 import DeletePost from "../post/DeletePost";
@@ -69,7 +69,6 @@ const Container = styled.div`
         display:flex;
         align-items: flex-start;
         justify-content:center;
-        width: inherit;
     }
     @media(max-width: 611px) {
         padding: 15px 18px 8px 15px;

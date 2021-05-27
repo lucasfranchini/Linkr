@@ -16,19 +16,29 @@ export default function DeletePost({ postId, userToken, isOpen, setIsOpen }) {
                 zIndex: 10
               },
               content: {
-                height: '200px',
-                width: '300px',
+                maxHeight: '262px',
+                maxWidth: '597px',
+                display: 'flex',
+                justifyContent: 'center',
                 margin: 'auto',
                 border: '1px solid #ccc',
-                background: '#fff',
+                background: '#333',
                 overflow: 'auto',
                 WebkitOverflowScrolling: 'touch',
-                borderRadius: '4px',
+                borderRadius: '50px',
+                border: 'none',
                 outline: 'none',
-                padding: '20px'
+                padding: '20px',
+                overflow: 'hidden'
               }
             }}>
-                Modal Content
+                <DialogContent>
+                    <Text>Tem certeza que deseja excluir essa publicação?</Text>
+                    <Buttons>
+                        <CancelButton>Cancelar</CancelButton>
+                        <ConfirmButton>Sim, excluir</ConfirmButton>
+                    </Buttons>
+                </DialogContent>
             </ReactModal>
         </>
     )
@@ -43,5 +53,59 @@ const DeleteButton = styled.button`
     background: none;
     border: none;
     padding: 0px;
+    cursor: pointer;
+`;
+
+const DialogContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 597px;
+    height: 222px;
+`;
+
+const Text = styled.h1`
+    width: 360px;
+    text-align: center;
+    font-family: Lato;
+    font-weight: bold;
+    font-size: 34px;
+    line-height: 41px;
+    color: #FFFFFF;
+    margin-bottom: 39px;
+`;
+
+const Buttons = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 295px;
+`;
+
+const CancelButton = styled.button`
+    width: 134px;
+    height: 37px;
+    background: #FFFFFF;
+    color: #1877F2;
+    font-family: Lato;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+`;
+
+const ConfirmButton = styled.button`
+    width: 134px;
+    height: 37px;
+    background: #1877F2;
+    color: #FFFFFF;
+    font-family: Lato;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
 `;
