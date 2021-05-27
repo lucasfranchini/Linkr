@@ -51,6 +51,7 @@ const Body = styled.div`
     align-items: center;
     color: white;
     font-weight: 700;
+    z-index: 3;
 `
 const Title = styled.div`
     font-family: 'Passion One', cursive;
