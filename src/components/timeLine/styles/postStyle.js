@@ -12,6 +12,10 @@ const Container = styled.div`
     background: #171717;
     border-radius: 16px;
     overflow: scroll;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    ::-webkit-scrollbar{
+        width: 0;
+    }
     >div{
         display:flex;
         align-items: flex-start;
