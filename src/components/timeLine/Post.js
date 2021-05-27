@@ -1,11 +1,16 @@
 import { useHistory, Link } from "react-router-dom";
 
+import DeletePost from "../post/DeletePost";
+
 import {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container} from './styles/postStyle';
 import {FaRegHeart} from 'react-icons/fa'
 import ReactHashtag from 'react-hashtag';
 
+
 export default function Post({post}) {
     const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = post;
+    const userInfo = props.userInfo;
+
     const history = useHistory();
     function goToUrl(tag) {
         const hashtag = tag.replace('#','')
@@ -20,6 +25,7 @@ export default function Post({post}) {
                     <p>{likes ? likes.length : 0} Likes</p>
                 </PostCreator>
                 <PostContent>
+                    {user.id === userInfo.user.id ? <DeletePost postId={id} userToken={userInfo.token} /> : () => {return(<></>)}}
                     <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
                     <p>
                         <ReactHashtag onHashtagClick={(val) => goToUrl(val)}>

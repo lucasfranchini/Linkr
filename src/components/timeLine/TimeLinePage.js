@@ -76,7 +76,7 @@ const Container = styled.div`
     display:flex;
     flex-direction:column;
     justify-content:center;
-    margin:0px;
+    margin: 0px auto;
     width: 614px;
     @media(max-width: 611px) {
         width:100%;
