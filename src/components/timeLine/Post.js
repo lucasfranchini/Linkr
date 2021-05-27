@@ -25,6 +25,7 @@ export default function Post(props) {
                     <p>{likes ? likes.length : 0} Likes</p>
                 </PostCreator>
                 <PostContent>
+                    {user.id === userInfo.user.id ? <EditPost postId={id} userToken={userInfo.token} /> : () => {return(<></>)}}
                     {user.id === userInfo.user.id ? <DeletePost postId={id} userToken={userInfo.token} /> : () => {return(<></>)}}
                     <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
                     <p>
