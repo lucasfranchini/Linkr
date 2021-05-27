@@ -49,7 +49,7 @@ export default function TimeLinePage() {
                     {isLoaded === 1 ? 
                         postsData.map((p) => {
                             return (
-                                <Post key={p.id.toString()} props={p} />
+                                <Post key={p.id.toString()} props={p} userInfo={user} />
                             )
                         }) : 
                         (isLoaded === 2) ?
@@ -63,11 +63,12 @@ export default function TimeLinePage() {
         );
     }
 };
+
 const Container = styled.div`
     display:flex;
     flex-direction:column;
     justify-content:center;
-    margin:0px auto;
+    margin: 0px auto;
     width: 614px;
     @media(max-width: 611px) {
         width:100%;
