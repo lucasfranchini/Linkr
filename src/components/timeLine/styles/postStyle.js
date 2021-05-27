@@ -11,6 +11,7 @@ const Container = styled.div`
     padding: 16px 20px 20px 18px;
     background: #171717;
     border-radius: 16px;
+    overflow: scroll;
     >div{
         display:flex;
         align-items: flex-start;

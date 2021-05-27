@@ -1,21 +1,22 @@
 import styled from "styled-components";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export default function TrendingTopics(props) {
     const history = useHistory();
     const [trendingTopics, setTrendingTopics] = useState([]);
     const token = props.user.token;
-    const headers = { headers: { Authorization: `Bearer ${token}` } };
+    
 
     useEffect(() => {
+        const headers = { headers: { Authorization: `Bearer ${token}` } };
         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/trending", headers);
 
         request.then((res) => {
             setTrendingTopics(res.data.hashtags);
         })
-    }, []);
+    }, [token]);
 
     function goToHashtag(hashtagName) {
         history.push(`/hashtag/${hashtagName}`);
@@ -27,8 +28,8 @@ export default function TrendingTopics(props) {
                 <h1>trending</h1>
             </TrendingTitle>
             <TrendingList>
-                {trendingTopics.map(t => (
-                    <h1 onClick={() => {goToHashtag(t.name)}}># {t.name}</h1>
+                {trendingTopics.map((t,i) => (
+                    <h1 key={i} onClick={() => {goToHashtag(t.name)}}># {t.name}</h1>
                 ))}
             </TrendingList>
         </Container>

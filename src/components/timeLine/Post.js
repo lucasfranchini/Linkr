@@ -1,5 +1,3 @@
-//import { useState, useContext} from "react";
-//import PostContext from '../../contexts/PostContext';
 import { useHistory, Link } from "react-router-dom";
 
 import {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container} from './styles/postStyle';
@@ -17,7 +15,7 @@ export default function Post({post}) {
         <Container key={id.toString()}>
             <div>
                 <PostCreator key={user.id.toString()}>
-                    <Link to={`/user/${user.id}`}><img src={user.avatar}></img></Link>
+                    <Link to={`/user/${user.id}`}><img src={user.avatar} alt={user.username}></img></Link>
                     <FaRegHeart/>
                     <p>{likes ? likes.length : 0} Likes</p>
                 </PostCreator>

@@ -17,19 +17,16 @@ export default function FilteredPosts(){
             setTitle("My Posts");
             const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${user.user.id}/posts`,{headers:{Authorization: `Bearer ${user.token}`}});
             promise.then(answer=>{
-                console.log(answer)
                 setPosts(answer.data.posts)
             })
         }
         else if(local===`/user/${id}`){
             const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}`,{headers:{Authorization: `Bearer ${user.token}`}});
             promise.then(answer=>{
-                console.log(answer)
                 setTitle(`${answer.data.user.username}'s posts`)
                 const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}/posts`,{headers:{Authorization: `Bearer ${user.token}`}});
                 promise.then(answer=>{
                     setPosts(answer.data.posts)
-                    console.log(answer)
                 })
             });
         }
@@ -37,7 +34,6 @@ export default function FilteredPosts(){
             setTitle(`# ${hashtag}`)
             const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts`,{headers:{Authorization: `Bearer ${user.token}`}});
             promise.then(answer=>{
-                console.log(answer)
                 setPosts(answer.data.posts)
             })
         }
@@ -45,7 +41,6 @@ export default function FilteredPosts(){
             setTitle("My Likes");
             const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked`,{headers:{Authorization: `Bearer ${user.token}`}});
             promise.then(answer=>{
-                console.log(answer)
                 setPosts(answer.data.posts)
             })
         }
