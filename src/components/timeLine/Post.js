@@ -1,6 +1,8 @@
-import { useState, useContext} from "react";
-import PostContext from '../../contexts/PostContext';
+//import { useState, useContext} from "react";
+//import PostContext from '../../contexts/PostContext';
 import { useHistory, Link } from "react-router-dom";
+
+
 
 import {FaRegHeart} from 'react-icons/fa'
 import styled from "styled-components";
@@ -234,9 +236,3 @@ const SnippetImg = styled.img`
         width:115px;
     }
 `
-const ReactModalContainer = styled.div`
-    padding-top: 100px;
-    height: 100vh;
-    width: 100vw;
-    z-index: 100;
-`;
