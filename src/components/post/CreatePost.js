@@ -28,7 +28,6 @@ export default function CreatePost({reloadPosts}) {
             setPostsData([...postsData, response.data.post]);
             reloadPosts();
         })
-        console.log(postsData);
         request.catch((error)=> {
             setIsLoading(false);
             alert('Houve um erro ao publicar seu link');

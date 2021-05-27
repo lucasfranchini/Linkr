@@ -6,7 +6,7 @@ const Container = styled.div`
     letter-spacing: 0em;
     color:#FFF;
     width: 612px;
-    height: 276px;
+    //height: 276px;
     margin-bottom: 16px;
     padding: 16px 20px 20px 18px;
     background: #171717;
@@ -66,7 +66,7 @@ const PostContent = styled.div`
     position: relative;
     z-index: 2;
     width: 504px;
-    height: 236px;
+   // height: 236px;
     margin-left:20px;
     display:flex;
     flex-direction:column;
@@ -93,7 +93,7 @@ const PostContent = styled.div`
         font-weight: 700;
     }
     @media(max-width: 611px) {
-        height:auto;
+       // height:auto;
         width: 100%;
         h3 {
         font-size: 17px;
@@ -110,7 +110,7 @@ const PostSnippet = styled.div`
     z-index:2;
     padding-left: 20px;
     width: 502px;
-    height: 154px;
+   // height: 154px;
     border: 1px solid #4D4D4D;
     border-radius: 11px;
     display:flex;
@@ -120,7 +120,7 @@ const PostSnippet = styled.div`
         width: 100%;
         padding:0;
         min-height: 115px;
-        height: auto;
+       // height: auto;
         justify-content:center;
         justify-content:flex-start;
     }
@@ -175,7 +175,7 @@ const SnippetImg = styled.img`
     position:absolute;
     right:0px;
     top:0px;
-    height:154px;
+    height:100%;
     width: 154px;
     border-radius: 0px 12px 13px 0px;
     @media(max-width: 611px) {
