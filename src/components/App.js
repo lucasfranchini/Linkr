@@ -12,8 +12,8 @@ import PostContext from '../contexts/PostContext'
 
 
 export default function App() {
-	const [user, setUser] = useState(null);
-	const [postsData, setPostsData] = useState([]);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const [postsData, setPostsData] = useState(null);
 	return (
 		<UserContext.Provider value={{ user, setUser }}>
 			<BrowserRouter>

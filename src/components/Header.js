@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 export default function Header(){
     const local = useLocation().pathname;
-    const {user} = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext);
     const [openMenu,setOpenMenu] = useState(false);
 
     function toggleMenu(e){
@@ -29,8 +29,8 @@ export default function Header(){
                     && 
                     <Links>
                         <Link to="/my-posts" onClick={toggleMenu}>My posts</Link>
-                        <Link to="/my-likes" onClick={toggleMenu}>My likes</Link>
-                        <Link to="/" onClick={()=>window.localStorage.clear()}>logout</Link>
+                        <Link to="/my-like" onClick={toggleMenu}>My likes</Link>
+                        <Link to="/" onClick={()=>{localStorage.clear();setUser(null)}}>logout</Link>
                     </Links>
                 }
             </Menu>
