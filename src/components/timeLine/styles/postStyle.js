@@ -13,6 +13,7 @@ const Container = styled.div`
     border-radius: 16px;
     overflow: scroll;
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;
     ::-webkit-scrollbar{
         width: 0;
     }

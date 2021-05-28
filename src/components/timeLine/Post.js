@@ -4,15 +4,15 @@ import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 
 import DeletePost from "../post/DeletePost";
-import { IoMdTrash } from "react-icons/io";
 
 import {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container, EditButton, Form} from './styles/postStyle';
-import {FaRegHeart} from 'react-icons/fa'
+import {FaRegHeart} from 'react-icons/fa';
+import {TiPencil} from 'react-icons/ti';
 import ReactHashtag from 'react-hashtag';
 
 
 export default function Post(props) {
-    const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.props;
+    const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.post;
     const { postsData, setPostsData } = useContext(PostContext);
     const userInfo = props.userInfo;
     const history = useHistory();
@@ -29,26 +29,26 @@ export default function Post(props) {
         if (isInEditMode) {
           inputRef.current.focus();
         }
-      }, [isInEditMode]);
+      }, [isInEditMode]
+    );
 
     function goToUrl(tag) {
         const hashtag = tag.replace('#','')
         history.push(`/hashtag/${hashtag}`)
     }
-    console.log(newPostText);
+
     function changeEditMode(text) {
         setIsInEditMode(!isInEditMode);
         if(checker === 0) {
             setNewPostText(text);
         }
-        console.log("mudou");
     }
+
     function editPost(e, text) {
         if(e.which === 27) {
             setIsInEditMode(!isInEditMode);
         }
         if(e.which === 13) {
-            console.log("Submitado!");
             setIsLoading(true);
             const body = {
                 text: newPostText
@@ -65,9 +65,6 @@ export default function Post(props) {
                 let oldText = text;
                 let postIndex = newArray.findIndex(el => (el.text === oldText));
                 newArray.splice([postIndex], 1, newPost);
-
-                console.log(newPost);
-
                 setPostText(newPost.text);
                 setPostsData(newArray);
                 setIsLoading(false);
@@ -90,7 +87,7 @@ export default function Post(props) {
                     <p>{likes ? likes.length : 0} Likes</p>
                 </PostCreator>
                 <PostContent>
-                    {user.id === userInfo.user.id ? <EditButton ref={buttonRef} onClick={() => changeEditMode(text)}><IoMdTrash /></EditButton> : () => {return(<></>)}}
+                    {user.id === userInfo.user.id ? <EditButton ref={buttonRef} onClick={() => changeEditMode(text)}><TiPencil /></EditButton> : () => {return(<></>)}}
                     {user.id === userInfo.user.id ? <DeletePost postId={id} userToken={userInfo.token} /> : () => {return(<></>)}}
                     <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
                     <p>
