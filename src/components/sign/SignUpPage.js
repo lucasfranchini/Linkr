@@ -32,14 +32,14 @@ export default function SignUpPage() {
                     setIsLoading(false);
                     history.push("/");
                 } else {
-                    console.log(response);
+                    alert(response.status);
                 }
             });
             request.catch((error)=> {
                 if(error.response.status === 403) {
                     alert('This e-mail is already in use, please proceed to log in page or use a different e-mail address');
                 } else {
-                    console.log(error.response);
+                    alert(error.response.status);
                 }
                 setIsLoading(false);
             })

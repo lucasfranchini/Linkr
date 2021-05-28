@@ -21,7 +21,6 @@ export default function FilteredPosts({url,newTitle}){
             setTitle(newTitle);
             const promise = axios.get(url,headers);
             promise.then(answer=>{
-                console.log(answer.data)
                 setPostsData(answer.data.posts)
             })
         }
