@@ -46,7 +46,7 @@ export default function FilteredPosts(){
                 setPostsData(answer.data.posts)
             })
         }
-    },[local,id,hashtag,user.token,user.user.id]);
+    },[local,id,hashtag,user.token,user.user.id,setPostsData]);
     
     return (
         <Body>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useCallback } from "react";
 import UserContext from '../../contexts/UserContext';
 import PostContext from '../../contexts/PostContext';
 
@@ -15,7 +15,7 @@ export default function TimeLinePage() {
     const { postsData, setPostsData } = useContext(PostContext);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    useEffect(()=>{
+    const loadPosts = useCallback(() => {
         const config = {
             headers: {
                 Authorization: `Bearer ${user.token}`
@@ -36,25 +36,25 @@ export default function TimeLinePage() {
                 setIsLoaded(3)
             }
         })
-    },[user.token, setPostsData])
+    },[setIsLoaded,setPostsData, user.token])
 
+    useEffect(()=>{
+        loadPosts()
+    },[user.token, setPostsData,loadPosts])
+    
     if(user){
         return (
             <Page >
                 <Container>    
                     <PageTitle title="timeline"/>
-                    <CreatePost/>
+                    <CreatePost reloadPosts={loadPosts}/>
                     <PostsContainer>
-                        {isLoaded === 1 ? 
-                            postsData.map((p) => {
-                                return (
-                                    <Post key={p.id} post={p} userInfo={user} />
-                                )
-                            }) : 
-                            (isLoaded === 2) ?
-                            <PageTitle title="No post has been found yet! :("/> :
-                            (isLoaded ===3) ? 
-                            <PageTitle title="An unexpected error has occurred. Please, reload the page and try again!"/> :
+                        {isLoaded === 1 
+                            ? postsData.map((p) => <Post key={p.id} post={p} userInfo={user} />) 
+                            : (isLoaded === 2) 
+                            ? <PageTitle title="No post has been found yet! :("/>
+                            : (isLoaded ===3) 
+                            ? <PageTitle title="An unexpected error has occurred. Please, reload the page and try again!"/> :
                             <PageTitle title="Loading..."/>
                         }
                     </PostsContainer>
@@ -71,7 +71,6 @@ const Page = styled.div`
     max-width: 940px;
     margin: 0px auto;
 `;
-
 const Container = styled.div`
     display:flex;
     flex-direction:column;
