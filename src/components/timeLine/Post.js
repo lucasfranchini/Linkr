@@ -29,6 +29,9 @@ export default function Post(props) {
     const [checker, setChecker] = useState(0);
     const buttonRef = useRef();
     const inputRef = useRef();
+    useEffect(()=>{
+        setPostLikes(likes)
+    },[likes,setPostLikes])
 
     const createTipText = useCallback((list) => {
         const userList = []
@@ -51,7 +54,7 @@ export default function Post(props) {
         } else if (userList.length === 2 && !userList.includes('You')){
             text = `${filteredList[0]} and ${filteredList[1]}`
         } else if (userList.length > 2 && !userList.includes('You')){
-            text = `${filteredList[0]} and ${filteredList[1]} other ${userList.length-2} people`
+            text = `${filteredList[0]}, ${filteredList[1]} and other ${userList.length-2} people`
         } else if (userList.length === 1 && userList.includes('You')){
             text = `You`
         } else if (userList.length === 2 && userList.includes('You')){
@@ -69,7 +72,8 @@ export default function Post(props) {
         }
         if(list && list.length !== 0){
             list.forEach((i)=>{
-                if(i.userId === myUser.user.id){
+                
+                if((i.userId || i.id) === myUser.user.id ){
                 setILike(true);
                 c++
                 }
@@ -86,7 +90,7 @@ export default function Post(props) {
           }
         createTipText(postLikes)
         verifyLike(postLikes)
-    },[verifyLike,postLikes,createTipText,isInEditMode])
+    },[verifyLike,postLikes,createTipText,isInEditMode,postsData])
     
     function goToUrl(tag) {
         const hashtag = tag.replace('#','')
