@@ -30,10 +30,10 @@ export default function App() {
 							<TimeLinePage />
 						</Route>
 						<Route path="/my-posts" exact>
-							<FilteredPosts />
+							<FilteredPosts newTitle="My Posts" url={user!==null && `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${user.user.id}/posts`}/>
 						</Route>
 						<Route path="/my-likes" exact>
-							<FilteredPosts />
+							<FilteredPosts newTitle="My Likes" url="https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked"/>
 						</Route>
 						<Route path="/user/:id" exact>
 							<FilteredPosts />
