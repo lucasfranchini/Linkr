@@ -10,7 +10,6 @@ import { useState } from "react";
 import UserContext from '../contexts/UserContext'
 import PostContext from '../contexts/PostContext'
 
-
 export default function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const [postsData, setPostsData] = useState(null);

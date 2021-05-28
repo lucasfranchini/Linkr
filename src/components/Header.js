@@ -20,7 +20,7 @@ export default function Header(){
     if(local==="/"|| local==="/signup") return null;
     return (
         <Body >
-            <Title>Linkr</Title>
+            <Title><Link to="/timeline">Linkr</Link></Title>
             <Menu onClick={toggleMenu} onBlur={toggleMenu}>
                 {openMenu ? <IoIosArrowUp/>:<IoIosArrowDown/>}
                 <img src={user.user.avatar} alt="user"/>
