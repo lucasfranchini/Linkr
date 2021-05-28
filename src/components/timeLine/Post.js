@@ -1,16 +1,16 @@
-import axios from 'axios'
-
-import { useState, useContext, useCallback} from "react";
+import React, { useState, useContext, useRef, useEffect, useCallback} from "react";
+import PostContext from '../../contexts/PostContext';
 import { useHistory, Link } from "react-router-dom";
+import axios from "axios";
 
 import DeletePost from "../post/DeletePost";
 
-import {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container} from './styles/postStyle';
-import {FaRegHeart,FaHeart} from 'react-icons/fa'
+import {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container, EditButton, Form} from './styles/postStyle';
+import {FaRegHeart,FaHeart} from 'react-icons/fa';
+import {TiPencil} from 'react-icons/ti';
 import styled from 'styled-components'
 import ReactHashtag from 'react-hashtag';
 import UserContext from "../../contexts/UserContext";
-import { useEffect } from "react/cjs/react.development";
 
 import ReactTooltip from 'react-tooltip';
 
@@ -21,7 +21,15 @@ export default function Post(props) {
     const [iLike, setILike] = useState(false);
     const [postLikes, setPostLikes] = useState(likes);
     const [toolTipText, setToolTipText] = useState('this post is not liked yet')
-    
+    const { postsData, setPostsData } = useContext(PostContext);
+    const [isInEditMode, setIsInEditMode] = useState(false);
+    const [newPostText, setNewPostText] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [postText, setPostText] = useState(text);
+    const [checker, setChecker] = useState(0);
+    const buttonRef = useRef();
+    const inputRef = useRef();
+
     const createTipText = useCallback((list) => {
         const userList = []
         let filteredList = []
@@ -35,7 +43,6 @@ export default function Post(props) {
                 }
             })
             filteredList = userList.filter((u)=> u !== 'You');
-            console.log(filteredList)
         }
         if (userList.length === 0){
             text = 'Do you like this post?' 
@@ -74,14 +81,58 @@ export default function Post(props) {
     }, [setILike,myUser.user.id])
 
     useEffect(()=>{
+        if (isInEditMode) {
+            inputRef.current.focus();
+          }
         createTipText(postLikes)
         verifyLike(postLikes)
-    },[verifyLike,postLikes,createTipText])
+    },[verifyLike,postLikes,createTipText,isInEditMode])
     
     function goToUrl(tag) {
         const hashtag = tag.replace('#','')
         history.push(`/hashtag/${hashtag}`)
     }
+
+    function changeEditMode(text) {
+        setIsInEditMode(!isInEditMode);
+        if(checker === 0) {
+            setNewPostText(text);
+        }
+    }
+
+    function editPost(e, text) {
+        if(e.which === 27) {
+            setIsInEditMode(!isInEditMode);
+        }
+        if(e.which === 13) {
+            setIsLoading(true);
+            const body = {
+                text: newPostText
+            }
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${myUser.token}`
+                }
+            };
+            const request = axios.put(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}`, body, config);
+            request.then((response) => {
+                let newPost = response.data.post;
+                let newArray = postsData;
+                let oldText = text;
+                let postIndex = newArray.findIndex(el => (el.text === oldText));
+                newArray.splice([postIndex], 1, newPost);
+                setPostText(newPost.text);
+                setPostsData(newArray);
+                setIsLoading(false);
+                setIsInEditMode(!isInEditMode);
+                setChecker(1);
+            })
+            request.catch((error) => {
+                setIsLoading(false);
+                alert("Algo deu errado! Tente novamente.");
+            })
+        }
+    }    
 
     function toggleLike(id) {
         const url = iLike
@@ -121,13 +172,23 @@ export default function Post(props) {
                         />
                     </PostCreator>
                     <PostContent>
+                        {user.id === myUser.user.id ? <EditButton ref={buttonRef} onClick={() => changeEditMode(text)}><TiPencil /></EditButton> : () => {return(<></>)}}
                         {user.id === myUser.user.id ? <DeletePost postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
                         <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
-                        <p>
-                            <ReactHashtag onHashtagClick={(val) => goToUrl(val)}>
-                                {text}
-                            </ReactHashtag>
-                        </p>
+                        <>
+                        {isInEditMode ? (
+                            <Form onKeyDown={(e) => editPost(e, text)}>
+                                <textarea ref={inputRef} disabled={isLoading} onChange={(e) => setNewPostText(e.target.value)} type="text" value={newPostText}></textarea>
+                            </Form>
+                        ) : 
+                            <p>
+                                <ReactHashtag onHashtagClick={(val) => goToUrl(val)}>
+                                    {text}
+                                    {postText}
+                                </ReactHashtag>
+                            </p>
+                        }
+                        </>
                         <PostSnippet>
                             <SpinnetContent>
                                 <span>
@@ -167,14 +228,5 @@ const ToolTipComponent = styled(ReactTooltip)`
                 border-right-width: 6px !important;
             }
         } 
-    }
-    @media(max-width: 611px) {
-        &.place-right {
-            &:after {
-            border-right-color: rgba(255, 255, 255, 0.9) !important;
-            border-right-style: solid !important;
-            border-right-width: 6px !important;
-            }
-        }
     }
 `

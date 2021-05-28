@@ -12,6 +12,7 @@ const Container = styled.div`
     border-radius: 16px;
     overflow: scroll;
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;
     ::-webkit-scrollbar{
         width: 0;
     }
@@ -183,4 +184,41 @@ const SnippetImg = styled.img`
         width:115px;
     }
 `
-export {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container}
+
+const EditButton = styled.button`
+    position: absolute;
+    top: 5px;
+    right: 35px;
+    color: #FFFFFF;
+    font-size: 20px;
+    background: none;
+    border: none;
+    padding: 0px;
+    cursor: pointer;
+`;
+
+const Form = styled.form`
+        margin:0 0 12px 0;
+        padding-right:2px;
+        width:100%;
+    textarea {
+        outline:none;
+        width:100%;
+        height: 34px;
+        color: #4C4C4C;
+        margin-top: 10px;
+        background: #EFEFEF;
+        border: none;
+        border-radius: 5px;
+        font-family: Lato;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        resize: none;
+        padding-left: 6px;
+        padding-top: 6px;
+        padding-right: 6px;
+    }
+`;
+
+export {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container, EditButton, Form}
