@@ -16,14 +16,13 @@ import ReactTooltip from 'react-tooltip';
 
 export default function Post(props) {
     const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.post;
-    const userInfo = props.userInfo;
     const history = useHistory();
     const {user: myUser} = useContext(UserContext);
     const [iLike, setILike] = useState(false);
     const [postLikes, setPostLikes] = useState(likes);
     const [toolTipText, setToolTipText] = useState('this post is not liked yet')
-
-    function createTipText(list) {
+    
+    const createTipText = useCallback((list) => {
         const userList = []
         let text = "";
         if (list && list.length !== 0){
@@ -51,7 +50,7 @@ export default function Post(props) {
             text = `You, ${userList[1]} and other ${userList.length-2} people`
         }
         setToolTipText(text);
-    }
+    },[setToolTipText,myUser.user.id])
 
     const verifyLike = useCallback((list) => { 
         let c=0;
@@ -111,7 +110,6 @@ export default function Post(props) {
                         data-iscapture="true"
                             >{postLikes ? postLikes.length : 0} Likes</p>
                         <ToolTipComponent 
-                        place="bottom"
                         className='customeTheme'
                         id="post-likes"
                         effect="solid"
@@ -119,7 +117,7 @@ export default function Post(props) {
                         />
                     </PostCreator>
                     <PostContent>
-                        {user.id === userInfo.user.id ? <DeletePost postId={id} userToken={userInfo.token} /> : () => {return(<></>)}}
+                        {user.id === myUser.user.id ? <DeletePost postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
                         <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
                         <p>
                             <ReactHashtag onHashtagClick={(val) => goToUrl(val)}>
@@ -165,5 +163,15 @@ const ToolTipComponent = styled(ReactTooltip)`
             border-bottom-width: 6px !important;
             }
         }
+    }
+    @media(max-width: 611px) {
+        &.place-right {
+            &:after {
+            border-right-color: rgba(255, 255, 255, 0.9) !important;
+            border-right-style: solid !important;
+            border-right-width: 6px !important;
+            }
+        }
+    }
     }
 `

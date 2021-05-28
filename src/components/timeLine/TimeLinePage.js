@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useCallback } from "react";
 import UserContext from '../../contexts/UserContext';
 import PostContext from '../../contexts/PostContext';
 
@@ -15,11 +15,7 @@ export default function TimeLinePage() {
     const { postsData, setPostsData } = useContext(PostContext);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    useEffect(()=>{
-        loadPosts()
-    },[user.token, setPostsData])
-
-    function loadPosts() {
+    const loadPosts = useCallback(() => {
         const config = {
             headers: {
                 Authorization: `Bearer ${user.token}`
@@ -40,7 +36,12 @@ export default function TimeLinePage() {
                 setIsLoaded(3)
             }
         })
-    }
+    },[setIsLoaded,setPostsData, user.token])
+
+    useEffect(()=>{
+        loadPosts()
+    },[user.token, setPostsData,loadPosts])
+    
     if(user){
         return (
             <Page >
@@ -74,7 +75,6 @@ const Page = styled.div`
     max-width: 940px;
     margin: 0px auto;
 `;
-
 const Container = styled.div`
     display:flex;
     flex-direction:column;
