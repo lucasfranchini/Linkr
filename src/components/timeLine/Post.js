@@ -24,6 +24,7 @@ export default function Post(props) {
     
     const createTipText = useCallback((list) => {
         const userList = []
+        let filteredList = []
         let text = "";
         if (list && list.length !== 0){
             list.forEach((u)=> {
@@ -33,21 +34,23 @@ export default function Post(props) {
                     userList.push(u['user.username']||u.username)
                 }
             })
+            filteredList = userList.filter((u)=> u !== 'You');
+            console.log(filteredList)
         }
         if (userList.length === 0){
             text = 'Do you like this post?' 
         } else if (userList.length === 1 && !userList.includes('You')){
-            text = `${userList[0]}`
+            text = `${filteredList[0]}`
         } else if (userList.length === 2 && !userList.includes('You')){
-            text = `${userList[0]} and ${userList[1]}`
+            text = `${filteredList[0]} and ${filteredList[1]}`
         } else if (userList.length > 2 && !userList.includes('You')){
-            text = `${userList[0]} and ${userList[1]} other ${userList.length-2} people`
+            text = `${filteredList[0]} and ${filteredList[1]} other ${userList.length-2} people`
         } else if (userList.length === 1 && userList.includes('You')){
             text = `You`
         } else if (userList.length === 2 && userList.includes('You')){
-            text = `You and ${userList[1]}`
+            text = `You and ${filteredList[0]}`
         } else if (userList.length > 2 && userList.includes('You')){
-            text = `You, ${userList[1]} and other ${userList.length-2} people`
+            text = `You, ${filteredList[0]} and other ${userList.length-2} people`
         }
         setToolTipText(text);
     },[setToolTipText,myUser.user.id])
