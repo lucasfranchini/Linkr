@@ -2,7 +2,6 @@ import styled from "styled-components";
 import ReactModal from 'react-modal';
 import axios from "axios";
 import { useState, useContext } from "react";
-import UserContext from '../../contexts/UserContext';
 import PostContext from '../../contexts/PostContext';
 import { IoMdTrash } from "react-icons/io";
 
@@ -22,7 +21,7 @@ export default function DeletePost({ postId, userToken }) {
         request.then((res) => {
             setIsLoading(true);
             let array = [...postsData];
-            let newPostsData = array.filter(e => e.id != postId);
+            let newPostsData = array.filter(e => e.id !== postId);
             setIsOpen(false);
             setPostsData(newPostsData);
             setIsLoading(false);
@@ -34,33 +33,33 @@ export default function DeletePost({ postId, userToken }) {
         })
     }
 
+    const modalStyles = {
+        overlay: {
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: 'rgba(255, 255, 255, 0.75)',
+          zIndex: 10
+        },
+        content: {
+          maxHeight: '262px',
+          maxWidth: '597px',
+          display: 'flex',
+          justifyContent: 'center',
+          margin: 'auto',
+          background: '#333',
+          WebkitOverflowScrolling: 'touch',
+          borderRadius: '50px',
+          border: 'none',
+          outline: 'none',
+          padding: '20px',
+          overflow: 'hidden'
+        }
+      };
+
     return(
         <>
             <DeleteButton onClick={() => setIsOpen(true)}><IoMdTrash /></DeleteButton>
-            <ReactModal isOpen={isOpen} style={{
-              overlay: {
-                width: '100vw',
-                height: '100vh',
-                backgroundColor: 'rgba(255, 255, 255, 0.75)',
-                zIndex: 10
-              },
-              content: {
-                maxHeight: '262px',
-                maxWidth: '597px',
-                display: 'flex',
-                justifyContent: 'center',
-                margin: 'auto',
-                border: '1px solid #ccc',
-                background: '#333',
-                overflow: 'auto',
-                WebkitOverflowScrolling: 'touch',
-                borderRadius: '50px',
-                border: 'none',
-                outline: 'none',
-                padding: '20px',
-                overflow: 'hidden'
-              }
-            }}>
+            <ReactModal isOpen={isOpen} style={modalStyles}>
                 <DialogContent>
                     <Text>Tem certeza que deseja excluir essa publicação?</Text>
                     <Buttons>
