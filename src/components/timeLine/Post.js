@@ -29,6 +29,10 @@ export default function Post(props) {
     const [checker, setChecker] = useState(0);
     const buttonRef = useRef();
     const inputRef = useRef();
+    useEffect(()=>{
+        setPostLikes(likes)
+    },[likes,setPostLikes])
+    console.log(postLikes)
 
     const createTipText = useCallback((list) => {
         const userList = []
@@ -64,12 +68,14 @@ export default function Post(props) {
 
     const verifyLike = useCallback((list) => { 
         let c=0;
+        console.log(list)
         if(list && list.length === 0){
             setILike(false);
         }
         if(list && list.length !== 0){
             list.forEach((i)=>{
-                if(i.userId === myUser.user.id){
+                
+                if((i.userId || i.id) === myUser.user.id ){
                 setILike(true);
                 c++
                 }
@@ -86,7 +92,7 @@ export default function Post(props) {
           }
         createTipText(postLikes)
         verifyLike(postLikes)
-    },[verifyLike,postLikes,createTipText,isInEditMode])
+    },[verifyLike,postLikes,createTipText,isInEditMode,postsData])
     
     function goToUrl(tag) {
         const hashtag = tag.replace('#','')
@@ -148,6 +154,7 @@ export default function Post(props) {
         request.then((response)=>{
             setPostLikes(response.data.post.likes)
             verifyLike(response.data.post.likes)
+            console.log(postLikes,"useeffec1t")
         })
     }
         return (
