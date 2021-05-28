@@ -47,7 +47,7 @@ export default function TimeLinePage() {
             <Page >
                 <Container>    
                     <PageTitle title="timeline"/>
-                    <CreatePost/>
+                    <CreatePost reloadPosts={loadPosts}/>
                     <PostsContainer>
                         {isLoaded === 1 ? 
                             postsData.map((p) => {
