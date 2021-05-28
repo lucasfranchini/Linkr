@@ -33,31 +33,33 @@ export default function DeletePost({ postId, userToken }) {
         })
     }
 
+    const modalStyles = {
+        overlay: {
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: 'rgba(255, 255, 255, 0.75)',
+          zIndex: 10
+        },
+        content: {
+          maxHeight: '262px',
+          maxWidth: '597px',
+          display: 'flex',
+          justifyContent: 'center',
+          margin: 'auto',
+          background: '#333',
+          WebkitOverflowScrolling: 'touch',
+          borderRadius: '50px',
+          border: 'none',
+          outline: 'none',
+          padding: '20px',
+          overflow: 'hidden'
+        }
+      };
+
     return(
         <>
             <DeleteButton onClick={() => setIsOpen(true)}><IoMdTrash /></DeleteButton>
-            <ReactModal isOpen={isOpen} style={{
-              overlay: {
-                width: '100vw',
-                height: '100vh',
-                backgroundColor: 'rgba(255, 255, 255, 0.75)',
-                zIndex: 10
-              },
-              content: {
-                maxHeight: '262px',
-                maxWidth: '597px',
-                display: 'flex',
-                justifyContent: 'center',
-                margin: 'auto',
-                background: '#333',
-                WebkitOverflowScrolling: 'touch',
-                borderRadius: '50px',
-                border: 'none',
-                outline: 'none',
-                padding: '20px',
-                overflow: 'hidden'
-              }
-            }}>
+            <ReactModal isOpen={isOpen} style={modalStyles}>
                 <DialogContent>
                     <Text>Tem certeza que deseja excluir essa publicação?</Text>
                     <Buttons>
