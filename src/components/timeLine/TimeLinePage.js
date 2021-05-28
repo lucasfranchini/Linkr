@@ -49,16 +49,12 @@ export default function TimeLinePage() {
                     <PageTitle title="timeline"/>
                     <CreatePost reloadPosts={loadPosts}/>
                     <PostsContainer>
-                        {isLoaded === 1 ? 
-                            postsData.map((p) => {
-                                return (
-                                    <Post key={p.id} post={p} userInfo={user} />
-                                )
-                            }) : 
-                            (isLoaded === 2) ?
-                            <PageTitle title="No post has been found yet! :("/> :
-                            (isLoaded ===3) ? 
-                            <PageTitle title="An unexpected error has occurred. Please, reload the page and try again!"/> :
+                        {isLoaded === 1 
+                            ? postsData.map((p) => <Post key={p.id} post={p} userInfo={user} />) 
+                            : (isLoaded === 2) 
+                            ? <PageTitle title="No post has been found yet! :("/>
+                            : (isLoaded ===3) 
+                            ? <PageTitle title="An unexpected error has occurred. Please, reload the page and try again!"/> :
                             <PageTitle title="Loading..."/>
                         }
                     </PostsContainer>

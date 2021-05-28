@@ -29,11 +29,11 @@ export default function SignUpPage() {
             const request = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-up', body);
             request.then((response)=> {
                 if (response.status === 200){
+                    setIsLoading(false);
                     history.push("/");
                 } else {
                     console.log(response);
                 }
-                setIsLoading(false);
             });
             request.catch((error)=> {
                 if(error.response.status === 403) {
