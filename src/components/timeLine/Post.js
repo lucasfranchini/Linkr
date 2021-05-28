@@ -1,20 +1,83 @@
+import React, { useState, useContext, useRef, useEffect} from "react";
+import PostContext from '../../contexts/PostContext';
 import { useHistory, Link } from "react-router-dom";
+import axios from "axios";
 
 import DeletePost from "../post/DeletePost";
 
-import {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container} from './styles/postStyle';
-import {FaRegHeart} from 'react-icons/fa'
+import {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container, EditButton, Form} from './styles/postStyle';
+import {FaRegHeart} from 'react-icons/fa';
+import {TiPencil} from 'react-icons/ti';
 import ReactHashtag from 'react-hashtag';
 
 
 export default function Post(props) {
     const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.post;
+    const { postsData, setPostsData } = useContext(PostContext);
     const userInfo = props.userInfo;
     const history = useHistory();
+    const [isInEditMode, setIsInEditMode] = useState(false);
+    const [newPostText, setNewPostText] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [postText, setPostText] = useState(text);
+    const [checker, setChecker] = useState(0);
+    const buttonRef = useRef();
+    const inputRef = useRef();
+
+
+    useEffect(() => {
+        if (isInEditMode) {
+          inputRef.current.focus();
+        }
+      }, [isInEditMode]
+    );
+
     function goToUrl(tag) {
         const hashtag = tag.replace('#','')
         history.push(`/hashtag/${hashtag}`)
     }
+
+    function changeEditMode(text) {
+        setIsInEditMode(!isInEditMode);
+        if(checker === 0) {
+            setNewPostText(text);
+        }
+    }
+
+    function editPost(e, text) {
+        if(e.which === 27) {
+            setIsInEditMode(!isInEditMode);
+        }
+        if(e.which === 13) {
+            setIsLoading(true);
+            const body = {
+                text: newPostText
+            }
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${userInfo.token}`
+                }
+            };
+            const request = axios.put(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}`, body, config);
+            request.then((response) => {
+                let newPost = response.data.post;
+                let newArray = postsData;
+                let oldText = text;
+                let postIndex = newArray.findIndex(el => (el.text === oldText));
+                newArray.splice([postIndex], 1, newPost);
+                setPostText(newPost.text);
+                setPostsData(newArray);
+                setIsLoading(false);
+                setIsInEditMode(!isInEditMode);
+                setChecker(1);
+            })
+            request.catch((error) => {
+                setIsLoading(false);
+                alert("Algo deu errado! Tente novamente.");
+            })
+        }
+    }
+
     return (
         <Container key={id.toString()}>
             <div>
@@ -24,12 +87,19 @@ export default function Post(props) {
                     <p>{likes ? likes.length : 0} Likes</p>
                 </PostCreator>
                 <PostContent>
+                    {user.id === userInfo.user.id ? <EditButton ref={buttonRef} onClick={() => changeEditMode(text)}><TiPencil /></EditButton> : () => {return(<></>)}}
                     {user.id === userInfo.user.id ? <DeletePost postId={id} userToken={userInfo.token} /> : () => {return(<></>)}}
                     <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
                     <p>
+                        {isInEditMode ? (
+                            <Form onKeyDown={(e) => editPost(e, text)}>
+                                <textarea ref={inputRef} disabled={isLoading} onChange={(e) => setNewPostText(e.target.value)} type="text" value={newPostText}></textarea>
+                            </Form>
+                        ) : 
                         <ReactHashtag onHashtagClick={(val) => goToUrl(val)}>
-                            {text}
+                            {postText}
                         </ReactHashtag>
+                        }
                     </p>
                     <PostSnippet>
                         <SpinnetContent>
