@@ -11,17 +11,20 @@ export default function Header(){
     const [openMenu,setOpenMenu] = useState(false);
 
     function toggleMenu(e){
+        if(openMenu===false)setOpenMenu(true);
+        else if(openMenu===true)setOpenMenu(false);
+    }
+    function closeMenu(e){
         let verification =true;
         if(e.relatedTarget!==null)verification=!(e.relatedTarget.innerHTML==='My posts'||e.relatedTarget.innerHTML==='My likes'||e.relatedTarget.innerHTML==='logout');
-        if(openMenu===false)setOpenMenu(true);
-        else if(openMenu===true && verification)setOpenMenu(false);
+        if(openMenu===true && verification)setOpenMenu(false);
     }
 
     if(local==="/"|| local==="/signup") return null;
     return (
         <Body >
             <Title><Link to="/timeline">Linkr</Link></Title>
-            <Menu onClick={toggleMenu} onBlur={toggleMenu}>
+            <Menu onClick={toggleMenu} onBlur={closeMenu}>
                 {openMenu ? <IoIosArrowUp/>:<IoIosArrowDown/>}
                 <img src={user.user.avatar} alt="user"/>
                 {
@@ -67,6 +70,7 @@ const Menu=styled.button`
     color:inherit;
     border: none;
     position: relative;
+    cursor: pointer;
     img{
             width: 53px;
             height: 53px;

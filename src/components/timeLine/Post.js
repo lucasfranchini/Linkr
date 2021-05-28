@@ -32,7 +32,6 @@ export default function Post(props) {
     useEffect(()=>{
         setPostLikes(likes)
     },[likes,setPostLikes])
-    console.log(postLikes)
 
     const createTipText = useCallback((list) => {
         const userList = []
@@ -55,7 +54,7 @@ export default function Post(props) {
         } else if (userList.length === 2 && !userList.includes('You')){
             text = `${filteredList[0]} and ${filteredList[1]}`
         } else if (userList.length > 2 && !userList.includes('You')){
-            text = `${filteredList[0]} and ${filteredList[1]} other ${userList.length-2} people`
+            text = `${filteredList[0]}, ${filteredList[1]} and other ${userList.length-2} people`
         } else if (userList.length === 1 && userList.includes('You')){
             text = `You`
         } else if (userList.length === 2 && userList.includes('You')){
@@ -68,7 +67,6 @@ export default function Post(props) {
 
     const verifyLike = useCallback((list) => { 
         let c=0;
-        console.log(list)
         if(list && list.length === 0){
             setILike(false);
         }
@@ -154,7 +152,6 @@ export default function Post(props) {
         request.then((response)=>{
             setPostLikes(response.data.post.likes)
             verifyLike(response.data.post.likes)
-            console.log(postLikes,"useeffec1t")
         })
     }
         return (

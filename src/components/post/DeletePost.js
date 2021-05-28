@@ -23,8 +23,8 @@ export default function DeletePost({ postId, userToken }) {
             let array = [...postsData];
             let newPostsData = array.filter(e => e.id !== postId);
             setIsOpen(false);
-            setPostsData(newPostsData);
             setIsLoading(false);
+            setPostsData(newPostsData);
         })
 
         request.catch((error) => {
