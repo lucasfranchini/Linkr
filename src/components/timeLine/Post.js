@@ -112,8 +112,9 @@ export default function Post(props) {
                         <ToolTipComponent 
                         className='customeTheme'
                         id="post-likes"
-                        effect="solid"
                         multiline={false}
+                        place="right"
+                        effect="solid"
                         />
                     </PostCreator>
                     <PostContent>
@@ -151,18 +152,18 @@ const ToolTipComponent = styled(ReactTooltip)`
         background: rgba(255, 255, 255, 0.9 ) !important;
         border-radius: 3px !important;
         color: #505050 !important;
-        &.place-bottom {
+        &.place-right {
             font-family: Lato !important;
-            font-size: 11px;
-            font-weight: 700;
-            line-height: 13px;
-            letter-spacing: 0em;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            line-height: 13px !important;
+            letter-spacing: 0em !important;
             &:after {
-            border-bottom-color: rgba(255, 255, 255, 0.9) !important;
-            border-bottom-style: solid !important;
-            border-bottom-width: 6px !important;
+                border-right-color: rgba(255, 255, 255, 0.9) !important;
+                border-right-style: solid !important;
+                border-right-width: 6px !important;
             }
-        }
+        } 
     }
     @media(max-width: 611px) {
         &.place-right {
