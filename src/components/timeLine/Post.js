@@ -10,6 +10,7 @@ import {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Conta
 import {FaRegHeart} from 'react-icons/fa'
 import ReactHashtag from 'react-hashtag';
 
+
 export default function Post(props) {
     const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.props;
     const { postsData, setPostsData } = useContext(PostContext);
@@ -84,7 +85,7 @@ export default function Post(props) {
         <Container key={id.toString()}>
             <div>
                 <PostCreator key={user.id.toString()}>
-                    <Link to={`/user/${user.id}`}><img src={user.avatar} alt=""></img></Link>
+                    <Link to={`/user/${user.id}`}><img src={user.avatar} alt={user.username}></img></Link>
                     <FaRegHeart/>
                     <p>{likes ? likes.length : 0} Likes</p>
                 </PostCreator>
