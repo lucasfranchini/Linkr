@@ -183,7 +183,6 @@ export default function Post(props) {
                         ) : 
                             <p>
                                 <ReactHashtag onHashtagClick={(val) => goToUrl(val)}>
-                                    {text}
                                     {postText}
                                 </ReactHashtag>
                             </p>
