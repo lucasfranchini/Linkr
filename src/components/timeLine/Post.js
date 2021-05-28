@@ -173,5 +173,4 @@ const ToolTipComponent = styled(ReactTooltip)`
             }
         }
     }
-    }
 `
