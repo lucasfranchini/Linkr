@@ -13,6 +13,7 @@ export default function FilteredPosts({url,newTitle}){
     const {id,hashtag} = useParams();
     const [title,setTitle]=useState("");
     const { postsData, setPostsData } = useContext(PostContext);
+    const [pageUser,setPageUser] = useState({});
     
     
     useEffect(()=>{
@@ -27,7 +28,8 @@ export default function FilteredPosts({url,newTitle}){
         else if(local===`/user/${id}`){
             const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}`,headers);
             promise.then(answer=>{
-                setTitle(`${answer.data.user.username}'s posts`)
+                setTitle(`${answer.data.user.username}'s posts`);
+                setPageUser(answer.data);
                 const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}/posts`,headers);
                 promise.then(answer=>{
                     setPostsData(answer.data.posts)
@@ -46,6 +48,7 @@ export default function FilteredPosts({url,newTitle}){
     return (
         <Body>
             <Title>
+                {local===`/user/${id}`&& <img src={user.avatar}/>}
                 {title}
             </Title>
             <Content>
