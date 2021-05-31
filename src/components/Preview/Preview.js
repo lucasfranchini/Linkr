@@ -33,7 +33,7 @@ export default function Preview({preview,link,setPreview}){
                 </a>
                 <IoIosClose onClick={()=>setPreview(false)}/>
             </Header>
-            <Iframe src={link}/>
+            <Iframe src={link} name="link para pagina clicada" referrerPolicy="no-referrer"/>
         </ReactModal>
     );
 }
