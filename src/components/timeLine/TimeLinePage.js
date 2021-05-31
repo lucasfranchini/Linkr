@@ -28,6 +28,7 @@ export default function TimeLinePage() {
             setPostsData([...data])
             if (data.length > 0){
                 setIsLoaded(1);
+                
             } else if (data.length === 0){
                 setIsLoaded(2);
             }
@@ -38,6 +39,12 @@ export default function TimeLinePage() {
             }
         })
     },[setIsLoaded,setPostsData, user.token])
+
+    useEffect(()=>{
+        if(postsData!==null && postsData.find(p=>p.user.id!==user.user.id) === undefined){
+            setIsLoaded(4)
+        }
+    },[postsData,setIsLoaded,user.user.id])
 
     useEffect(()=>{
         loadPosts()
@@ -55,10 +62,12 @@ export default function TimeLinePage() {
                         {isLoaded === 1 
                             ? postsData.map((p) => <Post key={p.id} post={p} userInfo={user} />) 
                             : (isLoaded === 2) 
-                            ? <PageTitle title="No post has been found yet! :("/>
+                            ? <PageTitle title="Nenhuma publicação encontrada"/>
                             : (isLoaded ===3) 
-                            ? <PageTitle title="An unexpected error has occurred. Please, reload the page and try again!"/> :
-                            <PageTitle title="Loading..."/>
+                            ? <PageTitle title="An unexpected error has occurred. Please, reload the page and try again!"/> 
+                            : (isLoaded ===4)
+                            ? <PageTitle title="Você não segue ninguém ainda, procure por perfis na busca"/> 
+                            :<PageTitle title="Loading..."/>
                         }
                     </PostsContainer>
                 </Container>
