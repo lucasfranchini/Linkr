@@ -118,6 +118,9 @@ const PostSnippet = styled.div`
     display:flex;
     align-items: center;
     justify-content:space-between;
+    &:hover{
+        cursor: pointer;
+    }
     @media(max-width: 611px) {
         width: 100%;
         padding:0;
@@ -133,10 +136,10 @@ const SpinnetContent = styled.article`
     flex-direction:column;
     align-items:flex-start;
     justify-content:space-between;
+    font-size: 16px;
     span{
         text-align: left;
         margin-left:0;
-        font-size: 16px;
         line-height: 19px;
         color: #CECECE;
     }
@@ -146,12 +149,7 @@ const SpinnetContent = styled.article`
         color: #9B9595;
         margin:6px 0 14px;
     }
-    a{
-        font-size: 11px;
-        line-height: 13px;
-        margin:0;
-        color: #CECECE;
-    }
+    
     @media(max-width: 611px) {
         margin:0;
         padding:7px 11px 8px 12px;
@@ -165,11 +163,14 @@ const SpinnetContent = styled.article`
             line-height: 11px;
             margin:6px 0 14px;
         }
-        a{
+    }
+`
+const PageLink = styled.span`
+    font-size: 11px; 
+    @media(max-width: 611px) {
             font-size: 9px;
             line-height: 11px;
             margin:0;
-        }
     }
 `
 const SnippetImg = styled.img`
@@ -221,4 +222,4 @@ const Form = styled.form`
     }
 `;
 
-export {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container, EditButton, Form}
+export {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container, EditButton, Form,PageLink}

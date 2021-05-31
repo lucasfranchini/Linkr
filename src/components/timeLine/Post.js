@@ -5,7 +5,7 @@ import axios from "axios";
 
 import DeletePost from "../post/DeletePost";
 
-import {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container, EditButton, Form} from './styles/postStyle';
+import {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container, EditButton, Form, PageLink} from './styles/postStyle';
 import {FaRegHeart,FaHeart} from 'react-icons/fa';
 import {TiPencil} from 'react-icons/ti';
 import styled from 'styled-components'
@@ -13,6 +13,7 @@ import ReactHashtag from 'react-hashtag';
 import UserContext from "../../contexts/UserContext";
 
 import ReactTooltip from 'react-tooltip';
+import Preview from "../Preview/Preview";
 
 export default function Post(props) {
     const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.post;
@@ -27,6 +28,7 @@ export default function Post(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [postText, setPostText] = useState(text);
     const [checker, setChecker] = useState(0);
+    const [preview,setPreview] = useState(false)
     const buttonRef = useRef();
     const inputRef = useRef();
     useEffect(()=>{
@@ -192,22 +194,21 @@ export default function Post(props) {
                             </p>
                         }
                         </>
-                        <a href={link} target="_blank" rel="noopener noreferrer">
-                            <PostSnippet>
-                                <SpinnetContent>
-                                    <span>
-                                        {linkTitle}
-                                    </span>
-                                    <p>
-                                        {linkDescription}
-                                    </p>
-                                    <a href={link} target="_blank" rel="noopener noreferrer">
-                                        {link}   
-                                    </a>
-                                </SpinnetContent>
-                                <SnippetImg src={linkImage} alt={linkTitle}></SnippetImg>
-                            </PostSnippet>
-                        </a>
+                        <PostSnippet onClick={()=>setPreview(true)}>
+                            <SpinnetContent>
+                                <span>
+                                    {linkTitle}
+                                </span>
+                                <p>
+                                    {linkDescription}
+                                </p>
+                                <PageLink>
+                                    {link}
+                                </PageLink>
+                            </SpinnetContent>
+                            <SnippetImg src={linkImage} alt={linkTitle}></SnippetImg>
+                        </PostSnippet>
+                        {preview && <Preview/>}
                     </PostContent>
                 </div>
             </Container>
