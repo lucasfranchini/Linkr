@@ -24,7 +24,6 @@ export default function TimeLinePage() {
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config)
         request.then((response)=>{
             const data = response.data.posts;
-            console.log(response);
             setPostsData([...data])
             if (data.length > 0){
                 setIsLoaded(1);
