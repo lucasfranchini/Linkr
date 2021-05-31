@@ -192,20 +192,22 @@ export default function Post(props) {
                             </p>
                         }
                         </>
-                        <PostSnippet>
-                            <SpinnetContent>
-                                <span>
-                                    {linkTitle}
-                                </span>
-                                <p>
-                                    {linkDescription}
-                                </p>
-                                <a href={link} target="_blank" rel="noopener noreferrer">
-                                    {link}   
-                                </a>
-                            </SpinnetContent>
-                            <SnippetImg src={linkImage} alt={linkTitle}></SnippetImg>
-                        </PostSnippet>
+                        <a href={link} target="_blank" rel="noopener noreferrer">
+                            <PostSnippet>
+                                <SpinnetContent>
+                                    <span>
+                                        {linkTitle}
+                                    </span>
+                                    <p>
+                                        {linkDescription}
+                                    </p>
+                                    <a href={link} target="_blank" rel="noopener noreferrer">
+                                        {link}   
+                                    </a>
+                                </SpinnetContent>
+                                <SnippetImg src={linkImage} alt={linkTitle}></SnippetImg>
+                            </PostSnippet>
+                        </a>
                     </PostContent>
                 </div>
             </Container>
