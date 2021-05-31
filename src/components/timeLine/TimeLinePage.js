@@ -21,7 +21,7 @@ export default function TimeLinePage() {
                 Authorization: `Bearer ${user.token}`
             }
         };
-        const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts', config)
+        const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config)
         request.then((response)=>{
             const data = response.data.posts;
             setPostsData([...data])
