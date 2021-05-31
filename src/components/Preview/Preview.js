@@ -20,7 +20,6 @@ export default function Preview({preview,link,setPreview}){
           border: 'none',
           outline: 'none',
           padding: '10px 20px 20px 20px ',
-          overflw: 'auto'
         }
       };   
     return (
