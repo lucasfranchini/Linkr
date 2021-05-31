@@ -16,6 +16,7 @@ export default function FilteredPosts({url,newTitle}){
     const { postsData, setPostsData } = useContext(PostContext);
     const [pageUser,setPageUser] = useState({});
     const [follow,setFollow] =useState(false);  
+    const [loading,setLoading] = useState(false);
     
     useEffect(()=>{
         const headers = {headers:{Authorization: `Bearer ${user.token}`}}
@@ -61,7 +62,7 @@ export default function FilteredPosts({url,newTitle}){
                 {
                 local===`/user/${id}` 
                 && 
-                <Button onClick={()=>toggleFollow(setFollow,follow,id,user)} follow={follow}> 
+                <Button onClick={()=>toggleFollow(setFollow,follow,id,user,setLoading)} follow={follow} loading={loading} disabled={loading}> 
                 {follow ? "Unfollow" : "Follow"}
                 </Button>
                 }
