@@ -60,7 +60,7 @@ align-items: flex-start;
 `
 const Button = styled.button`
 background-color: ${props=>props.follow ? '#fff': '#1877F2'};
-color: ${props=>props.follow ? '#1877F2': '#fff'};#fff;
+color: ${props=>props.follow ? '#1877F2': '#fff'};
 border: none;
 padding: 7px 30px; 
 border-radius: 5px;
