@@ -6,6 +6,7 @@ import PostContext from "../../contexts/PostContext";
 import UserContext from "../../contexts/UserContext";
 import Post from "../timeLine/Post";
 import TrendingTopics from "../timeLine/TrendingTopics";
+import toggleFollow from "./toggleFollow";
 
 export default function FilteredPosts({url,newTitle}){
     let local = useLocation().pathname;
@@ -14,9 +15,7 @@ export default function FilteredPosts({url,newTitle}){
     const [title,setTitle]=useState("");
     const { postsData, setPostsData } = useContext(PostContext);
     const [pageUser,setPageUser] = useState({});
-    const [follow,setFollow] =useState(false)
-    const [followeUsers,setFollowedUsers] = useState([]);
-    
+    const [follow,setFollow] =useState(false);  
     
     useEffect(()=>{
         const headers = {headers:{Authorization: `Bearer ${user.token}`}}
@@ -29,9 +28,10 @@ export default function FilteredPosts({url,newTitle}){
         }
         else if(local===`/user/${id}`){
             const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}`,headers);
-            const wish = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows',headers)
+            const wish = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows',headers);
             wish.then(answer=>{
-                setFollowedUsers(answer.data);
+                if(answer.data.users.find(follow=>follow.id===id) !== undefined )setFollow(true)
+
             });
             promise.then(answer=>{
                 setTitle(`${answer.data.user.username}'s posts`);
@@ -50,6 +50,7 @@ export default function FilteredPosts({url,newTitle}){
             })
         }
     },[local,id,hashtag,user.token,newTitle,setPostsData,url]);
+
     return (
         <Body>
             {parseInt(id)===user.user.id && <Redirect to="/my-posts"/>}
@@ -58,7 +59,7 @@ export default function FilteredPosts({url,newTitle}){
                     {local===`/user/${id}`&& <img src={pageUser.avatar}/>}
                     {title}
                 </div>
-                <Button>{follow ? "Unfollow" : "Follow"}</Button>
+                {local===`/user/${id}`&& <Button onClick={()=>toggleFollow(setFollow,follow,id,user)}>{follow ? "Unfollow" : "Follow"}</Button>}
             </Title>
             <Content>
                 <Posts>
