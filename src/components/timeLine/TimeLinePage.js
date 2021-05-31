@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useContext, useEffect, useCallback } from "react";
 import UserContext from '../../contexts/UserContext';
 import PostContext from '../../contexts/PostContext';
+import useInterval from './functions/useInterval'
 
 import Post from "./Post";
 import PageTitle from "./PageTitle";
@@ -16,19 +17,20 @@ export default function TimeLinePage() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const loadPosts = useCallback(() => {
+        console.log("foi")
         const config = {
             headers: {
                 Authorization: `Bearer ${user.token}`
             }
         };
-        const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts', config)
+        const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config)
         request.then((response)=>{
             const data = response.data.posts;
             setPostsData([...data])
             if (data.length > 0){
                 setIsLoaded(1);
             } else if (data.length === 0){
-                setIsLoaded(2)
+                setIsLoaded(2);
             }
         }) 
         request.catch((error)=>{
@@ -42,6 +44,8 @@ export default function TimeLinePage() {
         loadPosts()
     },[user.token, setPostsData,loadPosts])
     
+    useInterval(() => {loadPosts()}, 15000) 
+
     if(user){
         return (
             <Page >
