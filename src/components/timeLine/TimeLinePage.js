@@ -17,7 +17,6 @@ export default function TimeLinePage() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const loadPosts = useCallback(() => {
-        console.log("foi")
         const config = {
             headers: {
                 Authorization: `Bearer ${user.token}`

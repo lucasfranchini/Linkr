@@ -12,7 +12,9 @@ import styled from 'styled-components'
 import ReactHashtag from 'react-hashtag';
 import UserContext from "../../contexts/UserContext";
 
-import ReactTooltip from 'react-tooltip';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
+
 import Preview from "../Preview/Preview";
 
 export default function Post(props) {
@@ -164,18 +166,13 @@ export default function Post(props) {
                         <LikeButton checked={iLike} onClick={()=>toggleLike(id)}>
                             {iLike ? <FaHeart /> :<FaRegHeart/>}
                         </LikeButton>
-                        <p 
-                        data-for="post-likes"
-                        data-tip={toolTipText}
-                        data-iscapture="true"
-                            >{postLikes ? postLikes.length : 0} Likes</p>
-                        <ToolTipComponent 
-                        className='customeTheme'
-                        id="post-likes"
-                        multiline={true}
-                        place="bottom"
-                        effect="float"
-                        />
+                        <MuiThemeProvider theme={ToolTipComponent}>
+                            <Tooltip title={toolTipText} arrow={true} enterTouchDelay={200}>
+                                <p>
+                                    {postLikes ? postLikes.length : 0} Likes
+                                </p>
+                            </Tooltip>
+                        </MuiThemeProvider>
                     </PostCreator>
                     <PostContent>
                         {user.id === myUser.user.id ? <EditButton ref={buttonRef} onClick={() => changeEditMode(text)}><TiPencil /></EditButton> : () => {return(<></>)}}
@@ -217,22 +214,44 @@ export default function Post(props) {
 const LikeButton = styled.div`
     color: ${(props)=>(props.checked ? '#AC0000' : '#FFFFFF' )};
 `
-const ToolTipComponent = styled(ReactTooltip)`
-    &.customeTheme{
-        background: rgba(255, 255, 255, 0.9 ) !important;
-        border-radius: 3px !important;
-        color: #505050 !important;
-        &.place {
-            font-family: Lato !important;
-            font-size: 11px;
-            font-weight: 700;
-            line-height: 13px;
-            letter-spacing: 0em;
-            &:before {
-                border-color: rgba(255, 255, 255, 0.9) !important;
-                border-style: solid !important; 
-                border-width: 6px !important;
-            }
-        } 
-    }
-`
+// const ToolTipComponent = createMuiTheme({
+    
+//         background: rgba(255, 255, 255, 0.9 ) !important;
+//         border-radius: 3px !important;
+//         color: #505050 !important;
+//         place-bottom {
+//             font-family: Lato !important;
+//             font-size: 11px;
+//             font-weight: 700;
+//             line-height: 13px;
+//             letter-spacing: 0em;
+//             :before {
+//                 border-bottom-color: rgba(255, 255, 255, 0.9) !important;
+//                 border-bottom-style: solid !important; 
+//                 border-bottom-width: 6px !important;
+//             }
+//         } 
+//     }
+// })
+const ToolTipComponent = createMuiTheme({
+    overrides: {
+        MuiTooltip: {
+            arrow: {
+                "&:before": {
+                  border: "none"
+                },
+                color: 'rgba(255, 255, 255, 0.9)'
+              },
+          tooltip: {
+            fontFamily: 'Lato',
+            fontSize: '11px',
+            fontWeight: 700,
+            lineHeight: '13px',
+            letterSpacing: '0em',
+            color: "#505050",
+            backgroundColor: "rgba(255, 255, 255, 0.9)",
+            borderRadius: '3px',
+          }
+        }
+      },
+  });
