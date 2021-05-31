@@ -214,25 +214,6 @@ export default function Post(props) {
 const LikeButton = styled.div`
     color: ${(props)=>(props.checked ? '#AC0000' : '#FFFFFF' )};
 `
-// const ToolTipComponent = createMuiTheme({
-    
-//         background: rgba(255, 255, 255, 0.9 ) !important;
-//         border-radius: 3px !important;
-//         color: #505050 !important;
-//         place-bottom {
-//             font-family: Lato !important;
-//             font-size: 11px;
-//             font-weight: 700;
-//             line-height: 13px;
-//             letter-spacing: 0em;
-//             :before {
-//                 border-bottom-color: rgba(255, 255, 255, 0.9) !important;
-//                 border-bottom-style: solid !important; 
-//                 border-bottom-width: 6px !important;
-//             }
-//         } 
-//     }
-// })
 const ToolTipComponent = createMuiTheme({
     overrides: {
         MuiTooltip: {
