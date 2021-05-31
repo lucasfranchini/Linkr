@@ -208,7 +208,7 @@ export default function Post(props) {
                             </SpinnetContent>
                             <SnippetImg src={linkImage} alt={linkTitle}></SnippetImg>
                         </PostSnippet>
-                        {preview && <Preview/>}
+                        <Preview preview={preview} link={link} setPreview={setPreview}/>
                     </PostContent>
                 </div>
             </Container>
