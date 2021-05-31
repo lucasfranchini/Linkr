@@ -59,7 +59,13 @@ export default function FilteredPosts({url,newTitle}){
                     {local===`/user/${id}`&& <img src={pageUser.avatar}/>}
                     {title}
                 </div>
-                {local===`/user/${id}`&& <Button onClick={()=>toggleFollow(setFollow,follow,id,user)}>{follow ? "Unfollow" : "Follow"}</Button>}
+                {
+                local===`/user/${id}` 
+                && 
+                <Button onClick={()=>toggleFollow(setFollow,follow,id,user)} follow={follow}> 
+                {follow ? "Unfollow" : "Follow"}
+                </Button>
+                }
             </Title>
             <Content>
                 <Posts>
