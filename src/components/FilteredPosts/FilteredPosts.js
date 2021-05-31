@@ -62,7 +62,7 @@ export default function FilteredPosts({url,newTitle}){
                 {
                 local===`/user/${id}` 
                 && 
-                <Button onClick={()=>toggleFollow(setFollow,follow,id,user,setLoading)} follow={follow} loading={loading} disabled={loading}> 
+                <Button onClick={()=>toggleFollow(setFollow,follow,id,user,setLoading)} follow={follow} disabled={loading}> 
                 {follow ? "Unfollow" : "Follow"}
                 </Button>
                 }

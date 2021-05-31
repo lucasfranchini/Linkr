@@ -64,6 +64,7 @@ color: ${props=>props.follow ? '#1877F2': '#fff'};
 border: none;
 padding: 7px 30px; 
 border-radius: 5px;
+cursor: ${props=>props.disabled ? 'not-allowed':'pointer'};
 `
 
 export {Button,Content,Posts,Title,Body}
