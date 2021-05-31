@@ -30,8 +30,7 @@ export default function FilteredPosts({url,newTitle}){
             const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}`,headers);
             const wish = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows',headers);
             wish.then(answer=>{
-                if(answer.data.users.find(follow=>follow.id===id) !== undefined )setFollow(true)
-
+                if(answer.data.users.find(follow=>follow.id===parseInt(id)) !== undefined )setFollow(true);
             });
             promise.then(answer=>{
                 setTitle(`${answer.data.user.username}'s posts`);
@@ -56,7 +55,7 @@ export default function FilteredPosts({url,newTitle}){
             {parseInt(id)===user.user.id && <Redirect to="/my-posts"/>}
             <Title>
                 <div>
-                    {local===`/user/${id}`&& <img src={pageUser.avatar}/>}
+                    {local===`/user/${id}`&& <img src={pageUser.avatar} alt="avatar do usuario"/>}
                     {title}
                 </div>
                 {
