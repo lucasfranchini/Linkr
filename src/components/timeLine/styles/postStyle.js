@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { IoLocationSharp } from "react-icons/io5";
 
 const RepostInfo = styled.div `
     width: 612px;
@@ -27,7 +28,6 @@ const RepostedByWho = styled.div`
     }
     strong {
         margin-left: 3px;
-
     }
 `;
 
@@ -254,6 +254,16 @@ const Form = styled.form`
         padding-right: 6px;
     }
 `;
+const Author =styled.div`
+    display: flex;
+    align-items: center;
+    a{
+        margin-right: 5px;
+    }
+`
+const IoLocation = styled(IoLocationSharp)`
+    cursor: pointer;
+`
 
 const RepostIcon = styled.svg`
     color: #FFFFFF;
@@ -265,4 +275,4 @@ const RepostIcon = styled.svg`
     margin-top: 10px;
 `;
 
-export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form, PageLink, RepostInfo, RepostIcon, RepostedByWho}
+export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form, PageLink, RepostInfo, RepostIcon, RepostedByWho, IoLocation, Author}
