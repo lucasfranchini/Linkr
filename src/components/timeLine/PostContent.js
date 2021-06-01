@@ -14,6 +14,7 @@ import ReactHashtag from 'react-hashtag';
 
 import Preview from "../Preview/Preview";
 import DeletePost from "../post/DeletePost";
+import OpenMap from '../OpenMap/OpenMap';
 
 export default function PostContent({props}) {
     const [preview,setPreview] = useState(false);
@@ -27,6 +28,7 @@ export default function PostContent({props}) {
     const [isLoading, setIsLoading] = useState(false);
     const [postText, setPostText] = useState(text);
     const [checker, setChecker] = useState(0);
+    const [toggleMap,setToggleMap] = useState(false);
     const buttonRef = useRef();
     const inputRef = useRef();
 
@@ -87,7 +89,7 @@ export default function PostContent({props}) {
             {user.id === myUser.user.id ? <DeletePost postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
             <Author>
                 <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
-                {geolocation !== undefined && <IoLocationSharp/>}
+                {geolocation !== undefined && <IoLocationSharp onClick={()=>setToggleMap(true)}/>}
             </Author>
             <>
             {isInEditMode ? (
@@ -117,6 +119,7 @@ export default function PostContent({props}) {
                 <SnippetImg src={linkImage} alt={linkTitle}></SnippetImg>
             </PostSnippet>
             <Preview preview={preview} link={link} setPreview={setPreview}/>
+            <OpenMap toggleMap={toggleMap} setToggleMap={setToggleMap}/>
         </Container>
     );
 }
