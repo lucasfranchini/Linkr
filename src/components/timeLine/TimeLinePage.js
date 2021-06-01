@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useContext, useEffect, useCallback } from "react";
 import UserContext from '../../contexts/UserContext';
 import PostContext from '../../contexts/PostContext';
+import useInterval from './functions/useInterval'
 
 import Post from "./Post";
 import PageTitle from "./PageTitle";
@@ -29,7 +30,7 @@ export default function TimeLinePage() {
                 setIsLoaded(1);
                 
             } else if (data.length === 0){
-                setIsLoaded(2)
+                setIsLoaded(2);
             }
         }) 
         request.catch((error)=>{
@@ -49,6 +50,8 @@ export default function TimeLinePage() {
         loadPosts()
     },[user.token, setPostsData,loadPosts])
     
+    useInterval(() => {loadPosts()}, 15000) 
+
     if(user){
         return (
             <Page >

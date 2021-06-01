@@ -69,7 +69,7 @@ export default function SignUpPage() {
                 <input onChange={(e)=>setPassword(e.target.value)} value={password} type="password" placeholder="password"></input>
                 <input onChange={(e)=>setUserName(e.target.value)} value={username} type="text" placeholder="username"></input>
                 <input onChange={(e)=>setPictureUrl(e.target.value)} value={pictureUrl} type="text" placeholder="picture url"></input>
-                <Button isloading={isLoading} type="submit">Sign Up</Button>
+                <Button isloading={isLoading} disabled={isLoading} type="submit">Sign Up</Button>
                 <Link to='/'><p>Switch back to log in</p></Link>
             </Form>
         </SignUpContainer>
