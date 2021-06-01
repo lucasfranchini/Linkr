@@ -30,6 +30,7 @@ const Container = styled.div`
     }
 `
 const PostCreator = styled.div`
+    width: 60px;
     display:flex;
     flex-direction:column;
     align-items: center;
@@ -43,6 +44,7 @@ const PostCreator = styled.div`
     svg {
         height: 20px;
         width: 20px;
+        cursor: pointer;
     }
     p {
         margin-top: 4px;

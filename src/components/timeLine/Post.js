@@ -17,7 +17,7 @@ import ReactTooltip from 'react-tooltip';
 import Preview from "../Preview/Preview";
 
 export default function Post(props) {
-    const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.post;
+    const {id, text, link, linkTitle, linkDescription, linkImage, user, likes, repostCount} = props.post;
     const reloadPosts = props.reloadPosts;
     const history = useHistory();
     const {user: myUser} = useContext(UserContext);
@@ -178,11 +178,12 @@ export default function Post(props) {
                         place="right"
                         effect="solid"
                         />
+                        {user.id !== myUser.user.id ? <RePost reloadPosts={reloadPosts} postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
+                        <p>{repostCount}<span> </span>Re-posts</p>
                     </PostCreator>
                     <PostContent>
                         {user.id === myUser.user.id ? <EditButton ref={buttonRef} onClick={() => changeEditMode(text)}><TiPencil /></EditButton> : () => {return(<></>)}}
                         {user.id === myUser.user.id ? <DeletePost postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
-                        {user.id !== myUser.user.id ? <RePost reloadPosts={reloadPosts} postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
                         <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
                         <>
                         {isInEditMode ? (

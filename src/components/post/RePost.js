@@ -70,15 +70,13 @@ export default function RePost({ postId, userToken, reloadPosts }) {
 }
 
 const RePostButton = styled.button`
-    position: absolute;
-    top: 5px;
-    right: 70px;
     color: #FFFFFF;
     font-size: 20px;
     background: none;
     border: none;
     padding: 0px;
     cursor: pointer;
+    margin-top: 10px;
 `;
 
 const DialogContent = styled.div`
