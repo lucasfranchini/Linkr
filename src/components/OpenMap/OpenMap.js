@@ -2,9 +2,9 @@ import ReactModal from 'react-modal';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import styled from 'styled-components';
 import { IoIosClose } from "react-icons/io";
+import { IoLocationSharp } from "react-icons/io5";
 
-export default function OpenMap({ toggleMap, setToggleMap,geolocation}) {
-    console.log(parseFloat(geolocation.latitude))
+export default function OpenMap({ toggleMap, setToggleMap,geolocation,name}) {
     const modalStyles = {
         overlay: {
             width: '100vw',
@@ -21,32 +21,38 @@ export default function OpenMap({ toggleMap, setToggleMap,geolocation}) {
             borderRadius: '20px',
             border: 'none',
             outline: 'none',
-            padding: '20px',
+            padding: '10px 20px',
         }
     };
     return (
-        <ReactModal isOpen={toggleMap} style={modalStyles}>
+        <ReactModal isOpen={toggleMap} style={modalStyles} ariaHideApp={false}>
             <LoadScript googleMapsApiKey="AIzaSyB5vTL7qMB8j1-3pIJttbjX_xfRgZkNcGI">
                 <Header>
-                    <IoIosClose onClick={()=>setToggleMap(false)}/>
+                    <span>{`${name}'s location`}</span>
+                    <IoIosClose onClick={()=>setToggleMap(false)}/>  
                 </Header>
                 <GoogleMap
                     mapContainerStyle={{
                         width: '100%',
-                        height: '90%'
+                        height: '80%'
                       }}
                     center={{
                         lat: parseFloat(geolocation.latitude),
                         lng: parseFloat(geolocation.longitude)
                       }}
-                    zoom={10}
-                >
-                </GoogleMap>
+                    zoom={15}
+                />
             </LoadScript>
         </ReactModal>
     );
 }
 
 const Header = styled.div`
-
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    font-size: 38px;
+    line-height: 56px;
+    font-family: oswald;
 `
