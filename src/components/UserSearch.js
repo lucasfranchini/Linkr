@@ -1,15 +1,26 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import UserContext from '../contexts/UserContext';
 import { AiOutlineSearch } from "react-icons/ai";
 import {DebounceInput} from 'react-debounce-input';
+import axios from "axios";
 
 export default function UserSearch({avatar}) {
     const [user, setUser] = useState("");
-
+    const {user: myUser} = useContext(UserContext);
 
     useEffect(()=>{
         if(user.length >= 3) {
             console.log("buscou: " + user);
+            const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/search", { 
+                headers: { 
+                    Authorization: `Bearer ${myUser.token}` 
+                } 
+            });
+
+            request.then((response) => {
+                console.log(response.data);
+            })
         }
     })
 
@@ -27,9 +38,9 @@ export default function UserSearch({avatar}) {
                     <AiOutlineSearch/>
                 </SearchBox>
             </Search>
-            <Result><img src={avatar}></img><h1>Lalala</h1><h2>• following</h2></Result>
-            <Result><img src={avatar}></img><h1>Lalala</h1></Result>
-            <Result><img src={avatar}></img><h1>Lalala</h1></Result>
+            <Result><img alt="" src={avatar}></img><h1>Lalala</h1><h2>• following</h2></Result>
+            <Result><img alt="" src={avatar}></img><h1>Lalala</h1></Result>
+            <Result><img alt="" src={avatar}></img><h1>Lalala</h1></Result>
         </SearchResults>
     )
 }
