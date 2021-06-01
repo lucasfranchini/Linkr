@@ -1,10 +1,14 @@
 import axios from "axios";
 import React, { useState, useContext, useEffect, useCallback} from "react";
 import { Link } from "react-router-dom";
+import styled from 'styled-components';
 
-import {PostCreator, Container} from './styles/postStyle';
+import RePost from "../post/RePost";
+import { ImLoop } from "react-icons/im";
+
+import {PostCreator, Container, RepostInfo} from './styles/postStyle';
 import {FaRegHeart,FaHeart} from 'react-icons/fa';
-import styled from 'styled-components'
+
 import UserContext from "../../contexts/UserContext";
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -15,7 +19,7 @@ import buildText from './functions/buildText';
 import PostContent from './PostContent';
 
 export default function Post(props) {
-    const {id, user, likes} = props.post;
+    const {id, user, likes, repostCount} = props.post;
     const {user: myUser} = useContext(UserContext);
     const [iLike, setILike] = useState(false);
     const [postLikes, setPostLikes] = useState(likes);
@@ -70,6 +74,19 @@ export default function Post(props) {
         });
     }
         return (
+            <RepostInfo>
+                {props.post.repostedBy === undefined ?
+                    (<></>) : 
+                    (<div>
+                        <ImLoop />
+                        <p>Re-posted by 
+                            <strong>{props.post.repostedBy.username === myUser.user.username ?
+                                ("you") :
+                                (`${props.post.repostedBy.username}`)}
+                            </strong>
+                        </p>
+                    </div>)
+                }
             <Container key={id.toString()}>
                 <div>
                     <PostCreator >
@@ -84,10 +101,13 @@ export default function Post(props) {
                                 </p>
                             </Tooltip>
                         </MuiThemeProvider>
+                        {user.id !== myUser.user.id ? <RePost postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
+                        <p>{repostCount}<span> </span>Re-posts</p>
                     </PostCreator>
                     <PostContent props ={props} />
                 </div>
             </Container>
+            </RepostInfo>
         );
 };
 const LikeButton = styled.div`
