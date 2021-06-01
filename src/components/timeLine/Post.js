@@ -6,9 +6,10 @@ import axios from "axios";
 import DeletePost from "../post/DeletePost";
 import RePost from "../post/RePost";
 
-import {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container, EditButton, Form, PageLink} from './styles/postStyle';
+import {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container, EditButton, Form, PageLink, RepostInfo} from './styles/postStyle';
 import {FaRegHeart,FaHeart} from 'react-icons/fa';
 import {TiPencil} from 'react-icons/ti';
+import { ImLoop } from "react-icons/im";
 import styled from 'styled-components'
 import ReactHashtag from 'react-hashtag';
 import UserContext from "../../contexts/UserContext";
@@ -18,7 +19,6 @@ import Preview from "../Preview/Preview";
 
 export default function Post(props) {
     const {id, text, link, linkTitle, linkDescription, linkImage, user, likes, repostCount} = props.post;
-    const reloadPosts = props.reloadPosts;
     const history = useHistory();
     const {user: myUser} = useContext(UserContext);
     const [iLike, setILike] = useState(false);
@@ -159,6 +159,8 @@ export default function Post(props) {
         })
     }
         return (
+            <RepostInfo>
+                {props.post.repostedBy === undefined ? (<></>) : (<div><ImLoop /><p>Re-posted by <strong>{props.post.repostedBy.username}</strong></p></div>)}
             <Container key={id.toString()}>
                 <div>
                     <PostCreator >
@@ -178,7 +180,7 @@ export default function Post(props) {
                         place="right"
                         effect="solid"
                         />
-                        {user.id !== myUser.user.id ? <RePost reloadPosts={reloadPosts} postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
+                        {user.id !== myUser.user.id ? <RePost postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
                         <p>{repostCount}<span> </span>Re-posts</p>
                     </PostCreator>
                     <PostContent>
@@ -216,6 +218,7 @@ export default function Post(props) {
                     </PostContent>
                 </div>
             </Container>
+            </RepostInfo>
         );
 };
 const LikeButton = styled.div`

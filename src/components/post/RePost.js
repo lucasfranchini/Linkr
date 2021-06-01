@@ -4,7 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import { ImLoop } from "react-icons/im";
 
-export default function RePost({ postId, userToken, reloadPosts }) {
+export default function RePost({ postId, userToken }) {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 

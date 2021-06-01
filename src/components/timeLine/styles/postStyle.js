@@ -1,12 +1,37 @@
 import styled from 'styled-components'
 
+const RepostInfo = styled.div `
+    width: 612px;
+    background: #1E1E1E;
+    margin-bottom: 16px;
+    border-radius: 16px 16px 16px 16px;
+    div:first-child {
+        display: flex;
+        align-items: center;
+        svg {
+            color: #FFFFFF;
+            margin-left: 13px;
+        }
+    }
+    p {
+        margin-top: 11px;
+        margin-left: 6px;
+        margin-bottom: 11px;
+        font-size: 11px;
+        line-height: 13px;
+        font-family: Lato;
+        font-weight: 400;
+        letter-spacing: 0em;
+        color:#FFF;
+    }
+`;
+
 const Container = styled.div`
     font-family: Lato;
     font-weight: 400;
     letter-spacing: 0em;
     color:#FFF;
     width: 612px;
-    margin-bottom: 16px;
     padding: 16px 20px 20px 18px;
     background: #171717;
     border-radius: 16px;
@@ -30,7 +55,6 @@ const Container = styled.div`
     }
 `
 const PostCreator = styled.div`
-    width: 60px;
     display:flex;
     flex-direction:column;
     align-items: center;
@@ -50,6 +74,7 @@ const PostCreator = styled.div`
         margin-top: 4px;
         font-size: 11px;
         line-height: 13px;
+        text-align: center;
     }
     @media(max-width: 611px) {
         img {
@@ -224,4 +249,4 @@ const Form = styled.form`
     }
 `;
 
-export {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container, EditButton, Form,PageLink}
+export {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container, EditButton, Form, PageLink, RepostInfo}
