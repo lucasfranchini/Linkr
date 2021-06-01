@@ -25,7 +25,7 @@ export default function OpenMap({ toggleMap, setToggleMap,geolocation,name}) {
     };
     return (
         <ReactModal isOpen={toggleMap} style={modalStyles} ariaHideApp={false}>
-            <LoadScript googleMapsApiKey="AIzaSyB5vTL7qMB8j1-3pIJttbjX_xfRgZkNcGI">
+            <LoadScript >
                 <Header>
                     <span>{`${name}'s location`}</span>
                     <Close onClick={()=>setToggleMap(false)}/>  
