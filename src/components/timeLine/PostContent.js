@@ -119,7 +119,7 @@ export default function PostContent({props}) {
                 <SnippetImg src={linkImage} alt={linkTitle}></SnippetImg>
             </PostSnippet>
             <Preview preview={preview} link={link} setPreview={setPreview}/>
-            <OpenMap toggleMap={toggleMap} setToggleMap={setToggleMap}/>
+            {geolocation !== undefined && <OpenMap toggleMap={toggleMap} setToggleMap={setToggleMap} geolocation={geolocation}/>}
         </Container>
     );
 }
