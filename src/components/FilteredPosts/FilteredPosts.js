@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router";
-import styled from "styled-components";
+import { Redirect, useLocation, useParams } from "react-router";
+import {Button,Content,Posts,Title,Body} from "./FilteredPostStyles";
 import PostContext from "../../contexts/PostContext";
 import UserContext from "../../contexts/UserContext";
 import Post from "../timeLine/Post";
 import TrendingTopics from "../timeLine/TrendingTopics";
+import toggleFollow from "./toggleFollow";
 
 export default function FilteredPosts({url,newTitle}){
     let local = useLocation().pathname;
@@ -13,7 +14,9 @@ export default function FilteredPosts({url,newTitle}){
     const {id,hashtag} = useParams();
     const [title,setTitle]=useState("");
     const { postsData, setPostsData } = useContext(PostContext);
-    
+    const [pageUser,setPageUser] = useState({});
+    const [follow,setFollow] =useState(false);  
+    const [loading,setLoading] = useState(false);
     
     useEffect(()=>{
         const headers = {headers:{Authorization: `Bearer ${user.token}`}}
@@ -26,12 +29,17 @@ export default function FilteredPosts({url,newTitle}){
         }
         else if(local===`/user/${id}`){
             const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}`,headers);
+            const wish = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows',headers);
+            wish.then(answer=>{
+                if(answer.data.users.find(follow=>follow.id===parseInt(id)) !== undefined )setFollow(true);
+            });
             promise.then(answer=>{
-                setTitle(`${answer.data.user.username}'s posts`)
+                setTitle(`${answer.data.user.username}'s posts`);
+                setPageUser(answer.data.user);
                 const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}/posts`,headers);
                 promise.then(answer=>{
                     setPostsData(answer.data.posts)
-                })
+                });
             });
         }
         else if(local===`/hashtag/${hashtag}`){
@@ -42,11 +50,22 @@ export default function FilteredPosts({url,newTitle}){
             })
         }
     },[local,id,hashtag,user.token,newTitle,setPostsData,url]);
-    
+
     return (
         <Body>
+            {parseInt(id)===user.user.id && <Redirect to="/my-posts"/>}
             <Title>
-                {title}
+                <div>
+                    {local===`/user/${id}`&& <img src={pageUser.avatar} alt="avatar do usuario"/>}
+                    {title}
+                </div>
+                {
+                local===`/user/${id}` 
+                && 
+                <Button onClick={()=>toggleFollow(setFollow,follow,id,user,setLoading)} follow={follow} disabled={loading}> 
+                {follow ? "Unfollow" : "Follow"}
+                </Button>
+                }
             </Title>
             <Content>
                 <Posts>
@@ -57,44 +76,3 @@ export default function FilteredPosts({url,newTitle}){
         </Body>
     );
 }
-const Body =  styled.div`
-    width: 940px;
-    margin: 125px auto;
-    @media(max-width:940px){
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-`
-const Title = styled.h1`
-    font-family: 'Oswald', sans-serif;
-    color: #fff;
-    font-size: 43px;
-    font-weight: 700;
-    line-height: 64px;
-    margin-bottom: 43px;
-    @media(max-width:940px){
-        width: 612px;
-    }
-    @media(max-width:612px){
-        width: 100%;
-        padding-left: 15px;
-    }
-`
-const Posts =  styled.div`
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-    justify-content:center;
-    
-`
-const Content = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    >div{
-        margin:0;    
-    }
-`
