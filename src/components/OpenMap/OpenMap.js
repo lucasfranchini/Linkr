@@ -2,7 +2,6 @@ import ReactModal from 'react-modal';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import styled from 'styled-components';
 import { IoIosClose } from "react-icons/io";
-import { IoLocationSharp } from "react-icons/io5";
 
 export default function OpenMap({ toggleMap, setToggleMap,geolocation,name}) {
     const modalStyles = {
