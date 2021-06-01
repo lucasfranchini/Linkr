@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useContext, useEffect, useCallback } from "react";
 import UserContext from '../../contexts/UserContext';
 import PostContext from '../../contexts/PostContext';
+import useInterval from './functions/useInterval';
 
 import Post from "./Post";
 import PageTitle from "./PageTitle";
@@ -21,34 +22,36 @@ export default function TimeLinePage() {
                 Authorization: `Bearer ${user.token}`
             }
         };
-        const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config)
+        const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config);
         request.then((response)=>{
             const data = response.data.posts;
-            setPostsData([...data])
+            setPostsData([...data]);
             if (data.length > 0){
                 setIsLoaded(1);
                 
             } else if (data.length === 0){
-                setIsLoaded(2)
+                setIsLoaded(2);
             }
         }) 
         request.catch((error)=>{
             if (error.response) {
-                setIsLoaded(3)
+                setIsLoaded(3);
             }
         })
-    },[setIsLoaded,setPostsData, user.token])
+    },[setIsLoaded,setPostsData, user.token]);
 
     useEffect(()=>{
         if(postsData!==null && postsData.find(p=>p.user.id!==user.user.id) === undefined){
             setIsLoaded(4)
         }
-    },[postsData,setIsLoaded,user.user.id])
+    },[postsData,setIsLoaded,user.user.id]);
 
     useEffect(()=>{
         loadPosts()
-    },[user.token, setPostsData,loadPosts])
+    },[user.token, setPostsData,loadPosts]);
     
+    useInterval(() => {loadPosts()}, 15000);
+
     if(user){
         return (
             <Page >

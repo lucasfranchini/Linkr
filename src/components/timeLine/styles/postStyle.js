@@ -94,7 +94,7 @@ const PostCreator = styled.div`
         }
     }
 `
-const PostContent = styled.div`
+const PostContentStyle = styled.div`
     position: relative;
     z-index: 2;
     width: 504px;
@@ -226,9 +226,9 @@ const EditButton = styled.button`
 `;
 
 const Form = styled.form`
-        margin:0 0 12px 0;
-        padding-right:2px;
-        width:100%;
+    margin:0 0 12px 0;
+    padding-right:2px;
+    width:100%;
     textarea {
         outline:none;
         width:100%;
@@ -249,4 +249,4 @@ const Form = styled.form`
     }
 `;
 
-export {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container, EditButton, Form, PageLink, RepostInfo}
+export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form, PageLink, RepostInfo}
