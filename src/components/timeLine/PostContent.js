@@ -14,6 +14,7 @@ import ReactHashtag from 'react-hashtag';
 import Preview from "../Preview/Preview";
 import DeletePost from "../post/DeletePost";
 import OpenMap from '../OpenMap/OpenMap';
+import VideoPlayer from "../post/VideoPlayer";
 
 export default function PostContent({props}) {
     const [preview,setPreview] = useState(false);
@@ -30,6 +31,15 @@ export default function PostContent({props}) {
     const [toggleMap,setToggleMap] = useState(false);
     const buttonRef = useRef();
     const inputRef = useRef();
+
+    function isVideo(link) {
+        let str = new RegExp('youtube.com/watch');
+        if (str.test(link)) {
+            return(true);
+        } else {
+            return(false);
+        }
+    }
 
     function goToUrl(tag) {
         const hashtag = tag.replace('#','');
@@ -103,7 +113,10 @@ export default function PostContent({props}) {
                 </p>
             }
             </>
-            <PostSnippet onClick={()=>setPreview(true)}>
+            {isVideo(link) ? (
+                <VideoPlayer link={link} />
+            ) : (
+                <PostSnippet onClick={()=>setPreview(true)}>
                 <SpinnetContent>
                     <span>
                         {linkTitle}
@@ -117,6 +130,7 @@ export default function PostContent({props}) {
                 </SpinnetContent>
                 <SnippetImg src={linkImage} alt={linkTitle}></SnippetImg>
             </PostSnippet>
+            )}
             <Preview preview={preview} link={link} setPreview={setPreview}/>
             {geolocation !== undefined && <OpenMap toggleMap={toggleMap} setToggleMap={setToggleMap} geolocation={geolocation} name={user.username}/>}
         </Container>

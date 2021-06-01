@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import PostContext from "../../contexts/PostContext";
 
 export default function TrendingTopics(props) {
     const history = useHistory();
     const [trendingTopics, setTrendingTopics] = useState([]);
     const token = props.user.token;
+    const { setPostsData } = useContext(PostContext);
     
 
     useEffect(() => {
@@ -19,6 +21,7 @@ export default function TrendingTopics(props) {
     }, [token]);
 
     function goToHashtag(hashtagName) {
+        setPostsData(null);
         history.push(`/hashtag/${hashtagName}`);
     }
 

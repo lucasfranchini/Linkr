@@ -1,13 +1,38 @@
 import styled from 'styled-components'
 import { IoLocationSharp } from "react-icons/io5";
 
+const RepostInfo = styled.div `
+    width: 612px;
+    background: #1E1E1E;
+    margin-bottom: 16px;
+    border-radius: 16px 16px 16px 16px;
+    div:first-child {
+        display: flex;
+        align-items: center;
+        svg {
+            color: #FFFFFF;
+            margin-left: 13px;
+        }
+    }
+    p {
+        margin-top: 11px;
+        margin-left: 6px;
+        margin-bottom: 11px;
+        font-size: 11px;
+        line-height: 13px;
+        font-family: Lato;
+        font-weight: 400;
+        letter-spacing: 0em;
+        color:#FFF;
+    }
+`;
+
 const Container = styled.div`
     font-family: Lato;
     font-weight: 400;
     letter-spacing: 0em;
     color:#FFF;
     width: 612px;
-    margin-bottom: 16px;
     padding: 16px 20px 20px 18px;
     background: #171717;
     border-radius: 16px;
@@ -44,11 +69,13 @@ const PostCreator = styled.div`
     svg {
         height: 20px;
         width: 20px;
+        cursor: pointer;
     }
     p {
         margin-top: 4px;
         font-size: 11px;
         line-height: 13px;
+        text-align: center;
     }
     @media(max-width: 611px) {
         img {
@@ -200,9 +227,9 @@ const EditButton = styled.button`
 `;
 
 const Form = styled.form`
-        margin:0 0 12px 0;
-        padding-right:2px;
-        width:100%;
+    margin:0 0 12px 0;
+    padding-right:2px;
+    width:100%;
     textarea {
         outline:none;
         width:100%;
@@ -233,4 +260,4 @@ const IoLocation = styled(IoLocationSharp)`
     cursor: pointer;
 `
 
-export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form,PageLink,Author,IoLocation}
+export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form,PageLink,Author,IoLocation,RepostInfo}
