@@ -1,37 +1,32 @@
 import styled from "styled-components";
 import ReactModal from 'react-modal';
 import axios from "axios";
-import { useState, useContext } from "react";
-import PostContext from '../../contexts/PostContext';
-import { IoMdTrash } from "react-icons/io";
+import { useState } from "react";
+import { ImLoop } from "react-icons/im";
 
-export default function DeletePost({ postId, userToken }) {
+export default function RePost({ postId, userToken, reloadPosts }) {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const { postsData, setPostsData } = useContext(PostContext);
 
-    function deletePost(postId, userToken) {
+    function rePost(postId, userToken) {
         setIsLoading(true);
         
-        const config = {
+        const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${postId}/share`, {}, {
             headers: {
                 Authorization: `Bearer ${userToken}`
             }
-        };
-        const request = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${postId}`, config);
+        });
 
         request.then((res) => {
-            let array = [...postsData];
-            let newPostsData = array.filter(e => e.id !== postId);
-            setIsOpen(false);
             setIsLoading(false);
-            setPostsData(newPostsData);
+            setIsOpen(false);
         })
 
         request.catch((error) => {
-            setIsOpen(false);
+            console.log(error.response.data);
             setIsLoading(false);
-            alert("Não foi possível excluir o post. Por favor, tente novamente.")
+            setIsOpen(false);
+            alert("Não foi possível repostar a publicação. Por favor, tente novamente.")
         })
     }
 
@@ -60,13 +55,13 @@ export default function DeletePost({ postId, userToken }) {
 
     return(
         <>
-            <DeleteButton onClick={() => setIsOpen(true)}><IoMdTrash /></DeleteButton>
+            <RePostButton onClick={() => setIsOpen(true)}><ImLoop /></RePostButton>
             <ReactModal isOpen={isOpen} style={modalStyles}>
                 <DialogContent>
-                    <Text>Tem certeza que deseja excluir essa publicação?</Text>
+                    <Text>Você deseja repostar essa publicação?</Text>
                     <Buttons>
-                        <CancelButton isloading={isLoading} disabled={isLoading} onClick={() => setIsOpen(false)}>Cancelar</CancelButton>
-                        <ConfirmButton isloading={isLoading} disabled={isLoading} onClick={() => deletePost(postId, userToken)}>Sim, excluir</ConfirmButton>
+                        <CancelButton isloading={isLoading} disabled={isLoading} onClick={() => setIsOpen(false)}>Não, cancelar</CancelButton>
+                        <ConfirmButton isloading={isLoading} disabled={isLoading} onClick={() => rePost(postId, userToken)}>Sim, repostar!</ConfirmButton>
                     </Buttons>
                 </DialogContent>
             </ReactModal>
@@ -74,10 +69,10 @@ export default function DeletePost({ postId, userToken }) {
     )
 }
 
-const DeleteButton = styled.button`
+const RePostButton = styled.button`
     position: absolute;
     top: 5px;
-    right: 5px;
+    right: 70px;
     color: #FFFFFF;
     font-size: 20px;
     background: none;

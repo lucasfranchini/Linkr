@@ -4,6 +4,7 @@ import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 
 import DeletePost from "../post/DeletePost";
+import RePost from "../post/RePost";
 
 import {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container, EditButton, Form, PageLink} from './styles/postStyle';
 import {FaRegHeart,FaHeart} from 'react-icons/fa';
@@ -17,6 +18,7 @@ import Preview from "../Preview/Preview";
 
 export default function Post(props) {
     const {id, text, link, linkTitle, linkDescription, linkImage, user, likes} = props.post;
+    const reloadPosts = props.reloadPosts;
     const history = useHistory();
     const {user: myUser} = useContext(UserContext);
     const [iLike, setILike] = useState(false);
@@ -180,6 +182,7 @@ export default function Post(props) {
                     <PostContent>
                         {user.id === myUser.user.id ? <EditButton ref={buttonRef} onClick={() => changeEditMode(text)}><TiPencil /></EditButton> : () => {return(<></>)}}
                         {user.id === myUser.user.id ? <DeletePost postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
+                        {user.id !== myUser.user.id ? <RePost reloadPosts={reloadPosts} postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
                         <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
                         <>
                         {isInEditMode ? (
