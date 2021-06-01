@@ -72,20 +72,20 @@ export default function Post(props) {
             verifyLike(response.data.post.likes);
         });
     }
-    return (
-        <RepostInfo>
-            {props.post.repostedBy === undefined ?
-                (<></>) :
-                (<div>
-                    <Loop />
-                    <p>Re-posted by
+        return (
+            <RepostInfo>
+                {props.post.repostedBy === undefined ?
+                    (<></>) :
+                    (<div>
+                        <Loop />
+                        <p>Re-posted by 
                             <strong>{props.post.repostedBy.username === myUser.user.username ?
-                            ("you") :
-                            (`${props.post.repostedBy.username}`)}
-                        </strong>
-                    </p>
-                </div>)
-            }
+                                ("you") : 
+                                (`${props.post.repostedBy.username}`)}
+                            </strong>
+                        </p>
+                    </div>)
+                }
             <Container key={id.toString()}>
                 <div>
                     <PostCreator >
