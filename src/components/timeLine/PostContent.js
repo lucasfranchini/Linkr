@@ -4,7 +4,7 @@ import {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, EditButton, F
 
 import {Link, useHistory} from 'react-router-dom';
 
-import React, { useState, useContext, useRef, useEffect, useCallback} from "react";
+import React, { useState, useContext, useRef, useEffect} from "react";
 import UserContext from "../../contexts/UserContext";
 import PostContext from '../../contexts/PostContext';
 
