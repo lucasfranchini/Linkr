@@ -122,7 +122,9 @@ const Form = styled.form`
         background: #EFEFEF;
         border: none;
         border-radius: 5px;
-        color: #949494;
+        ::placeholder {
+            color: #949494;
+        }
         font-family: Lato;
         font-weight: 300;
     }
