@@ -51,7 +51,7 @@ export default function LogInPage() {
         <Form onSubmit={login}>
             <input onChange={(e)=>setEmail(e.target.value)} value={email} type="text" placeholder="e-mail" ></input>
             <input onChange={(e)=>setPassword(e.target.value)} value={password} type="password" placeholder="password"></input>
-            <Button isloading={isLoading} type="submit">Log In</Button>
+            <Button isloading={isLoading} disabled={isLoading} type="submit">Log In</Button>
             <Link to='/signup'><p>First time? Create an account!</p></Link>
         </Form>
     </Container>

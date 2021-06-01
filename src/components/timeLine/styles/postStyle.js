@@ -1,4 +1,36 @@
 import styled from 'styled-components'
+import { IoLocationSharp } from "react-icons/io5";
+import { ImLoop } from "react-icons/im";
+
+const RepostInfo = styled.div `
+    width: 612px;
+    background: #1E1E1E;
+    margin-bottom: 16px;
+    border-radius: 16px 16px 16px 16px;
+    div:first-child {
+        display: flex;
+        align-items: center;
+    }
+    p {
+        margin-top: 11px;
+        margin-left: 6px;
+        margin-bottom: 11px;
+        font-size: 11px;
+        line-height: 13px;
+        font-family: Lato;
+        font-weight: 400;
+        letter-spacing: 0em;
+        color:#FFF;
+    }
+    @media(max-width:612px){
+        width: 100%;
+    }
+`;
+const Loop =styled(ImLoop)`
+    color: #FFFFFF;
+    margin-left: 13px;
+
+`
 
 const Container = styled.div`
     font-family: Lato;
@@ -6,7 +38,6 @@ const Container = styled.div`
     letter-spacing: 0em;
     color:#FFF;
     width: 612px;
-    margin-bottom: 16px;
     padding: 16px 20px 20px 18px;
     background: #171717;
     border-radius: 16px;
@@ -43,11 +74,13 @@ const PostCreator = styled.div`
     svg {
         height: 20px;
         width: 20px;
+        cursor: pointer;
     }
     p {
         margin-top: 4px;
         font-size: 11px;
         line-height: 13px;
+        text-align: center;
     }
     @media(max-width: 611px) {
         img {
@@ -67,7 +100,7 @@ const PostCreator = styled.div`
         }
     }
 `
-const PostContent = styled.div`
+const PostContentStyle = styled.div`
     position: relative;
     z-index: 2;
     width: 504px;
@@ -118,6 +151,9 @@ const PostSnippet = styled.div`
     display:flex;
     align-items: center;
     justify-content:space-between;
+    &:hover{
+        cursor: pointer;
+    }
     @media(max-width: 611px) {
         width: 100%;
         padding:0;
@@ -133,10 +169,10 @@ const SpinnetContent = styled.article`
     flex-direction:column;
     align-items:flex-start;
     justify-content:space-between;
+    font-size: 16px;
     span{
         text-align: left;
         margin-left:0;
-        font-size: 16px;
         line-height: 19px;
         color: #CECECE;
     }
@@ -146,12 +182,7 @@ const SpinnetContent = styled.article`
         color: #9B9595;
         margin:6px 0 14px;
     }
-    a{
-        font-size: 11px;
-        line-height: 13px;
-        margin:0;
-        color: #CECECE;
-    }
+    
     @media(max-width: 611px) {
         margin:0;
         padding:7px 11px 8px 12px;
@@ -165,11 +196,14 @@ const SpinnetContent = styled.article`
             line-height: 11px;
             margin:6px 0 14px;
         }
-        a{
+    }
+`
+const PageLink = styled.span`
+    font-size: 11px; 
+    @media(max-width: 611px) {
             font-size: 9px;
             line-height: 11px;
             margin:0;
-        }
     }
 `
 const SnippetImg = styled.img`
@@ -198,9 +232,9 @@ const EditButton = styled.button`
 `;
 
 const Form = styled.form`
-        margin:0 0 12px 0;
-        padding-right:2px;
-        width:100%;
+    margin:0 0 12px 0;
+    padding-right:2px;
+    width:100%;
     textarea {
         outline:none;
         width:100%;
@@ -220,5 +254,15 @@ const Form = styled.form`
         padding-right: 6px;
     }
 `;
+const Author =styled.div`
+    display: flex;
+    align-items: center;
+    a{
+        margin-right: 5px;
+    }
+`
+const IoLocation = styled(IoLocationSharp)`
+    cursor: pointer;
+`
 
-export {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container, EditButton, Form}
+export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form,PageLink,Author,IoLocation,RepostInfo,Loop}
