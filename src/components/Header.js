@@ -4,6 +4,7 @@ import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 import { IoIosArrowDown,IoIosArrowUp } from "react-icons/io";
 import { Link } from "react-router-dom";
+import UserSearch from "./UserSearch";
 
 export default function Header(){
     const local = useLocation().pathname;
@@ -24,6 +25,7 @@ export default function Header(){
     return (
         <Body >
             <Title><Link to="/timeline">Linkr</Link></Title>
+            <UserSearch />
             <Menu onClick={toggleMenu} onBlur={closeMenu}>
                 {openMenu ? <IoIosArrowUp/>:<IoIosArrowDown/>}
                 <img src={user.user.avatar} alt="user"/>
@@ -46,7 +48,7 @@ const Body = styled.div`
     height: 72px;
     padding: 0 17px 0 28px;
     background-color: #151515;
-    position:fixed;
+    position:fixed relative;
     top: 0;
     left: 0;
     display: flex;
