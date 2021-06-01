@@ -257,6 +257,9 @@ const Form = styled.form`
 const Author =styled.div`
     display: flex;
     align-items: center;
+    svg {
+        margin-bottom: 5px;
+    }
     a{
         margin-right: 5px;
     }

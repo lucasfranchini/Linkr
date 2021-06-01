@@ -103,9 +103,9 @@ export default function Post(props) {
                             </MuiThemeProvider>
                             {user.id !== myUser.user.id ? 
                                 <RePost postId={id} userToken={myUser.token} /> :
-                                    <RepostIcon>
-                                        <ImLoop/>
-                                    </RepostIcon>
+                                <RepostIcon>
+                                    <ImLoop/>
+                                </RepostIcon>
                             }
                             <p>{repostCount}<span> </span>Re-posts</p>
                         </PostCreator>
