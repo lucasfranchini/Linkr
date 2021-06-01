@@ -1,14 +1,14 @@
-import GlobalStyle from '../styles/globalStyles'
-import LogInPage from "./sign/LogInPage"
-import SignUpPage from "./sign/SignUpPage"
+import GlobalStyle from '../styles/globalStyles';
+import LogInPage from "./sign/LogInPage";
+import SignUpPage from "./sign/SignUpPage";
 import FilteredPosts from "./FilteredPosts/FilteredPosts";
-import TimeLinePage from "./timeLine/TimeLinePage"
-import Header from './Header'
+import TimeLinePage from "./timeLine/TimeLinePage";
+import Header from './Header';
 
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useState } from "react";
-import UserContext from '../contexts/UserContext'
-import PostContext from '../contexts/PostContext'
+import UserContext from '../contexts/UserContext';
+import PostContext from '../contexts/PostContext';
 
 export default function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));

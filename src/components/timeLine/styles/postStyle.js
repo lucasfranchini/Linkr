@@ -67,7 +67,7 @@ const PostCreator = styled.div`
         }
     }
 `
-const PostContent = styled.div`
+const PostContentStyle = styled.div`
     position: relative;
     z-index: 2;
     width: 504px;
@@ -222,4 +222,4 @@ const Form = styled.form`
     }
 `;
 
-export {SnippetImg, SpinnetContent, PostSnippet, PostContent, PostCreator, Container, EditButton, Form,PageLink}
+export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form,PageLink}
