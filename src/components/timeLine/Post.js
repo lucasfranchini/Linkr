@@ -76,7 +76,7 @@ export default function Post(props) {
         return (
             <RepostInfo>
                 {props.post.repostedBy === undefined ?
-                    (<></>) : 
+                    (<></>) :
                     (<div>
                         <ImLoop />
                         <p>Re-posted by 
