@@ -81,7 +81,7 @@ export default function Post(props) {
                         <ImLoop />
                         <p>Re-posted by 
                             <strong>{props.post.repostedBy.username === myUser.user.username ?
-                                ("you") :
+                                ("you") : 
                                 (`${props.post.repostedBy.username}`)}
                             </strong>
                         </p>
