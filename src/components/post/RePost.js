@@ -23,7 +23,6 @@ export default function RePost({ postId, userToken }) {
         })
 
         request.catch((error) => {
-            console.log(error.response.data);
             setIsLoading(false);
             setIsOpen(false);
             alert("Não foi possível repostar a publicação. Por favor, tente novamente.")

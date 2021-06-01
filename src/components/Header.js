@@ -25,7 +25,7 @@ export default function Header(){
     return (
         <Body >
             <Title><Link to="/timeline">Linkr</Link></Title>
-            <UserSearch />
+            <UserSearch avatar={user.user.avatar} />
             <Menu onClick={toggleMenu} onBlur={closeMenu}>
                 {openMenu ? <IoIosArrowUp/>:<IoIosArrowDown/>}
                 <img src={user.user.avatar} alt="user"/>

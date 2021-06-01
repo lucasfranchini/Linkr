@@ -1,21 +1,35 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
+import {DebounceInput} from 'react-debounce-input';
 
-export default function UserSearch() {
+export default function UserSearch({avatar}) {
     const [user, setUser] = useState("");
+
+
+    useEffect(()=>{
+        if(user.length >= 3) {
+            console.log("buscou: " + user);
+        }
+    })
 
     return(
         <SearchResults>
             <Search>
                 <SearchBox>
-                    <input placeholder="Search for people and friends"></input>
+                    <DebounceInput
+                        minLength={3}
+                        debounceTimeout={300}
+                        onChange={(e)=> {setUser(e.target.value)}}
+                        placeholder="Search for people and friends"
+                        value={user}
+                    ></DebounceInput>
                     <AiOutlineSearch/>
                 </SearchBox>
             </Search>
-            <Result><h1>Lalala</h1><h2>- following</h2></Result>
-            <Result><h1>Lalala</h1></Result>
-            <Result><h1>Lalala</h1></Result>
+            <Result><img src={avatar}></img><h1>Lalala</h1><h2>• following</h2></Result>
+            <Result><img src={avatar}></img><h1>Lalala</h1></Result>
+            <Result><img src={avatar}></img><h1>Lalala</h1></Result>
         </SearchResults>
     )
 }
@@ -40,7 +54,7 @@ const Search = styled.div`
     padding-bottom: 12px;
     border-radius: 8px;
     input {
-        width: 244px;
+        width: 500px;
         height: 23px;
         color: #000000;
         font-family: Lato;
@@ -52,6 +66,9 @@ const Search = styled.div`
         ::placeholder {
             color: #C6C6C6;
         }
+    }
+    input:focus {
+        outline: none !important;
     }
     svg {
         font-size: 21px;
@@ -68,6 +85,7 @@ const SearchBox = styled.div`
 
 const Result = styled.div`
     display: flex;
+    align-items: center;
     margin-left: 17px;
     margin-top: 8px;
     margin-bottom: 8px;
@@ -79,8 +97,15 @@ const Result = styled.div`
     }
     h1 {
         color: #515151;
+        margin-left: 12px;
+        margin-right: 8px;
     }
     h2 {
         color: #C5C5C5;
+    }
+    img {
+        width: 39px;
+        height: 39px;
+        border-radius: 20px;
     }
 `;
