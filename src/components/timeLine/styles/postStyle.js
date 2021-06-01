@@ -5,15 +5,16 @@ const RepostInfo = styled.div `
     background: #1E1E1E;
     margin-bottom: 16px;
     border-radius: 16px 16px 16px 16px;
-    div:first-child {
-        display: flex;
-        align-items: center;
-        svg {
-            color: #FFFFFF;
-            margin-left: 13px;
-        }
+`;
+
+const RepostedByWho = styled.div`
+    display: flex;
+    align-items: center;
+    svg {
+        color: #FFFFFF;
+        margin-left: 13px;
     }
-    p {
+    h3 {
         margin-top: 11px;
         margin-left: 6px;
         margin-bottom: 11px;
@@ -23,6 +24,10 @@ const RepostInfo = styled.div `
         font-weight: 400;
         letter-spacing: 0em;
         color:#FFF;
+    }
+    strong {
+        margin-left: 3px;
+
     }
 `;
 
@@ -55,6 +60,7 @@ const Container = styled.div`
     }
 `
 const PostCreator = styled.div`
+    width: 60px;
     display:flex;
     flex-direction:column;
     align-items: center;
@@ -249,4 +255,14 @@ const Form = styled.form`
     }
 `;
 
-export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form, PageLink, RepostInfo}
+const RepostIcon = styled.svg`
+    color: #FFFFFF;
+    font-size: 20px;
+    background: none;
+    border: none;
+    padding: 0px;
+    cursor: pointer;
+    margin-top: 10px;
+`;
+
+export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form, PageLink, RepostInfo, RepostIcon, RepostedByWho}
