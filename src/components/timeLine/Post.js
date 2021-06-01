@@ -75,7 +75,18 @@ export default function Post(props) {
     }
         return (
             <RepostInfo>
-                {props.post.repostedBy === undefined ? (<></>) : (<div><ImLoop /><p>Re-posted by <strong>{props.post.repostedBy.username === myUser.user.username ? ("you") : (`${props.post.repostedBy.username}`)}</strong></p></div>)}
+                {props.post.repostedBy === undefined ?
+                    (<></>) : 
+                    (<div>
+                        <ImLoop />
+                        <p>Re-posted by 
+                            <strong>{props.post.repostedBy.username === myUser.user.username ?
+                                ("you") :
+                                (`${props.post.repostedBy.username}`)}
+                            </strong>
+                        </p>
+                    </div>)
+                }
             <Container key={id.toString()}>
                 <div>
                     <PostCreator >

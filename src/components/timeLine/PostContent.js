@@ -39,8 +39,6 @@ export default function PostContent({props}) {
         }
     }
 
-    isVideo(link);
-
     function goToUrl(tag) {
         const hashtag = tag.replace('#','');
         history.push(`/hashtag/${hashtag}`);
