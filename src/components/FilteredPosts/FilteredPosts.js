@@ -17,7 +17,7 @@ export default function FilteredPosts({url,newTitle}){
     const [pageUser,setPageUser] = useState({});
     const [follow,setFollow] =useState(false);  
     const [loading,setLoading] = useState(false);
-    
+    window.scrollTo(0,0);
     useEffect(()=>{
         const headers = {headers:{Authorization: `Bearer ${user.token}`}}
         if(local==="/my-posts" || local==="/my-likes"){

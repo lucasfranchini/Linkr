@@ -53,11 +53,17 @@ export default function CreatePost({reloadPosts}) {
                     placeholder="Muito irado esse link falando de #javascript"
                     disabled={isLoading ? (true) : (false)}
                 ></textarea>
-                <Button
-                    isloading={isLoading}
-                    type="submit"
-                    disabled={isLoading ? (true) : (false)}
-                >{isLoading ? "Publishing" : "Publicar"}</Button>
+                <Buttons>
+                    <Geolocation></Geolocation>
+                    <Button
+                        isloading={isLoading}
+                        type="submit"
+                        disabled={isLoading ? (true) : (false)}
+                    >
+                        {isLoading ? "Publishing" : "Publicar"}
+                    </Button>
+                </Buttons>
+                
             </Form>
         </Conteiner>
     );
@@ -158,3 +164,12 @@ const Button = styled.button`
         background-color:#18a9f2;
     }
 `;
+const Buttons = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`
+const Geolocation = styled.button`
+
+`
