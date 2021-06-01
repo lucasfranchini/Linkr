@@ -75,7 +75,7 @@ export default function Post(props) {
     }
         return (
             <RepostInfo>
-                {props.post.repostedBy === undefined ? (<></>) : (<div><ImLoop /><p>Re-posted by <strong>{props.post.repostedBy.username}</strong></p></div>)}
+                {props.post.repostedBy === undefined ? (<></>) : (<div><ImLoop /><p>Re-posted by <strong>{props.post.repostedBy.username === myUser.user.username ? ("you") : (`${props.post.repostedBy.username}`)}</strong></p></div>)}
             <Container key={id.toString()}>
                 <div>
                     <PostCreator >
@@ -83,8 +83,6 @@ export default function Post(props) {
                         <LikeButton checked={iLike} onClick={()=>toggleLike(id)}>
                             {iLike ? <FaHeart /> :<FaRegHeart/>}
                         </LikeButton>
-                        {user.id !== myUser.user.id ? <RePost postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
-                        <p>{repostCount}<span> </span>Re-posts</p>
                         <MuiThemeProvider theme={ToolTipComponent}>
                             <Tooltip title={toolTipText} arrow={true} enterTouchDelay={200}>
                                 <p>
@@ -92,6 +90,8 @@ export default function Post(props) {
                                 </p>
                             </Tooltip>
                         </MuiThemeProvider>
+                        {user.id !== myUser.user.id ? <RePost postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
+                        <p>{repostCount}<span> </span>Re-posts</p>
                     </PostCreator>
                     <PostContent props ={props} />
                 </div>
