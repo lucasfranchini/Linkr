@@ -12,8 +12,10 @@ import styled from 'styled-components'
 import ReactHashtag from 'react-hashtag';
 import UserContext from "../../contexts/UserContext";
 
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import {ToolTipComponent} from './styles/ToolTipComponent';
 import Tooltip from '@material-ui/core/Tooltip';
+import buildText from './functions/buildText';
 
 import Preview from "../Preview/Preview";
 
@@ -23,51 +25,24 @@ export default function Post(props) {
     const {user: myUser} = useContext(UserContext);
     const [iLike, setILike] = useState(false);
     const [postLikes, setPostLikes] = useState(likes);
-    const [toolTipText, setToolTipText] = useState('this post is not liked yet')
+    const [toolTipText, setToolTipText] = useState('this post is not liked yet');
     const { postsData, setPostsData } = useContext(PostContext);
     const [isInEditMode, setIsInEditMode] = useState(false);
     const [newPostText, setNewPostText] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [postText, setPostText] = useState(text);
     const [checker, setChecker] = useState(0);
-    const [preview,setPreview] = useState(false)
+    const [preview,setPreview] = useState(false);
     const buttonRef = useRef();
     const inputRef = useRef();
-    useEffect(()=>{
-        setPostLikes(likes)
-    },[likes,setPostLikes])
 
-    const createTipText = useCallback((list) => {
-        const userList = []
-        let filteredList = []
-        let text = "";
-        if (list && list.length !== 0){
-            list.forEach((u)=> {
-                if(u.userId === myUser.user.id){
-                    userList.push('You')
-                }else{
-                    userList.push(u['user.username']||u.username)
-                }
-            })
-            filteredList = userList.filter((u)=> u !== 'You');
-        }
-        if (userList.length === 0){
-            text = 'Do you like this post?' 
-        } else if (userList.length === 1 && !userList.includes('You')){
-            text = `${filteredList[0]}`
-        } else if (userList.length === 2 && !userList.includes('You')){
-            text = `${filteredList[0]} and ${filteredList[1]}`
-        } else if (userList.length > 2 && !userList.includes('You')){
-            text = `${filteredList[0]}, ${filteredList[1]} and other ${userList.length-2} people`
-        } else if (userList.length === 1 && userList.includes('You')){
-            text = `You`
-        } else if (userList.length === 2 && userList.includes('You')){
-            text = `You and ${filteredList[0]}`
-        } else if (userList.length > 2 && userList.includes('You')){
-            text = `You, ${filteredList[0]} and other ${userList.length-2} people`
-        }
-        setToolTipText(text);
-    },[setToolTipText,myUser.user.id])
+    useEffect(()=>{
+        setPostLikes(likes);
+    },[likes,setPostLikes]);
+
+    const createToolTipText = useCallback((list) => {
+        setToolTipText(buildText(list,myUser));
+    },[setToolTipText,myUser]);
 
     const verifyLike = useCallback((list) => { 
         let c=0;
@@ -86,19 +61,19 @@ export default function Post(props) {
                 setILike(false);
             }
         }
-    }, [setILike,myUser.user.id])
+    }, [setILike,myUser.user.id]);
 
     useEffect(()=>{
         if (isInEditMode) {
             inputRef.current.focus();
           }
-        createTipText(postLikes)
-        verifyLike(postLikes)
-    },[verifyLike,postLikes,createTipText,isInEditMode,postsData])
+        createToolTipText(postLikes);
+        verifyLike(postLikes);
+    },[verifyLike,postLikes,createToolTipText,isInEditMode,postsData]);
     
     function goToUrl(tag) {
-        const hashtag = tag.replace('#','')
-        history.push(`/hashtag/${hashtag}`)
+        const hashtag = tag.replace('#','');
+        history.push(`/hashtag/${hashtag}`);
     }
 
     function changeEditMode(text) {
@@ -152,11 +127,11 @@ export default function Post(props) {
                 Authorization: `Bearer ${myUser.token}`
             }
         };
-        const request = axios.post(url,{}, config)
+        const request = axios.post(url,{}, config);
         request.then((response)=>{
-            setPostLikes(response.data.post.likes)
-            verifyLike(response.data.post.likes)
-        })
+            setPostLikes(response.data.post.likes);
+            verifyLike(response.data.post.likes);
+        });
     }
         return (
             <Container key={id.toString()}>
@@ -214,25 +189,3 @@ export default function Post(props) {
 const LikeButton = styled.div`
     color: ${(props)=>(props.checked ? '#AC0000' : '#FFFFFF' )};
 `
-const ToolTipComponent = createMuiTheme({
-    overrides: {
-        MuiTooltip: {
-            arrow: {
-                "&:before": {
-                  border: "none"
-                },
-                color: 'rgba(255, 255, 255, 0.9)'
-              },
-          tooltip: {
-            fontFamily: 'Lato',
-            fontSize: '11px',
-            fontWeight: 700,
-            lineHeight: '13px',
-            letterSpacing: '0em',
-            color: "#505050",
-            backgroundColor: "rgba(255, 255, 255, 0.9)",
-            borderRadius: '3px',
-          }
-        }
-      },
-  });
