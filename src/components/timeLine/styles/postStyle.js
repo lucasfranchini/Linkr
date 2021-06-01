@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { IoLocationSharp } from "react-icons/io5";
 
 const Container = styled.div`
     font-family: Lato;
@@ -228,5 +229,8 @@ const Author =styled.div`
         margin-right: 5px;
     }
 `
+const IoLocation = styled(IoLocationSharp)`
+    cursor: pointer;
+`
 
-export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form,PageLink,Author}
+export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form,PageLink,Author,IoLocation}

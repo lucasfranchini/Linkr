@@ -1,6 +1,6 @@
 import axios from 'axios';
 import styled from 'styled-components';
-import {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, EditButton, Form, PageLink, Author} from './styles/postStyle';
+import {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, EditButton, Form, PageLink, Author,IoLocation} from './styles/postStyle';
 
 import {Link, useHistory} from 'react-router-dom';
 
@@ -9,7 +9,6 @@ import UserContext from "../../contexts/UserContext";
 import PostContext from '../../contexts/PostContext';
 
 import {TiPencil} from 'react-icons/ti';
-import { IoLocationSharp } from "react-icons/io5";
 import ReactHashtag from 'react-hashtag';
 
 import Preview from "../Preview/Preview";
@@ -89,7 +88,7 @@ export default function PostContent({props}) {
             {user.id === myUser.user.id ? <DeletePost postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
             <Author>
                 <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
-                {geolocation !== undefined && <IoLocationSharp onClick={()=>setToggleMap(true)}/>}
+                {geolocation !== undefined && <IoLocation onClick={()=>setToggleMap(true)}/>}
             </Author>
             <>
             {isInEditMode ? (

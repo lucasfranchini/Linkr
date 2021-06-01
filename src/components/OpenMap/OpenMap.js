@@ -29,7 +29,7 @@ export default function OpenMap({ toggleMap, setToggleMap,geolocation,name}) {
             <LoadScript googleMapsApiKey="AIzaSyB5vTL7qMB8j1-3pIJttbjX_xfRgZkNcGI">
                 <Header>
                     <span>{`${name}'s location`}</span>
-                    <IoIosClose onClick={()=>setToggleMap(false)}/>  
+                    <Close onClick={()=>setToggleMap(false)}/>  
                 </Header>
                 <GoogleMap
                     mapContainerStyle={{
@@ -55,4 +55,7 @@ const Header = styled.div`
     font-size: 38px;
     line-height: 56px;
     font-family: oswald;
+`
+const Close = styled(IoIosClose)`
+    cursor: pointer;
 `
