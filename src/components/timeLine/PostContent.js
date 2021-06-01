@@ -1,6 +1,6 @@
 import axios from 'axios';
 import styled from 'styled-components';
-import {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, EditButton, Form, PageLink} from './styles/postStyle';
+import {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, EditButton, Form, PageLink, Author} from './styles/postStyle';
 
 import {Link, useHistory} from 'react-router-dom';
 
@@ -9,6 +9,7 @@ import UserContext from "../../contexts/UserContext";
 import PostContext from '../../contexts/PostContext';
 
 import {TiPencil} from 'react-icons/ti';
+import { IoLocationSharp } from "react-icons/io5";
 import ReactHashtag from 'react-hashtag';
 
 import Preview from "../Preview/Preview";
@@ -17,7 +18,7 @@ import DeletePost from "../post/DeletePost";
 export default function PostContent({props}) {
     const [preview,setPreview] = useState(false);
     const {user: myUser} = useContext(UserContext);
-    const {id, text, link, linkTitle, linkDescription, linkImage, user} = props.post;
+    const {id, text, link, linkTitle, linkDescription, linkImage, user,geolocation} = props.post;
     const history = useHistory();
 
     const { postsData, setPostsData } = useContext(PostContext);
@@ -79,13 +80,15 @@ export default function PostContent({props}) {
                 alert("Algo deu errado! Tente novamente.");
             })
         }
-    }    
-
+    }
     return (
         <Container>
             {user.id === myUser.user.id ? <EditButton ref={buttonRef} onClick={() => changeEditMode(text)}><TiPencil /></EditButton> : () => {return(<></>)}}
             {user.id === myUser.user.id ? <DeletePost postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
-            <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
+            <Author>
+                <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
+                {geolocation !== undefined && <IoLocationSharp/>}
+            </Author>
             <>
             {isInEditMode ? (
                 <Form onKeyDown={(e) => editPost(e, text)}>

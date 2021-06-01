@@ -221,5 +221,12 @@ const Form = styled.form`
         padding-right: 6px;
     }
 `;
+const Author =styled.div`
+    display: flex;
+    align-items: center;
+    a{
+        margin-right: 5px;
+    }
+`
 
-export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form,PageLink}
+export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form,PageLink,Author}
