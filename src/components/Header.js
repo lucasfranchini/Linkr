@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { useLocation } from "react-router";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
+import PostContext from "../contexts/PostContext";
 import { IoIosArrowDown,IoIosArrowUp } from "react-icons/io";
 import { Link } from "react-router-dom";
 import UserSearch from "./UserSearch";
@@ -9,6 +10,7 @@ import UserSearch from "./UserSearch";
 export default function Header(){
     const local = useLocation().pathname;
     const {user, setUser} = useContext(UserContext);
+    const {setPostsData} = useContext(PostContext);
     const [openMenu,setOpenMenu] = useState(false);
 
     function toggleMenu(e){
@@ -33,8 +35,14 @@ export default function Header(){
                     openMenu 
                     && 
                     <Links>
-                        <Link to="/my-posts" onClick={toggleMenu}>My posts</Link>
-                        <Link to="/my-likes" onClick={toggleMenu}>My likes</Link>
+                        <Link to="/my-posts" onClick={()=>{
+                            toggleMenu();
+                            setPostsData(null);
+                        }}>My posts</Link>
+                        <Link to="/my-likes" onClick={()=>{
+                            toggleMenu();
+                            setPostsData(null);
+                        }}>My likes</Link>
                         <Link to="/" onClick={()=>{localStorage.clear();setUser(null)}}>logout</Link>
                     </Links>
                 }
