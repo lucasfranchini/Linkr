@@ -1,6 +1,6 @@
 import axios from 'axios';
 import styled from 'styled-components';
-import {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, EditButton, Form, PageLink} from './styles/postStyle';
+import {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, EditButton, Form, PageLink, Author,IoLocation} from './styles/postStyle';
 
 import {Link, useHistory} from 'react-router-dom';
 
@@ -13,11 +13,13 @@ import ReactHashtag from 'react-hashtag';
 
 import Preview from "../Preview/Preview";
 import DeletePost from "../post/DeletePost";
+import OpenMap from '../OpenMap/OpenMap';
+import VideoPlayer from "../post/VideoPlayer";
 
 export default function PostContent({props}) {
     const [preview,setPreview] = useState(false);
     const {user: myUser} = useContext(UserContext);
-    const {id, text, link, linkTitle, linkDescription, linkImage, user} = props.post;
+    const {id, text, link, linkTitle, linkDescription, linkImage, user,geolocation} = props.post;
     const history = useHistory();
 
     const { postsData, setPostsData } = useContext(PostContext);
@@ -26,8 +28,18 @@ export default function PostContent({props}) {
     const [isLoading, setIsLoading] = useState(false);
     const [postText, setPostText] = useState(text);
     const [checker, setChecker] = useState(0);
+    const [toggleMap,setToggleMap] = useState(false);
     const buttonRef = useRef();
     const inputRef = useRef();
+
+    function isVideo(link) {
+        let str = new RegExp('youtube.com/watch');
+        if (str.test(link)) {
+            return(true);
+        } else {
+            return(false);
+        }
+    }
 
     function goToUrl(tag) {
         const hashtag = tag.replace('#','');
@@ -79,13 +91,15 @@ export default function PostContent({props}) {
                 alert("Algo deu errado! Tente novamente.");
             })
         }
-    }    
-
+    }
     return (
         <Container>
             {user.id === myUser.user.id ? <EditButton ref={buttonRef} onClick={() => changeEditMode(text)}><TiPencil /></EditButton> : () => {return(<></>)}}
             {user.id === myUser.user.id ? <DeletePost postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
-            <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
+            <Author>
+                <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
+                {geolocation !== undefined && <IoLocation onClick={()=>setToggleMap(true)}/>}
+            </Author>
             <>
             {isInEditMode ? (
                 <Form onKeyDown={(e) => editPost(e, text)}>
@@ -99,7 +113,10 @@ export default function PostContent({props}) {
                 </p>
             }
             </>
-            <PostSnippet onClick={()=>setPreview(true)}>
+            {isVideo(link) ? (
+                <VideoPlayer link={link} />
+            ) : (
+                <PostSnippet onClick={()=>setPreview(true)}>
                 <SpinnetContent>
                     <span>
                         {linkTitle}
@@ -113,7 +130,9 @@ export default function PostContent({props}) {
                 </SpinnetContent>
                 <SnippetImg src={linkImage} alt={linkTitle}></SnippetImg>
             </PostSnippet>
+            )}
             <Preview preview={preview} link={link} setPreview={setPreview}/>
+            {geolocation !== undefined && <OpenMap toggleMap={toggleMap} setToggleMap={setToggleMap} geolocation={geolocation} name={user.username}/>}
         </Container>
     );
 }

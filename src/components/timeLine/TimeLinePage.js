@@ -60,7 +60,7 @@ export default function TimeLinePage() {
                     <CreatePost reloadPosts={loadPosts}/>
                     <PostsContainer>
                         {isLoaded === 1 
-                            ? postsData.map((p) => <Post key={p.id} post={p} userInfo={user} />) 
+                            ? postsData.map((p) => <Post reloadPosts={loadPosts} key={p.id} post={p} userInfo={user} />) 
                             : (isLoaded === 2) 
                             ? <PageTitle title="Nenhuma publicação encontrada"/>
                             : (isLoaded ===3) 

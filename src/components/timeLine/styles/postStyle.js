@@ -1,4 +1,39 @@
 import styled from 'styled-components'
+import { IoLocationSharp } from "react-icons/io5";
+
+const RepostInfo = styled.div `
+    width: 612px;
+    background: #1E1E1E;
+    margin-bottom: 16px;
+    border-radius: 16px 16px 16px 16px;
+    @media(max-width: 611px) {
+        width:100vw;
+        border-radius: 0px;
+    }
+`;
+
+const RepostedByWho = styled.div`
+    display: flex;
+    align-items: center;
+    svg {
+        color: #FFFFFF;
+        margin-left: 13px;
+    }
+    h3 {
+        margin-top: 11px;
+        margin-left: 6px;
+        margin-bottom: 11px;
+        font-size: 11px;
+        line-height: 13px;
+        font-family: Lato;
+        font-weight: 400;
+        letter-spacing: 0em;
+        color:#FFF;
+    }
+    strong {
+        margin-left: 3px;
+    }
+`;
 
 const Container = styled.div`
     position:relative;
@@ -38,6 +73,7 @@ const Card = styled.div`
     }
 `
 const PostCreator = styled.div`
+    width: 60px;
     display:flex;
     flex-direction:column;
     align-items: center;
@@ -51,6 +87,7 @@ const PostCreator = styled.div`
     svg {
         height: 20px;
         width: 20px;
+        cursor: pointer;
     }
     p {
         margin: 4px 0px 14px;
@@ -209,9 +246,9 @@ const EditButton = styled.button`
 `;
 
 const Form = styled.form`
-        margin:0 0 12px 0;
-        padding-right:2px;
-        width:100%;
+    margin:0 0 12px 0;
+    padding-right:2px;
+    width:100%;
     textarea {
         outline:none;
         width:100%;
@@ -231,26 +268,29 @@ const Form = styled.form`
         padding-right: 6px;
     }
 `;
-const Filler = styled.div`
-    display: ${(props)=>(props.active ? 'block' : 'none' )};
-    position: absolute;
-    z-index: -1;
-    height: 100%;
-    bottom: 0;
-    width: 100%;
-    border-radius: 16px;
-    background: #1E1E1E;
-`
-const CommentsContainer = styled.article`
-    display: ${(props)=>(props.active ? 'flex' : 'none' )}; 
-    flex-direction:column;
-    justify-content:center;
-    align-items:flex-start;
-    background: #1E1E1E;
-    padding: 12px 20px 24px;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
 
+const Author =styled.div`
+    display: flex;
+    align-items: center;
+    svg {
+        margin-bottom: 5px;
+    }
+    a{
+        margin-right: 5px;
+    }
+`
+const IoLocation = styled(IoLocationSharp)`
+    cursor: pointer;
 `
 
-export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form, PageLink, Card, Filler, CommentsContainer}
+const RepostIcon = styled.svg`
+    color: #FFFFFF;
+    font-size: 20px;
+    background: none;
+    border: none;
+    padding: 0px;
+    cursor: pointer;
+    margin-top: 10px;
+`;
+
+export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form, PageLink, Card, RepostInfo, RepostIcon, RepostedByWho, IoLocation, Author}

@@ -1,12 +1,15 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import PostContext from "../../contexts/PostContext";
 
 export default function TrendingTopics(props) {
     const history = useHistory();
     const [trendingTopics, setTrendingTopics] = useState([]);
     const token = props.user.token;
+    const { setPostsData } = useContext(PostContext);
+    const [hashtag, setHashtag] = useState("");
     
 
     useEffect(() => {
@@ -19,7 +22,15 @@ export default function TrendingTopics(props) {
     }, [token]);
 
     function goToHashtag(hashtagName) {
+        setPostsData(null);
         history.push(`/hashtag/${hashtagName}`);
+        setHashtag("");
+    }
+
+    function searchHashtag(e, hashtag) {
+        if(e.which === 13) {
+            goToHashtag(hashtag);
+        }
     }
 
     return(
@@ -31,6 +42,10 @@ export default function TrendingTopics(props) {
                 {trendingTopics.map((t,i) => (
                     <h1 key={i} onClick={() => {goToHashtag(t.name)}}># {t.name}</h1>
                 ))}
+                <HashtagSearch>
+                <h1>#</h1>
+                <SearchBox onChange={(e) => {setHashtag(e.target.value)}} value={hashtag} placeholder="type a hashtag" onKeyDown={(e) => searchHashtag(e, hashtag)}></SearchBox>
+            </HashtagSearch>
             </TrendingList>
         </Container>
     )
@@ -41,7 +56,7 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: space-between;
     width: 301px;
-    height: 406px;
+    height: 441px;
     margin-top: 232px;
     margin-left: 25px;
     background: #484848;
@@ -67,12 +82,11 @@ const TrendingTitle = styled.div`
 `;
 
 const TrendingList = styled.div`
-    height: 344px;
+    height: 379px;
     background: #171717;
     border-radius: 0px 0px 16px 16px;
     padding-top: 22px;
     padding-left: 16px;
-    padding-bottom: 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -84,4 +98,38 @@ const TrendingList = styled.div`
         line-height: 23px;  
         cursor: pointer;      
     }
+`;
+
+const HashtagSearch = styled.div`
+    height: 35px;
+    width: 269px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    background: #252525;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-family: Lato;
+    font-weight: bold;
+    font-size: 19px;
+    line-height: 23px;
+    h1 {
+        margin-left: 13px;
+        margin-right: 11px;
+    }
+    input:focus {
+        outline: none !important;
+    }
+`;
+
+const SearchBox = styled.input`
+    background: none;
+    border: none;
+    font-family: Lato;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0.05em;
+    color: #575757;
 `;

@@ -17,7 +17,12 @@ export default function FilteredPosts({url,newTitle}){
     const [pageUser,setPageUser] = useState({});
     const [follow,setFollow] =useState(false);  
     const [loading,setLoading] = useState(false);
-    
+    window.scrollTo(0,0);
+
+    useEffect(()=>{
+        setPostsData(postsData);
+    })
+
     useEffect(()=>{
         const headers = {headers:{Authorization: `Bearer ${user.token}`}}
         if(local==="/my-posts" || local==="/my-likes"){
@@ -69,7 +74,7 @@ export default function FilteredPosts({url,newTitle}){
             </Title>
             <Content>
                 <Posts>
-                    {postsData!==null && postsData.map(p=><Post key={p.id} post={p} userInfo={user} />)}
+                {postsData!==null && postsData.length === 0 ? <Title>Não existem posts nessa aba</Title>:postsData.map(p=><Post key={p.id} post={p} userInfo={user} />)}
                 </Posts>
                 <TrendingTopics user={user}/>
             </Content>

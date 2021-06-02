@@ -30,7 +30,7 @@ export default function Preview({preview,link,setPreview}){
                         Open in new tab 
                     </Button>
                 </a>
-                <IoIosClose onClick={()=>setPreview(false)}/>
+                <Close onClick={()=>setPreview(false)}/>
             </Header>
             <Iframe src={link} name="link para pagina clicada" referrerPolicy="no-referrer"/>
         </ReactModal>
@@ -56,4 +56,7 @@ const Button = styled.button`
 const Iframe = styled.iframe`
     width:100%;
     height:92%;
+`
+const Close = styled(IoIosClose)`
+    cursor: pointer;
 `
