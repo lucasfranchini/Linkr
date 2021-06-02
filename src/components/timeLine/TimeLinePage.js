@@ -49,7 +49,7 @@ export default function TimeLinePage() {
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?olderThan=${postId}`, myUser.config);
         request.then((response)=>{
             const data = response.data.posts;
-            const older = response.data.posts[response.data.posts.length-1].id;
+            const older = data[data.length-1].id;
             setOlderPost(older);
             setPostsData([...postsData,...data])
             if (postsData.length < 10){
@@ -59,17 +59,20 @@ export default function TimeLinePage() {
     };
 
     function fetchNewerPosts(postId) {
-        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?earlierThan=${postId}`, myUser.config);
-        request.then((response)=>{
-            const data = response.data.posts;
-            const newer = response.data.posts[0].id;
-            if (newer !== newerPost) {
-                setNewerPost(newer);
-            }
-            if (response.data.posts.length < 10){
-                setPostsData([...postsData,...data]);
-            }
-        })
+        if (myUser.config) {
+            const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?earlierThan=${postId}`, myUser.config);
+            request.then((response)=>{
+                const data = response.data.posts;
+                let newer;
+                if (data && data.length > 0 && newer !== newerPost){
+                    newer = data[0].id;
+                    setNewerPost(newer);
+                }
+                if (response.data.posts.length < 10){
+                    setPostsData([...postsData,...data]);
+                }
+            })
+        }
     }
 
     useEffect(()=>{
