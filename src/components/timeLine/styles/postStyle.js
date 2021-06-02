@@ -1,13 +1,27 @@
 import styled from 'styled-components'
 
 const Container = styled.div`
+    position:relative;
+    z-index:2;
     font-family: Lato;
     font-weight: 400;
     letter-spacing: 0em;
     color:#FFF;
-    width: 612px;
     margin-bottom: 16px;
-    padding: 16px 20px 20px 18px;
+    width: 612px;
+    z-index:2;
+    @media(max-width: 611px) {
+        padding: 0px;
+        width:100%;
+        border-radius:0px;
+        height:auto;
+    }
+`
+const Card = styled.div`
+    display:flex;
+    align-items: flex-start;
+    justify-content:center;
+    padding: 16px 20px 20px 12px;
     background: #171717;
     border-radius: 16px;
     overflow: scroll;
@@ -16,16 +30,10 @@ const Container = styled.div`
     ::-webkit-scrollbar{
         width: 0;
     }
-    >div{
-        display:flex;
-        align-items: flex-start;
-        justify-content:center;
-    }
     @media(max-width: 611px) {
         padding: 15px 18px 8px 15px;
-        width:100%;
         border-radius:0px;
-        height: 232px;
+        width:100%;
         height:auto;
     }
 `
@@ -45,16 +53,18 @@ const PostCreator = styled.div`
         width: 20px;
     }
     p {
-        margin-top: 4px;
+        margin: 4px 0px 14px;
+        width:100%;
         font-size: 11px;
         line-height: 13px;
+        text-align:center;
     }
     @media(max-width: 611px) {
         img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-bottom: 18px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-bottom: 18px;
         }
         svg {
             height: 18px;
@@ -70,8 +80,8 @@ const PostCreator = styled.div`
 const PostContentStyle = styled.div`
     position: relative;
     z-index: 2;
-    width: 504px;
-    margin-left:20px;
+    width: 502px;
+    margin-left: 16px;
     display:flex;
     flex-direction:column;
     align-items: flex-start;
@@ -221,5 +231,26 @@ const Form = styled.form`
         padding-right: 6px;
     }
 `;
+const Filler = styled.div`
+    display: ${(props)=>(props.active ? 'block' : 'none' )};
+    position: absolute;
+    z-index: -1;
+    height: 100%;
+    bottom: 0;
+    width: 100%;
+    border-radius: 16px;
+    background: #1E1E1E;
+`
+const CommentsContainer = styled.article`
+    display: ${(props)=>(props.active ? 'flex' : 'none' )}; 
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-start;
+    background: #1E1E1E;
+    padding: 12px 20px 24px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
 
-export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form,PageLink}
+`
+
+export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form, PageLink, Card, Filler, CommentsContainer}
