@@ -4,25 +4,50 @@ import UserContext from '../contexts/UserContext';
 import { AiOutlineSearch } from "react-icons/ai";
 import {DebounceInput} from 'react-debounce-input';
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
-export default function UserSearch({avatar}) {
-    const [user, setUser] = useState("");
+export default function UserSearch() {
+    const [searchText, setSearchText] = useState("");
     const {user: myUser} = useContext(UserContext);
+    const [searchResults, setSearchResults] = useState([]);
+    const [showableResults, setShowableResults] = useState([]);
+    const history = useHistory();
+
+    console.log(showableResults, "showableResults");
 
     useEffect(()=>{
-        if(user.length >= 3) {
-            console.log("buscou: " + user);
-            const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/search", { 
-                headers: { 
-                    Authorization: `Bearer ${myUser.token}` 
-                } 
-            });
+        if(searchText.length >= 3) {
+            console.log("buscou: " + searchText);
+            const config = { headers: { Authorization: `Bearer ${myUser.token}` } }
+            const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/search?username=${searchText}`, config);
 
             request.then((response) => {
-                console.log(response.data);
+                setSearchResults(response.data.users);
+                console.log(response.data.users, "searchResults");
             })
+        } else {
+            setShowableResults([]);
         }
-    })
+    },[searchText])
+
+    useEffect(()=>{
+        organizeResults();
+    },[searchResults])
+
+    function organizeResults() {
+        let followers = searchResults.filter(r => {return r.isFollowingLoggedUser})
+        let unfollowers = searchResults.filter(r => {return !r.isFollowingLoggedUser})
+        for(let i=followers.length; i>0; i--){unfollowers.splice(0, 0, followers[followers.length - 1]);}
+        setShowableResults([...unfollowers]);
+    }
+
+    function goToUser(userId) {
+        history.push(`/user/${userId}`);
+        setSearchText("");
+        setSearchResults([]);
+        setShowableResults([]);
+        window.location.reload();
+    }
 
     return(
         <SearchResults>
@@ -31,16 +56,26 @@ export default function UserSearch({avatar}) {
                     <DebounceInput
                         minLength={3}
                         debounceTimeout={300}
-                        onChange={(e)=> {setUser(e.target.value)}}
+                        onChange={(e)=> {setSearchText(e.target.value)}}
                         placeholder="Search for people and friends"
-                        value={user}
+                        value={searchText}
                     ></DebounceInput>
                     <AiOutlineSearch/>
                 </SearchBox>
             </Search>
-            <Result><img alt="" src={avatar}></img><h1>Lalala</h1><h2>• following</h2></Result>
-            <Result><img alt="" src={avatar}></img><h1>Lalala</h1></Result>
-            <Result><img alt="" src={avatar}></img><h1>Lalala</h1></Result>
+            {showableResults.length >= 1 ?
+                showableResults.map(r => 
+                    <Result onClick={() => {goToUser(r.id)}}>
+                        <img alt="" src={r.avatar}></img>
+                        <h1>{r.username}</h1>
+                        {r.isFollowingLoggedUser ?
+                            <h2> • following</h2> :
+                            <></>
+                        }
+                    </Result>
+                ) :
+                <></>
+            }
         </SearchResults>
     )
 }
@@ -53,6 +88,7 @@ const SearchResults = styled.div`
     position: absolute;
     top: 13.5px;
     left: calc(50vw - 281.5px);
+    z-index: 3;
 `;
 
 const Search = styled.div`
@@ -97,9 +133,12 @@ const SearchBox = styled.div`
 const Result = styled.div`
     display: flex;
     align-items: center;
-    margin-left: 17px;
+    padding-left: 17px;
+    padding-top: 3px;
+    padding-bottom: 3px;
     margin-top: 8px;
     margin-bottom: 8px;
+    cursor: pointer;
     h1, h2 {
         font-family: Lato;
         font-size: 19px;
@@ -118,5 +157,8 @@ const Result = styled.div`
         width: 39px;
         height: 39px;
         border-radius: 20px;
+    }
+    :hover {
+        background: #EFEFEF;
     }
 `;

@@ -33,8 +33,9 @@ export default function PostContent({props}) {
     const inputRef = useRef();
 
     function isVideo(link) {
-        let str = new RegExp('youtube.com/watch');
-        if (str.test(link)) {
+        let str1 = new RegExp('youtube.com/watch');
+        let str2 = new RegExp('youtu.be');
+        if (str1.test(link) || str2.test(link)) {
             return(true);
         } else {
             return(false);
