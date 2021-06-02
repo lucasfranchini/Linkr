@@ -13,17 +13,13 @@ export default function UserSearch() {
     const [showableResults, setShowableResults] = useState([]);
     const history = useHistory();
 
-    console.log(showableResults, "showableResults");
-
     useEffect(()=>{
         if(searchText.length >= 3) {
-            console.log("buscou: " + searchText);
             const config = { headers: { Authorization: `Bearer ${myUser.token}` } }
             const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/search?username=${searchText}`, config);
 
             request.then((response) => {
                 setSearchResults(response.data.users);
-                console.log(response.data.users, "searchResults");
             })
         } else {
             setShowableResults([]);

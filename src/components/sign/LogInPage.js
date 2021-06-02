@@ -29,8 +29,16 @@ export default function LogInPage() {
             const request = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-in', body);
             request.then((response)=> {
                 setIsLoading(false);
-                setUser({...response.data});
-                localStorage.setItem('user',JSON.stringify(response.data));
+                localStorage.setItem('user',JSON.stringify({
+                    user: response.data.user,
+                    token: response.data.token, 
+                    config: {headers: {Authorization: `Bearer ${response.data.token}`}} 
+                    }));
+                setUser({
+                    user: response.data.user,
+                    token: response.data.token, 
+                    config: {headers: {Authorization: `Bearer ${response.data.token}`}} 
+                    })
                 history.push('/timeline');
             })
             request.catch((error)=> {

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useState, useContext } from "react";
 import UserContext from '../contexts/UserContext';
+import PostContext from '../contexts/PostContext';
 import { AiOutlineSearch } from "react-icons/ai";
 import {DebounceInput} from 'react-debounce-input';
 import axios from "axios";
@@ -13,17 +14,13 @@ export default function UserSearch() {
     const [showableResults, setShowableResults] = useState([]);
     const history = useHistory();
 
-    console.log(showableResults, "showableResults");
-
     useEffect(()=>{
         if(searchText.length >= 3) {
-            console.log("buscou: " + searchText);
             const config = { headers: { Authorization: `Bearer ${myUser.token}` } }
             const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/search?username=${searchText}`, config);
 
             request.then((response) => {
                 setSearchResults(response.data.users);
-                console.log(response.data.users, "searchResults");
             })
         } else {
             setShowableResults([]);
@@ -81,6 +78,7 @@ export default function UserSearch() {
 }
 
 const SearchResults = styled.div`
+    position: fixed;
     width: 563px;
     background: #E7E7E7;
     border: none;

@@ -8,6 +8,7 @@ const RepostInfo = styled.div `
     border-radius: 16px 16px 16px 16px;
     @media(max-width: 611px) {
         width:100vw;
+        border-radius: 0px;
     }
 `;
 
@@ -35,12 +36,27 @@ const RepostedByWho = styled.div`
 `;
 
 const Container = styled.div`
+    position:relative;
+    z-index:2;
     font-family: Lato;
     font-weight: 400;
     letter-spacing: 0em;
     color:#FFF;
+    margin-bottom: 16px;
     width: 612px;
-    padding: 16px 20px 20px 18px;
+    z-index:2;
+    @media(max-width: 611px) {
+        padding: 0px;
+        width:100%;
+        border-radius:0px;
+        height:auto;
+    }
+`
+const Card = styled.div`
+    display:flex;
+    align-items: flex-start;
+    justify-content:center;
+    padding: 16px 20px 20px 12px;
     background: #171717;
     border-radius: 16px;
     overflow: scroll;
@@ -49,21 +65,15 @@ const Container = styled.div`
     ::-webkit-scrollbar{
         width: 0;
     }
-    >div{
-        display:flex;
-        align-items: flex-start;
-        justify-content:center;
-    }
     @media(max-width: 611px) {
         padding: 15px 18px 8px 15px;
-        width:100%;
         border-radius:0px;
-        height: 232px;
+        width:100%;
         height:auto;
     }
 `
 const PostCreator = styled.div`
-    width: 60px;
+    width: 62px;
     display:flex;
     flex-direction:column;
     align-items: center;
@@ -80,17 +90,18 @@ const PostCreator = styled.div`
         cursor: pointer;
     }
     p {
-        margin-top: 4px;
+        margin: 4px 0px 14px;
+        width:100%;
         font-size: 11px;
         line-height: 13px;
-        text-align: center;
+        text-align:center;
     }
     @media(max-width: 611px) {
         img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-bottom: 18px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-bottom: 18px;
         }
         svg {
             height: 18px;
@@ -106,8 +117,8 @@ const PostCreator = styled.div`
 const PostContentStyle = styled.div`
     position: relative;
     z-index: 2;
-    width: 504px;
-    margin-left:20px;
+    width: 502px;
+    margin-left: 16px;
     display:flex;
     flex-direction:column;
     align-items: flex-start;
@@ -135,8 +146,8 @@ const PostContentStyle = styled.div`
     @media(max-width: 611px) {
         width: 100%;
         h3 {
-        font-size: 17px;
-        line-height: 20px;
+            font-size: 17px;
+            line-height: 20px;
         }
         p{
             font-size: 15px;
@@ -257,6 +268,7 @@ const Form = styled.form`
         padding-right: 6px;
     }
 `;
+
 const Author =styled.div`
     display: flex;
     align-items: center;
@@ -281,4 +293,4 @@ const RepostIcon = styled.svg`
     margin-top: 10px;
 `;
 
-export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form, PageLink, RepostInfo, RepostIcon, RepostedByWho, IoLocation, Author}
+export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form, PageLink, Card, RepostInfo, RepostIcon, RepostedByWho, IoLocation, Author}
