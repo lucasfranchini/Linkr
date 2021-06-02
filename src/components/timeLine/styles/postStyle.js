@@ -1,17 +1,21 @@
 import styled from 'styled-components'
 import { IoLocationSharp } from "react-icons/io5";
-import { ImLoop } from "react-icons/im";
 
 const RepostInfo = styled.div `
     width: 612px;
     background: #1E1E1E;
     margin-bottom: 16px;
     border-radius: 16px 16px 16px 16px;
-    div:first-child {
-        display: flex;
-        align-items: center;
+`;
+
+const RepostedByWho = styled.div`
+    display: flex;
+    align-items: center;
+    svg {
+        color: #FFFFFF;
+        margin-left: 13px;
     }
-    p {
+    h3 {
         margin-top: 11px;
         margin-left: 6px;
         margin-bottom: 11px;
@@ -22,15 +26,10 @@ const RepostInfo = styled.div `
         letter-spacing: 0em;
         color:#FFF;
     }
-    @media(max-width:612px){
-        width: 100%;
+    strong {
+        margin-left: 3px;
     }
 `;
-const Loop =styled(ImLoop)`
-    color: #FFFFFF;
-    margin-left: 13px;
-
-`
 
 const Container = styled.div`
     font-family: Lato;
@@ -61,6 +60,7 @@ const Container = styled.div`
     }
 `
 const PostCreator = styled.div`
+    width: 60px;
     display:flex;
     flex-direction:column;
     align-items: center;
@@ -257,6 +257,9 @@ const Form = styled.form`
 const Author =styled.div`
     display: flex;
     align-items: center;
+    svg {
+        margin-bottom: 5px;
+    }
     a{
         margin-right: 5px;
     }
@@ -265,4 +268,14 @@ const IoLocation = styled(IoLocationSharp)`
     cursor: pointer;
 `
 
-export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form,PageLink,Author,IoLocation,RepostInfo,Loop}
+const RepostIcon = styled.svg`
+    color: #FFFFFF;
+    font-size: 20px;
+    background: none;
+    border: none;
+    padding: 0px;
+    cursor: pointer;
+    margin-top: 10px;
+`;
+
+export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form, PageLink, RepostInfo, RepostIcon, RepostedByWho, IoLocation, Author}

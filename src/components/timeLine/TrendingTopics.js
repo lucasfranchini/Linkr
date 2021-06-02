@@ -44,7 +44,7 @@ export default function TrendingTopics(props) {
                 ))}
                 <HashtagSearch>
                 <h1>#</h1>
-                <SearchBox onChange={(e) => {setHashtag(e.target.value)}} value={hashtag} placeholder="type a hashtage" onKeyDown={(e) => searchHashtag(e, hashtag)}></SearchBox>
+                <SearchBox onChange={(e) => {setHashtag(e.target.value)}} value={hashtag} placeholder="type a hashtag" onKeyDown={(e) => searchHashtag(e, hashtag)}></SearchBox>
             </HashtagSearch>
             </TrendingList>
         </Container>
