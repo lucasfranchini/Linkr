@@ -114,74 +114,74 @@ export default function Post(props) {
     }
    
         return (
-                <Container key={id.toString()}>
-                    <RepostInfo applyStyles={props.post.repostedBy !== undefined}>
-                    {props.post.repostedBy === undefined ?
-                        (<></>) :
-                        (<RepostedByWho>
-                            <ImLoop />
-                            <h3>Re-posted by 
-                                <strong>{props.post.repostedBy.username === myUser.user.username ?
-                                    ("you") : 
-                                    (`${props.post.repostedBy.username}`)}
-                                </strong>
-                            </h3>
-                        </RepostedByWho>)
-                    }
-                        <Card>
-                            <PostCreator >
-                                <Link to={`/user/${user.id}`}>
-                                    <img src={user.avatar} alt={user.username}/>
-                                </Link>
-                                <LikeButton checked={iLike} onClick={()=>toggleLike(id)}>
-                                    {iLike ? <FaHeart /> :<FaRegHeart/>}
-                                </LikeButton>
-                                <MuiThemeProvider theme={ToolTipComponent}>
-                                    <Tooltip title={toolTipText} arrow={true} enterTouchDelay={200}>
-                                        <p>
-                                            {postLikes ? postLikes.length : 0} Likes
-                                        </p>
-                                    </Tooltip>
-                                </MuiThemeProvider>
-                                <CommentsButton onClick={()=>toggleComments(id)}>
-                                    <AiOutlineComment/>
-                                </CommentsButton>
+            <Container key={id.toString()}>
+                <RepostInfo applyStyles={props.post.repostedBy !== undefined}>
+                {props.post.repostedBy === undefined ?
+                    (<></>) :
+                    (<RepostedByWho>
+                        <ImLoop />
+                        <h3>Re-posted by 
+                            <strong>{props.post.repostedBy.username === myUser.user.username ?
+                                ("you") : 
+                                (`${props.post.repostedBy.username}`)}
+                            </strong>
+                        </h3>
+                    </RepostedByWho>)
+                }
+                    <Card>
+                        <PostCreator >
+                            <Link to={`/user/${user.id}`}>
+                                <img src={user.avatar} alt={user.username}/>
+                            </Link>
+                            <LikeButton checked={iLike} onClick={()=>toggleLike(id)}>
+                                {iLike ? <FaHeart /> :<FaRegHeart/>}
+                            </LikeButton>
+                            <MuiThemeProvider theme={ToolTipComponent}>
+                                <Tooltip title={toolTipText} arrow={true} enterTouchDelay={200}>
                                     <p>
-                                        {commentsData.length >0 ? commentsData.length : commentCount} Comments
+                                        {postLikes ? postLikes.length : 0} Likes
                                     </p>
-                                {user.id !== myUser.user.id ? 
-                                    <RePost postId={id} userToken={myUser.token} /> :
-                                    <RepostIcon>
-                                        <ImLoop/>
-                                    </RepostIcon>
-                                }
-                                <p>{repostCount}<span> </span>Re-posts</p>
-                            </PostCreator>
-                            <PostContent props ={props} />
-                        </Card>
-                        <Filler active={inComments}/>
-                        <CommentsContainer active={inComments}>
-                            {commentsData.length > 0
-                            ? commentsData.map((c,i)=>{
-                                return(
-                                    <>
-                                        <Comment key={c.id} c={c} followers={followers} user={user}/>
-                                        <Spreader key={i}/>
-                                    </>
-                                );
-                            })
-                            : ""
+                                </Tooltip>
+                            </MuiThemeProvider>
+                            <CommentsButton onClick={()=>toggleComments(id)}>
+                                <AiOutlineComment/>
+                            </CommentsButton>
+                                <p>
+                                    {commentsData.length >0 ? commentsData.length : commentCount} Comments
+                                </p>
+                            {user.id !== myUser.user.id ? 
+                                <RePost postId={id} userToken={myUser.token} /> :
+                                <RepostIcon>
+                                    <ImLoop/>
+                                </RepostIcon>
                             }
-                            <InputComment>
-                                <img src={myUser.user.avatar} alt={user.username}/>
-                                <form onSubmit={(e)=>postComment(e, id)}>
-                                    <input value={commentText} onChange={(e)=>setCommentText(e.target.value)} disabled={sendingComments} placeholder="write a comment..."/>
-                                    <IoPaperPlaneOutline onClick={(e)=>{postComment(e, id)}}/>
-                                </form>
-                            </InputComment>
-                        </CommentsContainer>
-                    </RepostInfo>
-                </Container>
+                            <p>{repostCount}<span> </span>Re-posts</p>
+                        </PostCreator>
+                        <PostContent props ={props} />
+                    </Card>
+                    <Filler active={inComments}/>
+                    <CommentsContainer active={inComments}>
+                        {commentsData.length > 0
+                        ? commentsData.map((c,i)=>{
+                            return(
+                                <>
+                                    <Comment key={c.id} c={c} followers={followers} user={user}/>
+                                    <Spreader key={i}/>
+                                </>
+                            );
+                        })
+                        : ""
+                        }
+                        <InputComment>
+                            <img src={myUser.user.avatar} alt={user.username}/>
+                            <form onSubmit={(e)=>postComment(e, id)}>
+                                <input value={commentText} onChange={(e)=>setCommentText(e.target.value)} disabled={sendingComments} placeholder="write a comment..."/>
+                                <IoPaperPlaneOutline onClick={(e)=>{postComment(e, id)}}/>
+                            </form>
+                        </InputComment>
+                    </CommentsContainer>
+                </RepostInfo>
+            </Container>
         );
 };
 const LikeButton = styled.div`

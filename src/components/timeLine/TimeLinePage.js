@@ -8,6 +8,7 @@ import Post from "./Post";
 import PageTitle from "./PageTitle";
 import CreatePost from "../post/CreatePost";
 import TrendingTopics from "./TrendingTopics";
+import UserSearchMobile from "./UserSearchMobile";
 
 import styled from "styled-components";
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -17,13 +18,18 @@ export default function TimeLinePage() {
     const { postsData, setPostsData } = useContext(PostContext);
     const [isLoaded, setIsLoaded] = useState(false);
     const [olderPost, setOlderPost] = useState('');
+    const [newerPost, setNewerPost] = useState('');
+    const [loadMore, setLoadMore] = useState(true);
 
     const loadPosts = useCallback((config) => {
-        const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config);
+        
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts`, config);
         request.then((response)=>{
             const data = response.data.posts;
             const older = response.data.posts[response.data.posts.length-1].id;
             setOlderPost(older);
+            const newer = response.data.posts[0].id;
+            setNewerPost(newer);
             console.log(data, data.length, 'posts + qtd')
             setPostsData([...data]);
             if (data.length > 0){
@@ -39,14 +45,32 @@ export default function TimeLinePage() {
         })
     },[setIsLoaded,setPostsData]);
 
-    function fetchMorePosts(postId) {
+    function fetchOlderPosts(postId) {
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?olderThan=${postId}`, myUser.config);
         request.then((response)=>{
             const data = response.data.posts;
-            console.log(data,'more posts')
-            setPostsData([...postsData,data])
+            const older = response.data.posts[response.data.posts.length-1].id;
+            setOlderPost(older);
+            setPostsData([...postsData,...data])
+            if (postsData.length < 10){
+                setLoadMore(false)
+            }
         });
     };
+
+    function fetchNewerPosts(postId) {
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?earlierThan=${postId}`, myUser.config);
+        request.then((response)=>{
+            const data = response.data.posts;
+            const newer = response.data.posts[0].id;
+            if (newer !== newerPost) {
+                setNewerPost(newer);
+            }
+            if (response.data.posts.length < 10){
+                setPostsData([...postsData,...data]);
+            }
+        })
+    }
 
     useEffect(()=>{
         if(postsData!==null && postsData.find(p=>p.user.id!==myUser.user.id) === undefined){
@@ -60,20 +84,28 @@ export default function TimeLinePage() {
         }
     },[ myUser,setPostsData,loadPosts]);
     
-    useInterval(() => {loadPosts(myUser.config)}, 15000);
+    useInterval(() => {fetchNewerPosts(newerPost)}, 15000);
 
     if(myUser){
         return (
             <Page >
                 <Container>
+                    <UserSearchMobile/>
                     <PageTitle title="timeline"/>
                     <CreatePost reloadPosts={loadPosts}/>
                     <PostsContainer>
                         {isLoaded === 1 
-                            ? 
-                            <>
-                                {postsData.map((p) => <Post reloadPosts={loadPosts} key={p.id} post={p} userInfo={myUser} />)}
-                            </>
+                            ?
+                            <InfiniteScroll
+                                dataLength={postsData.length}
+                                next={()=>fetchOlderPosts(olderPost)}
+                                hasMore={loadMore}
+                                loader={<PageTitle>Loading...</PageTitle>}
+                                scrollThreshold="300px">
+                                <>
+                                    {postsData.map((p) => <Post reloadPosts={loadPosts} key={p.id} post={p} userInfo={myUser} />)}
+                                </>
+                            </InfiniteScroll>
                             : (isLoaded === 2) 
                             ? <PageTitle title="Nenhuma publicação encontrada"/>
                             : (isLoaded ===3) 
