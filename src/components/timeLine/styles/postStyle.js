@@ -6,6 +6,9 @@ const RepostInfo = styled.div `
     background: #1E1E1E;
     margin-bottom: 16px;
     border-radius: 16px 16px 16px 16px;
+    @media(max-width: 611px) {
+        width:100vw;
+    }
 `;
 
 const RepostedByWho = styled.div`
