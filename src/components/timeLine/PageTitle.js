@@ -26,4 +26,7 @@ const Container = styled.div`
         height: 86px;
         padding-left: 18px;
     }
+    @media(max-width: 611px){
+        margin-top: 0px;
+    }
 `

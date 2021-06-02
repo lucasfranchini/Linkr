@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState, useContext } from "react";
-import UserContext from '../contexts/UserContext';
+import UserContext from '../../contexts/UserContext';
 import { AiOutlineSearch } from "react-icons/ai";
 import {DebounceInput} from 'react-debounce-input';
 import axios from "axios";
@@ -81,6 +81,7 @@ export default function UserSearch() {
 }
 
 const SearchResults = styled.div`
+    display: none;
     width: 563px;
     background: #E7E7E7;
     border: none;
@@ -92,11 +93,17 @@ const SearchResults = styled.div`
         width: 50vw;
     }
     @media(max-width: 611px){
-        display: none;
+        display: block;
+        margin-top: 80px;
+        width: calc(100vw - 20px);
+        margin-left: 10px;
+        margin-right: 10px;
+        z-index: 2;
     }
 `;
 
 const Search = styled.div`
+    display: none;
     width: 563px;
     height: 45px;
     background: #FFFFFF;
@@ -128,6 +135,10 @@ const Search = styled.div`
     }
     @media(max-width: 850px){
         width: 50vw;
+    }
+    @media(max-width: 611px){
+        display: block;
+        width: 100%;
     }
 `;
 

@@ -48,7 +48,7 @@ const Body = styled.div`
     height: 72px;
     padding: 0 17px 0 28px;
     background-color: #151515;
-    position:fixed relative;
+    position: fixed;
     top: 0;
     left: 0;
     display: flex;

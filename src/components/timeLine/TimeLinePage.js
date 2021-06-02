@@ -8,6 +8,7 @@ import Post from "./Post";
 import PageTitle from "./PageTitle";
 import CreatePost from "../post/CreatePost";
 import TrendingTopics from "./TrendingTopics";
+import UserSearchMobile from "./UserSearchMobile";
 
 import styled from "styled-components";
 
@@ -55,7 +56,8 @@ export default function TimeLinePage() {
     if(user){
         return (
             <Page >
-                <Container>    
+                <Container>
+                    <UserSearchMobile/>
                     <PageTitle title="timeline"/>
                     <CreatePost reloadPosts={loadPosts}/>
                     <PostsContainer>
