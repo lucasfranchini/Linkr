@@ -23,6 +23,7 @@ import PostContent from './PostContent';
 import Comment from './Comment';
 
 export default function Post(props) {
+    console.log(props)
     const {id, user, likes, commentCount, repostCount} = props.post;
     const {user: myUser} = useContext(UserContext);
     const [iLike, setILike] = useState(false);
