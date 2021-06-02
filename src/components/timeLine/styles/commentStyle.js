@@ -1,17 +1,17 @@
 import styled from 'styled-components'
 
 const Filler = styled.div`
-    display: ${(props)=>(props.active ? 'block' : 'none' )};
+    /* display: ${(props)=>(props.active ? 'block' : 'none' )};
     position: absolute;
     z-index: -1;
     height: 100%;
     bottom: 0;
     width: 100%;
     border-radius: 16px;
-    background: #1E1E1E;
-    @media(max-width: 611px) {
+    background: #1E1E1E; */
+    /* @media(max-width: 611px) {
         border-radius:0px;
-    }
+    } */
 `
 const CommentsContainer = styled.article`
     display: ${(props)=>(props.active ? 'flex' : 'none' )}; 

@@ -12,16 +12,11 @@ import TrendingTopics from "./TrendingTopics";
 import styled from "styled-components";
 
 export default function TimeLinePage() {
-    const { user } = useContext(UserContext);
+    const { user: myUser } = useContext(UserContext);
     const { postsData, setPostsData } = useContext(PostContext);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    const loadPosts = useCallback(() => {
-        const config = {
-            headers: {
-                Authorization: `Bearer ${user.token}`
-            }
-        };
+    const loadPosts = useCallback((config) => {
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config);
         request.then((response)=>{
             const data = response.data.posts;
@@ -38,21 +33,23 @@ export default function TimeLinePage() {
                 setIsLoaded(3);
             }
         })
-    },[setIsLoaded,setPostsData, user.token]);
+    },[setIsLoaded,setPostsData]);
 
     useEffect(()=>{
-        if(postsData!==null && postsData.find(p=>p.user.id!==user.user.id) === undefined){
+        if(postsData!==null && postsData.find(p=>p.user.id!==myUser.user.id) === undefined){
             setIsLoaded(4)
         }
-    },[postsData,setIsLoaded,user.user.id]);
+    },[postsData,setIsLoaded,myUser.user.id]);
 
     useEffect(()=>{
-        loadPosts()
-    },[user.token, setPostsData,loadPosts]);
+        if(myUser.config){
+            loadPosts(myUser.config)
+        }
+    },[ myUser,setPostsData,loadPosts]);
     
-    useInterval(() => {loadPosts()}, 15000);
+    useInterval(() => {loadPosts(myUser.config)}, 15000);
 
-    if(user){
+    if(myUser){
         return (
             <Page >
                 <Container>    
@@ -60,7 +57,7 @@ export default function TimeLinePage() {
                     <CreatePost reloadPosts={loadPosts}/>
                     <PostsContainer>
                         {isLoaded === 1 
-                            ? postsData.map((p) => <Post reloadPosts={loadPosts} key={p.id} post={p} userInfo={user} />) 
+                            ? postsData.map((p) => <Post reloadPosts={loadPosts} key={p.id} post={p} userInfo={myUser} />) 
                             : (isLoaded === 2) 
                             ? <PageTitle title="Nenhuma publicação encontrada"/>
                             : (isLoaded ===3) 
@@ -71,7 +68,7 @@ export default function TimeLinePage() {
                         }
                     </PostsContainer>
                 </Container>
-                <TrendingTopics user={user} />
+                <TrendingTopics user={myUser} />
             </Page>
         );
     }

@@ -34,23 +34,17 @@ export default function Post(props) {
     const [commentText, setCommentText] = useState('');
     const [followers, setFollowers] = useState([]);
 
-    const config = {
-        headers: {
-            Authorization: `Bearer ${myUser.token}`
-        }
-    };
-
-    const getFollowers = useCallback(()=>{
+    const getFollowers = useCallback((config)=>{
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows',config)
         request.then((response)=>{
             setFollowers(response.data.users)
         })
     },[setFollowers])
-     
+    
     useEffect(()=>{
         setPostLikes(likes);
-        getFollowers();
-    },[likes,setPostLikes, getFollowers]);
+        getFollowers(myUser.config);
+    },[likes,setPostLikes, getFollowers,myUser.config]);
 
     const createToolTipText = useCallback((list) => {
         setToolTipText(buildText(list, myUser));
@@ -85,7 +79,7 @@ export default function Post(props) {
             ? `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/dislike`
             : `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/like`;
 
-        const request = axios.post(url,{}, config);
+        const request = axios.post(url,{}, myUser.config);
         request.then((response)=>{
             setPostLikes(response.data.post.likes);
             verifyLike(response.data.post.likes);
@@ -93,7 +87,7 @@ export default function Post(props) {
     }
     function loadComments(postId){
         const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${postId}/comments`;
-        const request = axios.get(url,config)
+        const request = axios.get(url,myUser.config)
         request.then((response)=>{setCommentsData(response.data.comments)})
     }
     function toggleComments(postId) {
@@ -109,11 +103,11 @@ export default function Post(props) {
             text: commentText
         };
         const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${postId}/comment`;
-        const request = axios.post(url, body, config);
+        const request = axios.post(url, body, myUser.config);
         request.then((response)=>{
             setSendingComments(false);
             setCommentText('');
-            getFollowers();
+            getFollowers(myUser.config);
             loadComments(postId);
         });
     }

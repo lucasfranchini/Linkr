@@ -73,7 +73,7 @@ const Card = styled.div`
     }
 `
 const PostCreator = styled.div`
-    width: 60px;
+    width: 62px;
     display:flex;
     flex-direction:column;
     align-items: center;
@@ -146,8 +146,8 @@ const PostContentStyle = styled.div`
     @media(max-width: 611px) {
         width: 100%;
         h3 {
-        font-size: 17px;
-        line-height: 20px;
+            font-size: 17px;
+            line-height: 20px;
         }
         p{
             font-size: 15px;
