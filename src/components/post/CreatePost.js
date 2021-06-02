@@ -1,6 +1,7 @@
 import axios from "axios";
 import styled from 'styled-components';
 import { useState, useContext } from "react";
+import { IoLocationOutline } from "react-icons/io5";
 
 import UserContext from '../../contexts/UserContext';
 import PostContext from '../../contexts/PostContext';
@@ -12,11 +13,14 @@ export default function CreatePost({reloadPosts}) {
     const [isLoading, setIsLoading] = useState(false);
     const [text, setText] = useState("");
     const [link, setLink] = useState("");
+    const [locationCheck,setLocationCheck] = useState(false);
+    let [geolocation,setGeolocation] = useState(null);
 
     function postIt(e) {
         e.preventDefault();
         setIsLoading(true);
-        const body = {text, link};
+        let body = {text, link};
+        if(locationCheck) body = {text, link,geolocation};
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
 
         const request = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts', body, config);
@@ -32,6 +36,19 @@ export default function CreatePost({reloadPosts}) {
             setIsLoading(false);
             alert('Houve um erro ao publicar seu link');
         })
+    }
+    function saveLocation(){
+        if(locationCheck){
+            setLocationCheck(false);
+            setGeolocation(null);
+        }
+        else if (navigator.geolocation){
+            setLocationCheck(true);
+            navigator.geolocation.getCurrentPosition(position => setGeolocation({latitude: position.coords.latitude,longitude: position.coords.longitude}));
+        }
+        else{
+            alert("não foi possivel obter sua localização");
+        }
     }
     return(
         <Conteiner>
@@ -53,11 +70,19 @@ export default function CreatePost({reloadPosts}) {
                     placeholder="Muito irado esse link falando de #javascript"
                     disabled={isLoading ? (true) : (false)}
                 ></textarea>
-                <Button
-                    isloading={isLoading}
-                    type="submit"
-                    disabled={isLoading ? (true) : (false)}
-                >{isLoading ? "Publishing" : "Publicar"}</Button>
+                <Buttons>
+                    <Geolocation locationCheck={locationCheck} onClick={saveLocation} disabled={isLoading}>
+                        <IoLocationOutline/> {locationCheck ? "Localização ativada":"Localização desativada"}
+                    </Geolocation>
+                    <Button
+                        isloading={isLoading}
+                        type="submit"
+                        disabled={isLoading ? (true) : (false)}
+                    >
+                        {isLoading ? "Publishing" : "Publicar"}
+                    </Button>
+                </Buttons>
+                
             </Form>
         </Conteiner>
     );
@@ -158,3 +183,17 @@ const Button = styled.button`
         background-color:#18a9f2;
     }
 `;
+const Buttons = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`
+const Geolocation = styled.button`
+    border:none;
+    background-color: inherit;
+    color: ${props => props.locationCheck ? '#238700':'#949494'};
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`

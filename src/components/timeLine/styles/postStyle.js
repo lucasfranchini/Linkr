@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import { IoLocationSharp } from "react-icons/io5";
+import { ImLoop } from "react-icons/im";
 
 const RepostInfo = styled.div `
     width: 612px;
@@ -8,10 +10,6 @@ const RepostInfo = styled.div `
     div:first-child {
         display: flex;
         align-items: center;
-        svg {
-            color: #FFFFFF;
-            margin-left: 13px;
-        }
     }
     p {
         margin-top: 11px;
@@ -24,7 +22,15 @@ const RepostInfo = styled.div `
         letter-spacing: 0em;
         color:#FFF;
     }
+    @media(max-width:612px){
+        width: 100%;
+    }
 `;
+const Loop =styled(ImLoop)`
+    color: #FFFFFF;
+    margin-left: 13px;
+
+`
 
 const Container = styled.div`
     font-family: Lato;
@@ -248,5 +254,15 @@ const Form = styled.form`
         padding-right: 6px;
     }
 `;
+const Author =styled.div`
+    display: flex;
+    align-items: center;
+    a{
+        margin-right: 5px;
+    }
+`
+const IoLocation = styled(IoLocationSharp)`
+    cursor: pointer;
+`
 
-export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form, PageLink, RepostInfo}
+export {SnippetImg, SpinnetContent, PostSnippet, PostContentStyle, PostCreator, Container, EditButton, Form,PageLink,Author,IoLocation,RepostInfo,Loop}
