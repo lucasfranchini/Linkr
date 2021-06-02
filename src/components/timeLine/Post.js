@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import styled from 'styled-components';
 
 import RePost from "../post/RePost";
+import {ImLoop} from 'react-icons/im';
 
-import { PostCreator, Container, RepostInfo,Loop } from './styles/postStyle';
-import { FaRegHeart, FaHeart } from 'react-icons/fa';
+import {PostCreator, Container, RepostInfo, RepostIcon, RepostedByWho} from './styles/postStyle';
+import {FaRegHeart,FaHeart} from 'react-icons/fa';
 
 import UserContext from "../../contexts/UserContext";
 
@@ -73,41 +74,46 @@ export default function Post(props) {
         });
     }
         return (
-            <RepostInfo>
+            <RepostInfo applyStyles={props.post.repostedBy !== undefined}>
                 {props.post.repostedBy === undefined ?
                     (<></>) :
-                    (<div>
+                    (<RepostedByWho>
                         <ImLoop />
-                        <p>Re-posted by 
+                        <h3>Re-posted by 
                             <strong>{props.post.repostedBy.username === myUser.user.username ?
                                 ("you") :
                                 (`${props.post.repostedBy.username}`)}
                             </strong>
-                        </p>
-                    </div>)
+                        </h3>
+                    </RepostedByWho>)
                 }
-            <Container key={id.toString()}>
-                <div>
-                    <PostCreator >
-                        <Link to={`/user/${user.id}`}><img src={user.avatar} alt={user.username} /></Link>
-                        <LikeButton checked={iLike} onClick={() => toggleLike(id)}>
-                            {iLike ? <FaHeart /> : <FaRegHeart />}
-                        </LikeButton>
-                        <MuiThemeProvider theme={ToolTipComponent}>
-                            <Tooltip title={toolTipText} arrow={true} enterTouchDelay={200}>
-                                <p>
-                                    {postLikes ? postLikes.length : 0} Likes
-                                </p>
-                            </Tooltip>
-                        </MuiThemeProvider>
-                        {user.id !== myUser.user.id ? <RePost postId={id} userToken={myUser.token} /> : () => { return (<></>) }}
-                        <p>{repostCount}<span> </span>Re-posts</p>
-                    </PostCreator>
-                    <PostContent props={props} />
-                </div>
-            </Container>
-        </RepostInfo>
-    );
+                <Container key={id.toString()}>
+                    <div>
+                        <PostCreator >
+                            <Link to={`/user/${user.id}`}><img src={user.avatar} alt={user.username}/></Link>
+                            <LikeButton checked={iLike} onClick={()=>toggleLike(id)}>
+                                {iLike ? <FaHeart /> :<FaRegHeart/>}
+                            </LikeButton>
+                            <MuiThemeProvider theme={ToolTipComponent}>
+                                <Tooltip title={toolTipText} arrow={true} enterTouchDelay={200}>
+                                    <p>
+                                        {postLikes ? postLikes.length : 0} Likes
+                                    </p>
+                                </Tooltip>
+                            </MuiThemeProvider>
+                            {user.id !== myUser.user.id ? 
+                                <RePost postId={id} userToken={myUser.token} /> :
+                                <RepostIcon>
+                                    <ImLoop/>
+                                </RepostIcon>
+                            }
+                            <p>{repostCount}<span> </span>Re-posts</p>
+                        </PostCreator>
+                        <PostContent props ={props} />
+                    </div>
+                </Container>
+            </RepostInfo>
+        );
 };
 const LikeButton = styled.div`
     color: ${(props) => (props.checked ? '#AC0000' : '#FFFFFF')};

@@ -23,11 +23,16 @@ YoutubeEmbed.propTypes = {
 export default YoutubeEmbed;
 
 const VideoResponsive = styled.div`
-    overflow: hidden;
-    width: 501px;
-    height: 281px;
-    iframe {
-        height: 100%;
-        width: 100%;
-    }
+  overflow: hidden;
+  width: 501px;
+  height: 281px;
+  iframe {
+    height: 100%;
+    width: 100%;
+  }
+  @media(max-width: 611px) {
+    width: 70vw;
+    border-radius:0px;
+    height: auto;
+  }
 `;

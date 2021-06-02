@@ -57,6 +57,12 @@ align-items: flex-start;
 >div{
     margin:0;    
 }
+@media(max-width:612px){
+width: 75%;
+font-size: 30px;
+justify-content: center;
+margin: 0;
+}
 `
 const Button = styled.button`
 background-color: ${props=>props.follow ? '#fff': '#1877F2'};
