@@ -63,13 +63,12 @@ export default function TimeLinePage() {
             const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?earlierThan=${postId}`, myUser.config);
             request.then((response)=>{
                 const data = response.data.posts;
-                let newer;
-                if (data && data.length > 0 && newer !== newerPost){
-                    newer = data[0].id;
-                    setNewerPost(newer);
-                }
-                if (response.data.posts.length < 10){
-                    setPostsData([...postsData,...data]);
+                if (data.length>0){
+                    const newer = data[0].id;
+                    if (newer !== newerPost){
+                        setNewerPost(newer);
+                        setPostsData([...data,...postsData]);
+                    }
                 }
             })
         }
