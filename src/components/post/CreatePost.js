@@ -30,7 +30,7 @@ export default function CreatePost({reloadPosts}) {
             setText("");
             setLink("");
             setPostsData([...postsData, response.data.post]);
-            reloadPosts();
+            reloadPosts(config);
         })
         request.catch((error)=> {
             setIsLoading(false);

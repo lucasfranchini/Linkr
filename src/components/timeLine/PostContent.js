@@ -68,12 +68,7 @@ export default function PostContent({props}) {
             const body = {
                 text: newPostText
             }
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${myUser.token}`
-                }
-            };
-            const request = axios.put(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}`, body, config);
+            const request = axios.put(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}`, body, myUser.config);
             request.then((response) => {
                 let newPost = response.data.post;
                 let newArray = postsData;
