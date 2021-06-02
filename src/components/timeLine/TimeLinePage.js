@@ -57,7 +57,7 @@ export default function TimeLinePage() {
             }
         });
     };
-
+    console.log(postsData)
     function fetchNewerPosts(postId) {
         if (myUser.config) {
             const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?earlierThan=${postId}`, myUser.config);
@@ -105,7 +105,7 @@ export default function TimeLinePage() {
                                 loader={<PageTitle>Loading...</PageTitle>}
                                 scrollThreshold="300px">
                                 <>
-                                    {postsData.map((p) => <Post reloadPosts={loadPosts} key={p.id} post={p} userInfo={myUser} />)}
+                                    {postsData.map((p) => <Post reloadPosts={loadPosts} key={p.repostId||p.id} post={p} userInfo={myUser} />)}
                                 </>
                             </InfiniteScroll>
                             : (isLoaded === 2) 
