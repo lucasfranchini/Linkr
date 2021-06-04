@@ -57,7 +57,6 @@ export default function Post(props) {
         }
         if (list && list.length !== 0) {
             list.forEach((i) => {
-
                 if ((i.userId || i.id) === myUser.user.id) {
                     setILike(true);
                     c++
@@ -129,7 +128,7 @@ export default function Post(props) {
                 }
                     <Card>
                         <PostCreator >
-                            <Link to={`/user/${user.id}`}>
+                            <Link onClick={()=>window.scrollTo(0,0)} to={`/user/${user.id}`}>
                                 <img src={user.avatar} alt={user.username}/>
                             </Link>
                             <LikeButton checked={iLike} onClick={()=>toggleLike(id)}>

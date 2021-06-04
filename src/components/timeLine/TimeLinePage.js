@@ -2,9 +2,8 @@ import axios from "axios";
 import { useState, useContext, useEffect, useCallback } from "react";
 import UserContext from '../../contexts/UserContext';
 import PostContext from '../../contexts/PostContext';
-import useInterval from './functions/useInterval';
 
-import Post from "./Post";
+import InfinitePosts from "./InfinitePosts";
 import PageTitle from "./PageTitle";
 import CreatePost from "../post/CreatePost";
 import TrendingTopics from "./TrendingTopics";
@@ -16,15 +15,27 @@ export default function TimeLinePage() {
     const { user: myUser } = useContext(UserContext);
     const { postsData, setPostsData } = useContext(PostContext);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [olderPost, setOlderPost] = useState('');
+    const [newerPost, setNewerPost] = useState('');
+    const axiosUrlPath = `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts`;
+   
+    function setupPostsId(data) {
+        if (data && data.length>0){
+            const older = data[data.length-1].id;
+            setOlderPost(older);
+            const newer = {id: data[0].id, repostId:data[0].repostId};
+            setNewerPost(newer);
+        }
+    }
 
     const loadPosts = useCallback((config) => {
-        const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config);
+        const request = axios.get(axiosUrlPath, config);
         request.then((response)=>{
             const data = response.data.posts;
-            setPostsData([...data]);
+            setupPostsId(data);
             if (data.length > 0){
+                setPostsData([...data]);
                 setIsLoaded(1);
-                
             } else if (data.length === 0){
                 setIsLoaded(2);
             }
@@ -34,7 +45,7 @@ export default function TimeLinePage() {
                 setIsLoaded(3);
             }
         })
-    },[setIsLoaded,setPostsData]);
+    },[setIsLoaded,setPostsData, axiosUrlPath]);
 
     useEffect(()=>{
         if(postsData!==null && postsData.find(p=>p.user.id!==myUser.user.id) === undefined){
@@ -48,8 +59,6 @@ export default function TimeLinePage() {
         }
     },[ myUser,setPostsData,loadPosts]);
     
-    useInterval(() => {loadPosts(myUser.config)}, 15000);
-
     if(myUser){
         return (
             <Page >
@@ -59,7 +68,13 @@ export default function TimeLinePage() {
                     <CreatePost reloadPosts={loadPosts}/>
                     <PostsContainer>
                         {isLoaded === 1 
-                            ? postsData.map((p) => <Post reloadPosts={loadPosts} key={p.id} post={p} userInfo={myUser} />) 
+                            ?
+                            <InfinitePosts
+                                oldPost={olderPost}
+                                newPost={newerPost}
+                                isLoaded={isLoaded}
+                                axiosUrlPath={axiosUrlPath}
+                            />
                             : (isLoaded === 2) 
                             ? <PageTitle title="Nenhuma publicação encontrada"/>
                             : (isLoaded ===3) 

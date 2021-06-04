@@ -27,7 +27,7 @@ export default function Comment({c, followers, user: AuthorUser}) {
     return (
         <Container>
             <div>
-                <Link to={`/user/${commentUser.id}`}>
+                <Link onClick={()=>window.scrollTo(0,0)} to={`/user/${commentUser.id}`}>
                     <img src={commentUser.avatar} alt={commentUser.username} />
                 </Link>
             </div>

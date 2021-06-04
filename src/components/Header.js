@@ -26,7 +26,7 @@ export default function Header(){
     if(local==="/"|| local==="/signup") return null;
     return (
         <Body >
-            <Title><Link to="/timeline">Linkr</Link></Title>
+            <Title><Link to="/timeline" onClick={()=>window.scrollTo(0,0)}>Linkr</Link></Title>
             <UserSearch/>
             <Menu onClick={toggleMenu} onBlur={closeMenu}>
                 {openMenu ? <IoIosArrowUp/>:<IoIosArrowDown/>}
@@ -38,10 +38,12 @@ export default function Header(){
                         <Link to="/my-posts" onClick={()=>{
                             toggleMenu();
                             setPostsData(null);
+                            window.scrollTo(0,0);
                         }}>My posts</Link>
                         <Link to="/my-likes" onClick={()=>{
                             toggleMenu();
                             setPostsData(null);
+                            window.scrollTo(0,0);
                         }}>My likes</Link>
                         <Link to="/" onClick={()=>{localStorage.clear();setUser(null)}}>logout</Link>
                     </Links>
