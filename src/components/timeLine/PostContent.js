@@ -44,6 +44,7 @@ export default function PostContent({props}) {
 
     function goToUrl(tag) {
         const hashtag = tag.replace('#','');
+        window.scrollTo(0,0);
         history.push(`/hashtag/${hashtag}`);
     }
     useEffect(()=>{
@@ -93,7 +94,7 @@ export default function PostContent({props}) {
             {user.id === myUser.user.id ? <EditButton ref={buttonRef} onClick={() => changeEditMode(text)}><TiPencil /></EditButton> : () => {return(<></>)}}
             {user.id === myUser.user.id ? <DeletePost postId={id} userToken={myUser.token} /> : () => {return(<></>)}}
             <Author>
-                <Link to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
+                <Link onClick={()=>window.scrollTo(0,0)} to={`/user/${user.id}`}><h3>{user.username}</h3></Link>
                 {geolocation !== undefined && <IoLocation onClick={()=>setToggleMap(true)}/>}
             </Author>
             <>
