@@ -71,7 +71,7 @@ export default function CreatePost({reloadPosts}) {
                     disabled={isLoading ? (true) : (false)}
                 ></textarea>
                 <Buttons>
-                    <Geolocation locationCheck={locationCheck} onClick={saveLocation} disabled={isLoading}>
+                    <Geolocation locationCheck={locationCheck} onClick={saveLocation} type='button' disabled={isLoading}>
                         <IoLocationOutline/> {locationCheck ? "Localização ativada":"Localização desativada"}
                     </Geolocation>
                     <Button
@@ -196,4 +196,5 @@ const Geolocation = styled.button`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
 `
