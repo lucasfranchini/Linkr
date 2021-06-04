@@ -89,6 +89,7 @@ const SearchResults = styled.div`
     z-index: 3;
     @media(max-width: 850px){
         width: 50vw;
+        left: 25vw;
     }
     @media(max-width: 611px){
         display: none;
