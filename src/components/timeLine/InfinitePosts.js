@@ -58,7 +58,7 @@ export default function InfinitePosts({oldPost, newPost, axiosUrlPath}) {
     const fetchNewerPosts = useCallback((postId)=>{
         if (postId && myUser.config && axiosUrlPath) {
             if (axiosUrlPath === `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts`){
-                const request = axios.get(`${axiosUrlPath}?earlierThan=${postId.repostId||postId.id}`, myUser.config)
+                const request = axios.get(`${axiosUrlPath}?earlierThan=${postId.id}`, myUser.config)
                 request.then((response)=>{
                     const data = response.data.posts;
                     if (data.length>0){
