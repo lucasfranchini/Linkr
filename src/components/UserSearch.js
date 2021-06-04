@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 export default function UserSearch() {
     const [searchText, setSearchText] = useState("");
     const {user: myUser} = useContext(UserContext);
+    const {setPostsData} = useContext(PostContext);
     const [searchResults, setSearchResults] = useState([]);
     const [showableResults, setShowableResults] = useState([]);
     const history = useHistory();
@@ -43,7 +44,7 @@ export default function UserSearch() {
         setSearchText("");
         setSearchResults([]);
         setShowableResults([]);
-        window.location.reload();
+        setPostsData(null);
     }
 
     return(

@@ -15,17 +15,17 @@ export default function App() {
   const [postsData, setPostsData] = useState(null);
 	return (
 		<UserContext.Provider value={{ user, setUser }}>
-			<BrowserRouter>
-				<GlobalStyle />
-				<Header />
-				<Switch>
-					<Route path="/" exact>
-						<LogInPage />
-					</Route>
-					<Route path="/signup" exact>
-						<SignUpPage />
-					</Route>
-					<PostContext.Provider value={{ postsData, setPostsData }}>
+			<PostContext.Provider value={{ postsData, setPostsData }}>
+				<BrowserRouter>
+					<GlobalStyle />
+					<Header />
+					<Switch>
+						<Route path="/" exact>
+							<LogInPage />
+						</Route>
+						<Route path="/signup" exact>
+							<SignUpPage />
+						</Route>
 						<Route path="/timeline" exact>
 							<TimeLinePage />
 						</Route>
@@ -41,9 +41,9 @@ export default function App() {
 						<Route path="/hashtag/:hashtag" exact>
 							<FilteredPosts />
 						</Route>
-					</PostContext.Provider>
-				</Switch>
-			</BrowserRouter>
+					</Switch>
+				</BrowserRouter>
+			</PostContext.Provider>
 		</UserContext.Provider>
 	);
 }
