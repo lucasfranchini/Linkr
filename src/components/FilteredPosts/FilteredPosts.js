@@ -52,7 +52,13 @@ export default function FilteredPosts({url,newTitle}){
                 if(answer.data.users.find(follow=>follow.id===parseInt(id)) !== undefined )setFollow(true);
             });
             promise.then(answer=>{
-                setTitle(`${answer.data.user.username}'s posts`);
+                if(parseInt(id)===user.user.id){
+                    setTitle("My Posts")
+                }
+                else{
+                    setTitle(`${answer.data.user.username}'s posts`);
+                }
+                
                 setPageUser(answer.data.user);
                 const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}/posts`,headers);
                 setAxiosUrlPath(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}/posts`);
@@ -75,7 +81,7 @@ export default function FilteredPosts({url,newTitle}){
                 setPostsData(answer.data.posts)
             })
         }
-    },[local,id,hashtag,user.token,newTitle,setPostsData,url]);
+    },[local,id,hashtag,user.token,newTitle,setPostsData,url,user.user.id]);
 
     return (
         <Body>

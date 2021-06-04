@@ -81,8 +81,9 @@ export default function InfinitePosts({oldPost, newPost, axiosUrlPath}) {
             dataLength={postsData.length}
             next={()=>fetchOlderPosts(olderPost)}
             hasMore={loadMore}
-            loader={<PageTitle>Loading...</PageTitle>}
-            scrollThreshold="300px">
+            loader={<PageTitle title="Loading..."/>}
+            scrollThreshold="300px"
+            endMessage={<PageTitle title="Não há mais posts para serem carregados"/>}>
             <>
                 {postsData.map((p) => <Post key={p.repostId||p.id} post={p} userInfo={myUser} />)}
             </>
