@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useState, useContext } from "react";
 import UserContext from '../../contexts/UserContext';
+import PostContext from '../../contexts/PostContext';
 import { AiOutlineSearch } from "react-icons/ai";
 import {DebounceInput} from 'react-debounce-input';
 import axios from "axios";
@@ -9,6 +10,7 @@ import { useHistory } from "react-router-dom";
 export default function UserSearch() {
     const [searchText, setSearchText] = useState("");
     const {user: myUser} = useContext(UserContext);
+    const {setPostsData} = useContext(PostContext);
     const [searchResults, setSearchResults] = useState([]);
     const [showableResults, setShowableResults] = useState([]);
     const history = useHistory();
@@ -42,7 +44,7 @@ export default function UserSearch() {
         setSearchText("");
         setSearchResults([]);
         setShowableResults([]);
-        window.location.reload();
+        setPostsData(null);
     }
 
     return(
@@ -131,6 +133,7 @@ const Search = styled.div`
     }
     @media(max-width: 850px){
         width: 50vw;
+        left: 25vw;
     }
     @media(max-width: 611px){
         display: block;
