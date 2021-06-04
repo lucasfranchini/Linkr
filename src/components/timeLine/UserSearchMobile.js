@@ -24,11 +24,11 @@ export default function UserSearch() {
         } else {
             setShowableResults([]);
         }
-    },[searchText])
+    },[searchText,myUser.token])
 
     useEffect(()=>{
         organizeResults();
-    },[searchResults])
+    },[searchResults]) //eslint-disable-line react-hooks/exhaustive-deps
 
     function organizeResults() {
         let followers = searchResults.filter(r => {return r.isFollowingLoggedUser})
