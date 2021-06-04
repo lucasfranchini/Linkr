@@ -57,7 +57,6 @@ export default function Post(props) {
         }
         if (list && list.length !== 0) {
             list.forEach((i) => {
-
                 if ((i.userId || i.id) === myUser.user.id) {
                     setILike(true);
                     c++

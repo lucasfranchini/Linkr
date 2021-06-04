@@ -4,7 +4,7 @@ import { Redirect, useLocation, useParams } from "react-router";
 import {Button,Content,Posts,Title,Body} from "./FilteredPostStyles";
 import PostContext from "../../contexts/PostContext";
 import UserContext from "../../contexts/UserContext";
-import Post from "../timeLine/Post";
+import InfinitePosts from "../timeLine/InfinitePosts";
 import TrendingTopics from "../timeLine/TrendingTopics";
 import toggleFollow from "./toggleFollow";
 
@@ -17,19 +17,32 @@ export default function FilteredPosts({url,newTitle}){
     const [pageUser,setPageUser] = useState({});
     const [follow,setFollow] =useState(false);  
     const [loading,setLoading] = useState(false);
-    window.scrollTo(0,0);
-
-    useEffect(()=>{
-        setPostsData(postsData);
-    })
+    
+    const [axiosUrlPath, setAxiosUrlPath] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [olderPost, setOlderPost] = useState('');
+    const [newerPost, setNewerPost] = useState('');
+    
+    function setupPostsId(data) {
+        if (data && data.length>0){
+            const older = data[data.length-1].id;
+            setOlderPost(older);
+            const newer = {id: data[0].id, repostId:data[0].repostId};
+            setNewerPost(newer);
+        }
+    }
 
     useEffect(()=>{
         const headers = {headers:{Authorization: `Bearer ${user.token}`}}
         if(local==="/my-posts" || local==="/my-likes"){
             setTitle(newTitle);
             const promise = axios.get(url,headers);
+            setAxiosUrlPath(url);
             promise.then(answer=>{
-                setPostsData(answer.data.posts)
+                const data = answer.data.posts
+                setupPostsId(data);
+                setIsLoaded(1);
+                setPostsData(answer.data.posts);
             })
         }
         else if(local===`/user/${id}`){
@@ -42,7 +55,11 @@ export default function FilteredPosts({url,newTitle}){
                 setTitle(`${answer.data.user.username}'s posts`);
                 setPageUser(answer.data.user);
                 const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}/posts`,headers);
+                setAxiosUrlPath(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}/posts`);
                 promise.then(answer=>{
+                    const data = answer.data.posts
+                    setupPostsId(data);;
+                    setIsLoaded(1);
                     setPostsData(answer.data.posts)
                 });
             });
@@ -50,7 +67,11 @@ export default function FilteredPosts({url,newTitle}){
         else if(local===`/hashtag/${hashtag}`){
             setTitle(`# ${hashtag}`)
             const promise = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts`,headers);
+            setAxiosUrlPath(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts`)
             promise.then(answer=>{
+                const data = answer.data.posts
+                setupPostsId(data);
+                setIsLoaded(1);
                 setPostsData(answer.data.posts)
             })
         }
@@ -74,7 +95,15 @@ export default function FilteredPosts({url,newTitle}){
             </Title>
             <Content>
                 <Posts>
-                {postsData!==null && (postsData.length === 0 ? <Title>Não existem posts nessa aba</Title>:postsData.map(p=><Post key={p.id} post={p} userInfo={user} />))}
+                    {postsData!==null && (postsData.length === 0
+                        ? <Title>Não existem posts nessa aba</Title>
+                        : <InfinitePosts 
+                        oldPost={olderPost}
+                        newPost={newerPost}
+                        isLoaded={isLoaded}
+                        axiosUrlPath={axiosUrlPath}
+                        />
+                    )}
                 </Posts>
                 <TrendingTopics user={user}/>
             </Content>
